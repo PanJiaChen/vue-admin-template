@@ -20,12 +20,6 @@ export function validateLowerCase(str) {
   return reg.test(str);
 }
 
-/* 验证key*/
-// export function validateKey(str) {
-//     var reg = /^[a-z_\-:]+$/;
-//     return reg.test(str);
-// }
-
 /* 大写字母*/
 export function validateUpperCase(str) {
   const reg = /^[A-Z]+$/;

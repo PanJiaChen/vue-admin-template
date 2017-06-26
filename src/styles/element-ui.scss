@@ -1,23 +1,4 @@
- //覆盖一些element-ui样式
-.block-checkbox {
-  display: block;
-}
-
-.operation-container {
-  .cell {
-    padding: 10px !important;
-  }
-  .el-button {
-    &:nth-child(3) {
-      margin-top: 10px;
-      margin-left: 0px;
-    }
-    &:nth-child(4) {
-      margin-top: 10px;
-    }
-  }
-}
-
+ //覆盖一些element-ui样式 覆盖css样式可在这里添加
 .el-upload {
   input[type="file"] {
     display: none !important;
@@ -28,47 +9,12 @@
   display: none;
 }
 
-.cell {
-  .el-tag {
-    margin-right: 8px;
-  }
-}
-
-.small-padding {
-  .cell {
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-}
-
-.status-col {
-  .cell {
-    padding: 0 10px;
-    text-align: center;
-    .el-tag {
-      margin-right: 0px;
-    }
-  }
-}
-
 //暂时性解决diolag 问题 https://github.com/ElemeFE/element/issues/2461
 .el-dialog {
   transform: none;
   left: 0;
   position: relative;
   margin: 0 auto;
-}
-
-
-//文章页textarea修改样式
-.article-textarea {
-  textarea {
-    padding-right: 40px;
-    resize: none;
-    border: none;
-    border-radius: 0px;
-    border-bottom: 1px solid #bfcbd9;
-  }
 }
 
 //element ui upload

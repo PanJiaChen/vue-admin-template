@@ -5,12 +5,16 @@
                  class="card-box login-form">
             <h3 class="title">系统登录</h3>
             <el-form-item prop="email">
-                <span class="svg-container"><wscn-icon-svg icon-class="jiedianyoujian"/></span>
+                <span class="svg-container">
+                  <icon-svg icon-class="jiedianyoujian"></icon-svg>
+                </span>
                 <el-input name="email" type="text" v-model="loginForm.email" autoComplete="on"
                           placeholder="邮箱"></el-input>
             </el-form-item>
             <el-form-item prop="password">
-                <span class="svg-container"><wscn-icon-svg icon-class="mima"/></span>
+                <span class="svg-container">
+                  <icon-svg icon-class="mima" ></icon-svg>
+                </span>
                 <el-input name="password" type="password" @keyup.enter.native="handleLogin" v-model="loginForm.password"
                           autoComplete="on" placeholder="密码"></el-input>
             </el-form-item>
@@ -21,15 +25,11 @@
             </el-form-item>
             <div class='tips'>admin账号为:admin@wallstreetcn.com 密码随便填</div>
             <div class='tips'>editor账号:editor@wallstreetcn.com 密码随便填</div>
-            <router-link to="/sendpwd" class="forget-pwd">
-                忘记密码?(或首次登录)
-            </router-link>
         </el-form>
     </div>
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
     import { isWscnEmail } from '@/utils/validate';
 
     export default {
@@ -62,14 +62,8 @@
                 { required: true, trigger: 'blur', validator: validatePass }
             ]
           },
-          loading: false,
-          showDialog: false
+          loading: false
         }
-      },
-      computed: {
-        ...mapGetters([
-          'auth_type'
-        ])
       },
       methods: {
         handleLogin() {
@@ -79,7 +73,6 @@
               this.$store.dispatch('Login', this.loginForm).then(() => {
                 this.loading = false;
                 this.$router.push({ path: '/' });
-                // this.showDialog = true;
               }).catch(() => {
                 this.loading = false;
               });
@@ -88,31 +81,7 @@
               return false;
             }
           });
-        },
-        afterQRScan() {
-          // const hash = window.location.hash.slice(1);
-          // const hashObj = getQueryObject(hash);
-          // const originUrl = window.location.origin;
-          // history.replaceState({}, '', originUrl);
-          // const codeMap = {
-          //   wechat: 'code',
-          //   tencent: 'code'
-          // };
-          // const codeName = hashObj[codeMap[this.auth_type]];
-          // if (!codeName) {
-          //   alert('第三方登录失败');
-          // } else {
-          //   this.$store.dispatch('LoginByThirdparty', codeName).then(() => {
-          //     this.$router.push({ path: '/' });
-          //   });
-          // }
         }
-      },
-      created() {
-        // window.addEventListener('hashchange', this.afterQRScan);
-      },
-      destroyed() {
-        // window.removeEventListener('hashchange', this.afterQRScan);
       }
     }
 </script>
