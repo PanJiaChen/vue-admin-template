@@ -16,7 +16,8 @@ const dashboard = _import('dashboard/index');
 /* error page */
 const Err404 = _import('404');
 
-const Page = _import('page/index');
+const Form = _import('page/form');
+const Table = _import('table/index');
 
 Vue.use(Router);
 
@@ -51,11 +52,20 @@ export const asyncRouterMap = [
     path: '/example',
     component: Layout,
     redirect: 'noredirect',
-    name: 'page',
-    icon: 'zonghe',
+    name: 'Example',
+    icon: 'zujian',
     children: [
-      { path: 'index', component: Page, name: 'page' }
+      { path: 'index', component: Form, name: 'Form', icon: 'zonghe' }
     ]
+  },
+  {
+    path: '/table',
+    component: Layout,
+    redirect: '/table/index',
+    name: 'Table',
+    icon: 'tubiaoleixingzhengchang',
+    noDropdown: true,
+    children: [{ path: 'index', component: Table, name: 'Table', meta: { role: ['admin'] } }]
   },
   { path: '*', redirect: '/404', hidden: true }
 ];
