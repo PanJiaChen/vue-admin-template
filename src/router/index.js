@@ -28,6 +28,7 @@ Vue.use(Router);
   * meta : { role: ['admin'] }  will control the page role
   **/
 export const constantRouterMap = [
+  { path: '/login', component: Login, hidden: true },
   { path: '/404', component: Err404, hidden: true },
   {
     path: '/',

@@ -23,8 +23,8 @@
  import img_404_cloud from '@/assets/404_images/404_cloud.png'
 
  export default {
-   data: {
-     return: {
+   data() {
+     return {
        img_404,
        img_404_cloud
      }

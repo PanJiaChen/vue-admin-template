@@ -1,21 +1,13 @@
 import fetch from '@/utils/fetch';
 
-export function loginByEmail(email, password) {
-  const data = {
-    email,
-    password
-  };
+export function login(email, password) {
   return fetch({
-    url: '/login/loginbyemail',
+    url: '/user/login',
     method: 'post',
-    data
-  });
-}
-
-export function logout() {
-  return fetch({
-    url: '/login/logout',
-    method: 'post'
+    data: {
+      email,
+      password
+    }
   });
 }
 
@@ -26,4 +18,13 @@ export function getInfo(token) {
     params: { token }
   });
 }
+
+export function logout() {
+  return fetch({
+    url: '/user/logout',
+    method: 'post'
+  });
+}
+
+
 
