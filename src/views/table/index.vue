@@ -33,25 +33,26 @@
 </template>
 
 <script>
-import { getList } from '@/api/table';
-export default {
-  data() {
-    return {
-      list: null,
-      listLoading: true
+  import { getList } from '@/api/table';
+
+  export default {
+    data() {
+      return {
+        list: null,
+        listLoading: true
+      }
+    },
+    created() {
+      this.fetchData();
+    },
+    methods: {
+      fetchData() {
+        this.listLoading = true;
+        getList(this.listQuery).then(response => {
+          this.list = response.data.items;
+          this.listLoading = false;
+        })
+      }
     }
-  },
-  created() {
-    this.fetchData();
-  },
-  methods: {
-    fetchData() {
-      this.listLoading = true;
-      getList(this.listQuery).then(response => {
-        this.list = response.data.items;
-        this.listLoading = false;
-      })
-    }
-  }
-};
+  };
 </script>

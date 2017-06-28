@@ -56,15 +56,3 @@
      return d.getMonth() + 1 + '月' + d.getDate() + '日' + d.getHours() + '时' + d.getMinutes() + '分'
    }
  }
-
- export function scrollTo(element, to, duration) {
-   if (duration <= 0) return;
-   const difference = to - element.scrollTop;
-   const perTick = difference / duration * 10;
-   setTimeout(() => {
-     console.log(new Date())
-     element.scrollTop = element.scrollTop + perTick;
-     if (element.scrollTop === to) return;
-     scrollTo(element, to, duration - 10);
-   }, 10);
- }

@@ -37,13 +37,13 @@
 
 <style rel="stylesheet/scss" lang="scss" scoped>
     .app-levelbar.el-breadcrumb {
-        display: inline-block;
-        font-size: 14px;
-        line-height: 50px;
-        margin-left: 10px;
-        .no-redirect{
-          color: #97a8be;
-          cursor:text;
-        }
+      display: inline-block;
+      font-size: 14px;
+      line-height: 50px;
+      margin-left: 10px;
+      .no-redirect {
+        color: #97a8be;
+        cursor: text;
+      }
     }
 </style>

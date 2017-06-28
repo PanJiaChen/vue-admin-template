@@ -48,7 +48,7 @@
                     }
                 }
             }
-            .main-container{
+            .main-container {
                 margin-left: 40px;
             }
         }

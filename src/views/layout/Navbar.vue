@@ -10,7 +10,7 @@
             <el-dropdown-menu class="user-dropdown" slot="dropdown">
                 <router-link class='inlineBlock' to="/">
                     <el-dropdown-item>
-                        首页
+                        Home
                     </el-dropdown-item>
                 </router-link>
                 <el-dropdown-item divided><span @click="logout" style="display:block;">退出登录</span></el-dropdown-item>
@@ -32,7 +32,6 @@
       computed: {
         ...mapGetters([
           'sidebar',
-          'name',
           'avatar'
         ])
       },
@@ -42,7 +41,7 @@
         },
         logout() {
           this.$store.dispatch('LogOut').then(() => {
-            location.reload();// 为了重新实例化vue-router对象 避免bug
+            location.reload();  // 为了重新实例化vue-router对象 避免bug
           });
         }
       }
@@ -65,11 +64,11 @@
             position: absolute;
             right: 150px;
         }
-        .screenfull{
-             position: absolute;
-             right: 90px;
-             top: 16px;
-             color: red;
+        .screenfull {
+            position: absolute;
+            right: 90px;
+            top: 16px;
+            color: red;
         }
         .avatar-container {
             height: 50px;
@@ -78,7 +77,7 @@
             right: 35px;
             .avatar-wrapper {
                 cursor: pointer;
-                margin-top:5px;
+                margin-top: 5px;
                 position: relative;
                 .user-avatar {
                     width: 40px;
