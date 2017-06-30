@@ -1,9 +1,9 @@
 {
-  "name": "vue-admin",
+  "name": "vue-admin-template",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "license": "MIT",
+  "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
   "author": "Pan <panfree23@gmail.com>",
-  "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
