@@ -8,7 +8,6 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
 import NProgress from 'nprogress'
 import 'normalize.css/normalize.css'
-import '@/styles/index.scss' // 全局自定义的css样式
 import '@/assets/iconfont/iconfont'
 import IconSvg from '@/components/Icon-svg/index.vue'
 
