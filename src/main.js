@@ -27,8 +27,8 @@ router.beforeEach((to, from, next) => {
         store.dispatch('GetInfo').then(res => {
           const roles = res.data.role;
           store.dispatch('GenerateRoutes', { roles }).then(() => {
-            router.addRoutes(store.getters.addRouters)
-            next(Object.assign({}, to));
+            router.addRoutes(store.getters.addRouters);
+            next({ ...to });
           })
         })
       } else {
