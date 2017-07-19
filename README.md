@@ -8,6 +8,7 @@
  
  ## 相关项目
  [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
+ [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
 
 写了一个系列的教程配套文章，如何从零构建后一个完整的后台项目:
  - [手摸手，带你用 vue 撸后台 系列一(基础篇)](https://juejin.im/post/59097cd7a22b9d0065fb61d2)
