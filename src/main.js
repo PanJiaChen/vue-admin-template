@@ -11,6 +11,7 @@ import 'nprogress/nprogress.css'
 import 'normalize.css/normalize.css'
 import '@/assets/iconfont/iconfont'
 import IconSvg from '@/components/Icon-svg/index.vue'
+import { getToken } from '@/utils/auth'
 
 Vue.config.productionTip = false
 
@@ -20,7 +21,7 @@ Vue.component('icon-svg', IconSvg)
 const whiteList = ['/login'];
 router.beforeEach((to, from, next) => {
   NProgress.start();
-  if (store.getters.token) {
+  if (getToken()) {
     if (to.path === '/login') {
       next({ path: '/' });
     } else {
