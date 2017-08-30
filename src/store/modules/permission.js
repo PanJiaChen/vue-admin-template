@@ -1,4 +1,4 @@
-import { asyncRouterMap, constantRouterMap } from '@/router/index';
+import { asyncRouterMap, constantRouterMap } from '@/router/index'
 
 /**
  * 通过meta.role判断是否与当前用户权限匹配
@@ -38,8 +38,8 @@ const permission = {
   },
   mutations: {
     SET_ROUTERS: (state, routers) => {
-      state.addRouters = routers;
-      state.routers = constantRouterMap.concat(routers);
+      state.addRouters = routers
+      state.routers = constantRouterMap.concat(routers)
     }
   },
   actions: {
@@ -52,11 +52,11 @@ const permission = {
         } else {
           accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
         }
-        commit('SET_ROUTERS', accessedRouters);
-        resolve();
+        commit('SET_ROUTERS', accessedRouters)
+        resolve()
       })
     }
   }
-};
+}
 
-export default permission;
+export default permission

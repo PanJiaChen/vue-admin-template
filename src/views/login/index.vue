@@ -5,14 +5,14 @@
       <h3 class="title">系统登录</h3>
       <el-form-item prop="email">
         <span class="svg-container">
-                  <icon-svg icon-class="jiedianyoujian"></icon-svg>
-                </span>
+          <icon-svg icon-class="email"></icon-svg>
+        </span>
         <el-input name="email" type="text" v-model="loginForm.email" autoComplete="on" placeholder="邮箱"></el-input>
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
-                  <icon-svg icon-class="mima" ></icon-svg>
-                </span>
+          <icon-svg icon-class="mima" ></icon-svg>
+        </span>
         <el-input name="password" type="password" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
           placeholder="密码"></el-input>
       </el-form-item>
@@ -28,60 +28,60 @@
 </template>
 
 <script>
-    import { isWscnEmail } from '@/utils/validate';
+import { isWscnEmail } from '@/utils/validate'
 
-    export default {
-      name: 'login',
-      data() {
-        const validateEmail = (rule, value, callback) => {
-          if (!isWscnEmail(value)) {
-            callback(new Error('请输入正确的合法邮箱'));
-          } else {
-            callback();
-          }
-        };
-        const validatePass = (rule, value, callback) => {
-          if (value.length < 6) {
-            callback(new Error('密码不能小于6位'));
-          } else {
-            callback();
-          }
-        };
-        return {
-          loginForm: {
-            email: 'admin@wallstreetcn.com',
-            password: '111111'
-          },
-          loginRules: {
-            email: [
-                { required: true, trigger: 'blur', validator: validateEmail }
-            ],
-            password: [
-                { required: true, trigger: 'blur', validator: validatePass }
-            ]
-          },
-          loading: false
-        }
-      },
-      methods: {
-        handleLogin() {
-          this.$refs.loginForm.validate(valid => {
-            if (valid) {
-              this.loading = true;
-              this.$store.dispatch('Login', this.loginForm).then(() => {
-                this.loading = false;
-                this.$router.push({ path: '/' });
-              }).catch(() => {
-                this.loading = false;
-              });
-            } else {
-              console.log('error submit!!');
-              return false;
-            }
-          });
-        }
+export default {
+  name: 'login',
+  data() {
+    const validateEmail = (rule, value, callback) => {
+      if (!isWscnEmail(value)) {
+        callback(new Error('请输入正确的合法邮箱'))
+      } else {
+        callback()
       }
     }
+    const validatePass = (rule, value, callback) => {
+      if (value.length < 6) {
+        callback(new Error('密码不能小于6位'))
+      } else {
+        callback()
+      }
+    }
+    return {
+      loginForm: {
+        email: 'admin@wallstreetcn.com',
+        password: '111111'
+      },
+      loginRules: {
+        email: [
+                { required: true, trigger: 'blur', validator: validateEmail }
+        ],
+        password: [
+                { required: true, trigger: 'blur', validator: validatePass }
+        ]
+      },
+      loading: false
+    }
+  },
+  methods: {
+    handleLogin() {
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          this.$store.dispatch('Login', this.loginForm).then(() => {
+            this.loading = false
+            this.$router.push({ path: '/' })
+          }).catch(() => {
+            this.loading = false
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
