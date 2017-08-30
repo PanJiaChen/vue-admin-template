@@ -6,19 +6,19 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
-    export default {
-      name: 'dashboard',
-      computed: {
-        ...mapGetters([
-          'name',
-          'roles'
-        ])
-      }
-    }
+import { mapGetters } from 'vuex'
+export default {
+  name: 'dashboard',
+  computed: {
+    ...mapGetters([
+      'name',
+      'roles'
+    ])
+  }
+}
 </script>
 
-<style rel="stylesheet/scss" lang="scss">
+<style rel="stylesheet/scss" lang="scss" scoped>
 .dashboard {
   &-container {
     margin: 30px;
