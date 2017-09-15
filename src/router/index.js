@@ -6,19 +6,6 @@ const _import = require('./_import_' + process.env.NODE_ENV)
 /* layout */
 import Layout from '../views/layout/Layout'
 
-/* login */
-const Login = _import('login/index')
-
-/* dashboard */
-const dashboard = _import('dashboard/index')
-
-/* error page */
-const Err404 = _import('404')
-
-/* demo page */
-const Form = _import('page/form')
-const Table = _import('table/index')
-
 Vue.use(Router)
 
  /**
@@ -29,15 +16,15 @@ Vue.use(Router)
   * meta : `{ role: ['admin'] }`  will control the page role
   **/
 export const constantRouterMap = [
-  { path: '/login', component: Login, hidden: true },
-  { path: '/404', component: Err404, hidden: true },
+  { path: '/login', component: _import('login/index'), hidden: true },
+  { path: '/404', component: _import('404'), hidden: true },
   {
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    name: 'Home',
+    name: 'Dashboard',
     hidden: true,
-    children: [{ path: 'dashboard', component: dashboard }]
+    children: [{ path: 'dashboard', component: _import('dashboard/index') }]
   }
 ]
 
@@ -55,7 +42,7 @@ export const asyncRouterMap = [
     name: 'Example',
     icon: 'zujian',
     children: [
-      { path: 'index', component: Form, name: 'Form', icon: 'zonghe' }
+      { path: 'index', name: 'Form', icon: 'zonghe', component: _import('page/form') }
     ]
   },
 
@@ -65,7 +52,7 @@ export const asyncRouterMap = [
     redirect: '/table/index',
     icon: 'tubiao',
     noDropdown: true,
-    children: [{ path: 'index', component: Table, name: 'Table', meta: { role: ['admin'] }}]
+    children: [{ path: 'index', name: 'Table', component: _import('table/index'), meta: { role: ['admin'] }}]
   },
 
   { path: '*', redirect: '/404', hidden: true }
