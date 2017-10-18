@@ -3,6 +3,9 @@
 > 这是一个 极简的vue admin 管理后台 它只包含了 Element UI & axios & iconfont & permission control & lint，这些搭建后台必要的东西。
 
 [线上地址](http://panjiachen.github.io/vueAdmin-template)
+
+## Extra
+如果你想要根据用户角色来动态生成侧边栏和router，你可以使用改分支[permission-control](https://github.com/PanJiaChen/vueAdmin-template/tree/permission-control)
  
  ## 相关项目
  [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
