@@ -6,6 +6,26 @@
 
 ## Extra
 如果你想要根据用户角色来动态生成侧边栏和router，你可以使用改分支[permission-control](https://github.com/PanJiaChen/vueAdmin-template/tree/permission-control)
+
+## Element-Ui 使用cdn教程
+首先找到 `index.html` ([根目录下](https://github.com/PanJiaChen/vueAdmin-template/blob/element-ui-cdn/index.html))
+
+引入 Element的css和js ，并且引入 vue 。因为 Element-Ui 是依赖 vue 的，所以必须在它之前引入 vue 。
+
+之后找到 [webpack.base.conf.js](https://github.com/PanJiaChen/vueAdmin-template/blob/element-ui-cdn/build/webpack.base.conf.js) 加入 `externals` 让webpack 不打包 vue 和 element
+```
+externals: {
+  vue: 'Vue',
+  'element-ui':'ELEMENT'
+}
+```
+
+之后还有一个小细节是如果你用了全局对象方式引入vue，就不需要 手动 `Vue.use(Vuex）` ，它会自动挂载，具体见 [issue](https://github.com/vuejs/vuex/issues/731)
+
+最终你可以使用 `npm run build --report` 查看效果
+如图：
+![demo](https://panjiachen.github.io/images/element-cdn.png)
+
  
  ## 相关项目
  [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
