@@ -5,6 +5,9 @@
 **Live demo:** http://panjiachen.github.io/vueAdmin-template
 
 [中文文档](https://github.com/PanJiaChen/vueAdmin-template/blob/master/README-zh.md)
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/vMACqConzRGb2TuXvYSosXpP/PanJiaChen/vueAdmin-template'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/vMACqConzRGb2TuXvYSosXpP/PanJiaChen/vueAdmin-template.svg' />
+</a>
 
 ## Build Setup
 
