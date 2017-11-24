@@ -14,7 +14,6 @@ import Layout from '../views/layout/Layout'
 * redirect: noredirect           if `redirect:noredirect` will no redirct in the breadcrumb
 * name:'router-name'             the name is used by <keep-alive> (must set!!!)
 * meta : {
-    role: ['admin','editor']     will control the page role (you can set multiple roles)
     title: 'title'               the name show in submenu and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar,
   }
@@ -59,7 +58,7 @@ export const constantRouterMap = [
       path: 'index',
       name: 'Table',
       component: _import('table/index'),
-      meta: { title: 'Table', icon: 'table', role: ['admin'] }}
+      meta: { title: 'Table', icon: 'table' }}
     ]
   },
 
