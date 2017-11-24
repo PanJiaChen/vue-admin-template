@@ -1,5 +1,7 @@
 @import './element-ui.scss';
 @import './mixin.scss';
+@import './transition.scss';
+
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -43,17 +45,6 @@ a:hover {
     clear: both;
     height: 0;
   }
-}
-
-//vue router transition css
-.fade-enter-active,
-.fade-leave-active {
-  transition: all .2s ease
-}
-
-.fade-enter,
-.fade-leave-active {
-  opacity: 0;
 }
 
 //main-container全局样式
