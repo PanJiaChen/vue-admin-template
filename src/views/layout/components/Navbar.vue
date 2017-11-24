@@ -1,7 +1,7 @@
 <template>
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
-    <levelbar></levelbar>
+    <breadcrumb></breadcrumb>
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
         <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
@@ -13,7 +13,9 @@
             Home
           </el-dropdown-item>
         </router-link>
-        <el-dropdown-item divided><span @click="logout" style="display:block;">LogOut</span></el-dropdown-item>
+        <el-dropdown-item divided>
+          <span @click="logout" style="display:block;">LogOut</span>
+        </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </el-menu>
@@ -21,12 +23,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Levelbar from './Levelbar'
+import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
 export default {
   components: {
-    Levelbar,
+    Breadcrumb,
     Hamburger
   },
   computed: {
