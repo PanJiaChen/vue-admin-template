@@ -1,19 +1,23 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 const _import = require('./_import_' + process.env.NODE_ENV)
-// in development env not use Lazy Loading,because Lazy Loading too many pages will cause webpack hot update too slow.so only in production use Lazy Loading
-
-/* layout */
-import Layout from '../views/layout/Layout'
+// in development-env not use lazy-loading, because lazy-loading too many pages will cause webpack hot update too slow. so only in production use lazy-loading;
+// detail: https://panjiachen.github.io/vue-element-admin-site/#/lazy-loading
 
 Vue.use(Router)
 
+/* Layout */
+import Layout from '../views/layout/Layout'
+
 /**
-* icon : the icon show in the sidebar
-* hidden : if `hidden:true` will not show in the sidebar
-* redirect : if `redirect:noredirect` will not redirct in the levelbar
-* noDropdown : if `noDropdown:true` will not has submenu in the sidebar
-* meta : `{ role: ['admin'] }`  will control the page role
+* hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
+* redirect: noredirect           if `redirect:noredirect` will no redirct in the breadcrumb
+* name:'router-name'             the name is used by <keep-alive> (must set!!!)
+* meta : {
+    role: ['admin','editor']     will control the page role (you can set multiple roles)
+    title: 'title'               the name show in submenu and breadcrumb (recommend set)
+    icon: 'svg-name'             the icon show in the sidebar,
+  }
 **/
 export const constantRouterMap = [
   { path: '/login', component: _import('login/index'), hidden: true },
@@ -24,7 +28,11 @@ export const constantRouterMap = [
     redirect: '/dashboard',
     name: 'Dashboard',
     hidden: true,
-    children: [{ path: 'dashboard', component: _import('dashboard/index') }]
+    children: [{
+      path: 'dashboard',
+      component: _import('dashboard/index'),
+      meta: { title: 'dashboard', icon: 'dashboard' }
+    }]
   },
 
   {
@@ -32,9 +40,14 @@ export const constantRouterMap = [
     component: Layout,
     redirect: 'noredirect',
     name: 'Example',
-    icon: 'example',
+    meta: { title: 'Example', icon: 'example' },
     children: [
-      { path: 'index', name: 'Form', icon: 'form', component: _import('page/form') }
+      {
+        path: 'index',
+        name: 'Form',
+        component: _import('page/form'),
+        meta: { title: 'Form', icon: 'form' }
+      }
     ]
   },
 
@@ -42,9 +55,12 @@ export const constantRouterMap = [
     path: '/table',
     component: Layout,
     redirect: '/table/index',
-    icon: 'table',
-    noDropdown: true,
-    children: [{ path: 'index', name: 'Table', component: _import('table/index'), meta: { role: ['admin'] }}]
+    children: [{
+      path: 'index',
+      name: 'Table',
+      component: _import('table/index'),
+      meta: { title: 'Table', icon: 'table', role: ['admin'] }}
+    ]
   },
 
   { path: '*', redirect: '/404', hidden: true }
