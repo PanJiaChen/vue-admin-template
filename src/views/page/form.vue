@@ -20,7 +20,7 @@
         </el-col>
       </el-form-item>
       <el-form-item label="Instant delivery">
-        <el-switch on-text="" off-text="" v-model="form.delivery"></el-switch>
+        <el-switch v-model="form.delivery"></el-switch>
       </el-form-item>
       <el-form-item label="Activity type">
         <el-checkbox-group v-model="form.type">
@@ -70,3 +70,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.line{
+  text-align: center;
+}
+</style>
+

@@ -17,6 +17,10 @@ html {
   box-sizing: inherit;
 }
 
+div:focus{
+  outline: none;
+}
+
 a:focus,
 a:active {
   outline: none;
