@@ -21,6 +21,7 @@ import Layout from '../views/layout/Layout'
 export const constantRouterMap = [
   { path: '/login', component: _import('login/index'), hidden: true },
   { path: '/404', component: _import('404'), hidden: true },
+
   {
     path: '/',
     component: Layout,
@@ -29,36 +30,42 @@ export const constantRouterMap = [
     hidden: true,
     children: [{
       path: 'dashboard',
-      component: _import('dashboard/index'),
-      meta: { title: 'dashboard', icon: 'dashboard' }
+      component: _import('dashboard/index')
     }]
   },
 
   {
     path: '/example',
     component: Layout,
-    redirect: 'noredirect',
+    redirect: '/example/table',
     name: 'Example',
     meta: { title: 'Example', icon: 'example' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: _import('page/form'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'table',
+        name: 'Table',
+        component: _import('table/index'),
+        meta: { title: 'Table', icon: 'table' }
+      },
+      {
+        path: 'tree',
+        name: 'Tree',
+        component: _import('tree/index'),
+        meta: { title: 'Tree', icon: 'tree' }
       }
     ]
   },
 
   {
-    path: '/table',
+    path: '/form',
     component: Layout,
-    redirect: '/table/index',
-    children: [{
-      path: 'index',
-      name: 'Table',
-      component: _import('table/index'),
-      meta: { title: 'Table', icon: 'table' }}
+    children: [
+      {
+        path: 'index',
+        name: 'Form',
+        component: _import('form/index'),
+        meta: { title: 'Form', icon: 'form' }
+      }
     ]
   },
 
