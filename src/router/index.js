@@ -32,9 +32,9 @@ export const constantRouterMap = [
     component: Layout,
     redirect: 'noredirect',
     name: 'Example',
-    icon: 'zujian',
+    icon: 'example',
     children: [
-      { path: 'index', name: 'Form', icon: 'zonghe', component: _import('page/form') }
+      { path: 'index', name: 'Form', icon: 'form', component: _import('page/form') }
     ]
   },
 
@@ -42,7 +42,7 @@ export const constantRouterMap = [
     path: '/table',
     component: Layout,
     redirect: '/table/index',
-    icon: 'tubiao',
+    icon: 'table',
     noDropdown: true,
     children: [{ path: 'index', name: 'Table', component: _import('table/index'), meta: { role: ['admin'] }}]
   },
