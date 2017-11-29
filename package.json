@@ -16,7 +16,7 @@
     "js-cookie": "2.2.0",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
-    "vue": "2.5.8",
+    "vue": "2.5.9",
     "vue-router": "3.0.1",
     "vuex": "3.0.1"
   },
@@ -56,7 +56,7 @@
     "url-loader": "0.6.1",
     "vue-loader": "13.5.0",
     "vue-style-loader": "3.0.3",
-    "vue-template-compiler": "2.5.8",
+    "vue-template-compiler": "2.5.9",
     "webpack": "3.8.1",
     "webpack-bundle-analyzer": "2.9.1",
     "webpack-dev-middleware": "1.12.1",
