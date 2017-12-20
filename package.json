@@ -7,8 +7,8 @@
   "scripts": {
     "dev": "cross-env BABEL_ENV=development webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
-    "build": "cross-env BABEL_ENV=production node build/build.js",
-    "build:report": "cross-env BABEL_ENV=production npm_config_report=true node build/build.js",
+    "build": "node build/build.js",
+    "build:report": "npm_config_report=true node build/build.js",
     "lint": "eslint --ext .js,.vue src",
     "test": "npm run lint"
   },
@@ -36,7 +36,7 @@
     "babel-preset-stage-2": "6.24.1",
     "chalk": "2.3.0",
     "copy-webpack-plugin": "4.2.3",
-    "cross-env": "^5.1.1",
+    "cross-env": "5.1.1",
     "css-loader": "0.28.7",
     "eslint": "4.13.1",
     "eslint-friendly-formatter": "3.0.0",
