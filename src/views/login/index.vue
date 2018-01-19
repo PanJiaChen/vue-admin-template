@@ -92,14 +92,14 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-  @import "src/styles/mixin.scss";
   $bg:#2d3a4b;
   $dark_gray:#889aa4;
   $light_gray:#eee;
 
   .login-container {
-    @include relative;
-    height: 100vh;
+    position: fixed;
+    height: 100%;
+    width:100%;
     background-color: $bg;
     input:-webkit-autofill {
       -webkit-box-shadow: 0 0 0px 1000px #293444 inset !important;
