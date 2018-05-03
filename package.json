@@ -52,6 +52,7 @@
     "portfinder": "1.0.13",
     "postcss-import": "11.0.0",
     "postcss-loader": "2.0.9",
+    "postcss-url": "7.3.0",
     "rimraf": "2.6.2",
     "sass-loader": "6.0.6",
     "semver": "5.4.1",
