@@ -46,7 +46,7 @@ npm run build --report
 ## Demo
 ![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
 
-## Element-Ui 使用cdn教程
+### Element-Ui 使用cdn教程
 首先找到 `index.html` ([根目录下](https://github.com/PanJiaChen/vueAdmin-template/blob/element-ui-cdn/index.html))
 
 引入 Element的css和js ，并且引入 vue 。因为 Element-Ui 是依赖 vue 的，所以必须在它之前引入 vue 。
@@ -67,7 +67,7 @@ externals: {
 
 **[具体代码](https://github.com/PanJiaChen/vueAdmin-template/commit/746aff560932704ae821f82f10b8b2a9681d5177)**
 
-**[对应分支](https://github.com/PanJiaChen/vueAdmin-template/tree/element-ui-cdn)
+**[对应分支](https://github.com/PanJiaChen/vueAdmin-template/tree/element-ui-cdn)**
 
 ## License
 [MIT](https://github.com/PanJiaChen/vueAdmin-template/blob/master/LICENSE) license.

@@ -62,7 +62,7 @@ Pictured:
 
 **[Detailed code](https://github.com/PanJiaChen/vueAdmin-template/commit/746aff560932704ae821f82f10b8b2a9681d5177)**
 
-**[Branch](https://github.com/PanJiaChen/vueAdmin-template/tree/element-ui-cdn)
+**[Branch](https://github.com/PanJiaChen/vueAdmin-template/tree/element-ui-cdn)**
 
 
 ## License
