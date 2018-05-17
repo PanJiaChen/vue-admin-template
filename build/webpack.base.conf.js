@@ -7,6 +7,7 @@ const vueLoaderConfig = require('./vue-loader.conf')
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
+const {externals, plugins} = require('./cdn')
 
 const createLintingRule = () => ({
   test: /\.(js|vue)$/,
@@ -20,6 +21,8 @@ const createLintingRule = () => ({
 })
 
 module.exports = {
+  externals,
+  plugins,
   context: path.resolve(__dirname, '../'),
   entry: {
     app: './src/main.js'
