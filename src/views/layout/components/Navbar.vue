@@ -1,5 +1,5 @@
 <template>
-  <el-menu class="navbar" mode="horizontal" router>
+  <el-menu class="navbar" mode="horizontal" router :default-active="$route.matched[0].path">
     <!-- <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger> -->
     <!-- <breadcrumb></breadcrumb> -->
     <el-menu-item v-for="route in topRoutes" :key="route.path" :index="route.path">
