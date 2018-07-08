@@ -4,6 +4,7 @@
     <sidebar class="sidebar-container"></sidebar>
     <div class="main-container">
       <navbar></navbar>
+      <breadcrumb></breadcrumb>
       <app-main></app-main>
     </div>
   </div>
@@ -11,6 +12,7 @@
 
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
+import Breadcrumb from '@/components/Breadcrumb'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -18,7 +20,8 @@ export default {
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
+    Breadcrumb
   },
   mixins: [ResizeMixin],
   computed: {
