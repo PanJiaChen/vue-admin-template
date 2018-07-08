@@ -46,9 +46,9 @@ export default {
         return routes
       }
 
-      const theRoutes = routes.find(r => r.path === this.topRoute.path)
+      const wantedRoutes = routes.find(r => r.path === this.topRoute.path)
 
-      return theRoutes.children || []
+      return (wantedRoutes && wantedRoutes.children) || []
     },
     isCollapse() {
       return !this.sidebar.opened
