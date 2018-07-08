@@ -62,6 +62,8 @@ export const constantRouterMap = [
   {
     path: '/form',
     component: Layout,
+    redirect: '/form/index',
+    meta: { title: 'Form' },
     children: [
       {
         path: 'index',
@@ -75,7 +77,7 @@ export const constantRouterMap = [
   {
     path: '/nested',
     component: Layout,
-    redirect: '/nested/bar/profile',
+    redirect: '/nested/menu1',
     name: 'nested',
     meta: {
       title: 'nested',
