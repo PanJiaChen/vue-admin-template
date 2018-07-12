@@ -10,7 +10,7 @@
     "build": "node build/build.js",
     "build:report": "npm_config_report=true node build/build.js",
     "lint": "eslint --ext .js,.vue src",
-    "test": "npm run lint"
+    "test": "jest"
   },
   "dependencies": {
     "axios": "0.17.1",
@@ -23,10 +23,12 @@
     "vuex": "3.0.1"
   },
   "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.20",
     "autoprefixer": "7.2.3",
     "babel-core": "6.26.0",
     "babel-eslint": "8.0.3",
     "babel-helper-vue-jsx-merge-props": "2.0.3",
+    "babel-jest": "^23.4.0",
     "babel-loader": "7.1.2",
     "babel-plugin-syntax-jsx": "6.18.0",
     "babel-plugin-transform-runtime": "6.23.0",
@@ -45,6 +47,8 @@
     "file-loader": "1.1.5",
     "friendly-errors-webpack-plugin": "1.6.1",
     "html-webpack-plugin": "2.30.1",
+    "jest": "^23.4.0",
+    "jest-serializer-vue": "^2.0.2",
     "node-notifier": "5.1.2",
     "node-sass": "^4.7.2",
     "optimize-css-assets-webpack-plugin": "3.2.0",
@@ -61,6 +65,7 @@
     "uglifyjs-webpack-plugin": "1.1.3",
     "url-loader": "0.6.2",
     "vue-loader": "13.7.2",
+    "vue-jest": "^2.6.0",
     "vue-style-loader": "3.0.3",
     "vue-template-compiler": "2.5.10",
     "webpack": "3.10.0",
