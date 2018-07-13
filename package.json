@@ -10,7 +10,8 @@
     "build": "node build/build.js",
     "build:report": "npm_config_report=true node build/build.js",
     "lint": "eslint --ext .js,.vue src",
-    "test": "jest"
+    "test": "jest",
+    "test:watch": " jest --watch"
   },
   "dependencies": {
     "axios": "0.17.1",
