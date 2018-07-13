@@ -4,24 +4,21 @@ import Hamburger from '@/components/Hamburger/index.vue'
 describe('Hamburger.vue', () => {
   it('toggle click', () => {
     const wrapper = shallowMount(Hamburger)
-
     const mockFn = jest.fn()
-    wrapper.vm.$on('toggleClick', mockFn)
 
-    // 触发按钮的点击事件
+    wrapper.vm.$on('toggleClick', mockFn)
     wrapper.find('.hamburger').trigger('click')
+
     expect(mockFn).toBeCalled()
   })
 
-  // it('渲染正确', () => {
-  //   expect(wrapper.html()).toContain('<span class="count">0</span>')
-  // })
+  it('prop isActive', () => {
+    const wrapper = shallowMount(Hamburger)
 
-  // it('是一个按钮', () => {
-  //   expect(wrapper.contains('button')).toBe(true)
-  // })
+    wrapper.setProps({ isActive: true })
+    expect(wrapper.contains('.is-active')).toBe(true)
 
-  // it('snapshot test', () => {
-  //   expect(wrapper.element).toMatchSnapshot()
-  // })
+    wrapper.setProps({ isActive: false })
+    expect(wrapper.contains('.is-active')).toBe(false)
+  })
 })
