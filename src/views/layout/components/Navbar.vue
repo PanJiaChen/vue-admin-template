@@ -1,11 +1,17 @@
 <template>
   <el-menu class="navbar" mode="horizontal" router :default-active="$route.matched[0].path">
-    <!-- <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger> -->
-    <!-- <breadcrumb></breadcrumb> -->
-    <el-menu-item v-for="route in topRoutes" :key="route.path" :index="route.path">
-      <svg-icon v-if="route.meta&&route.meta.icon" :icon-class="route.meta.icon"></svg-icon>
-      <span v-if="route.meta&&route.meta.title" slot="title">{{route.meta.title}}</span>
-    </el-menu-item>
+    <template v-if="DISTRIBUTED_MENU">
+      <el-menu-item v-for="route in topRoutes" :key="route.path" :index="route.path">
+        <svg-icon v-if="route.meta&&route.meta.icon" :icon-class="route.meta.icon"></svg-icon>
+        <span v-if="route.meta&&route.meta.title" slot="title">{{route.meta.title}}</span>
+      </el-menu-item>
+    </template>
+
+    <template v-else>
+      <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
+      <breadcrumb></breadcrumb>
+    </template>
+
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
         <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
@@ -26,13 +32,18 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import Breadcrumb from '@/components/Breadcrumb'
-// import Hamburger from '@/components/Hamburger'
+import Breadcrumb from '@/components/Breadcrumb'
+import Hamburger from '@/components/Hamburger'
 
 export default {
   components: {
-    // Breadcrumb,
-    // Hamburger
+    Breadcrumb,
+    Hamburger
+  },
+  data() {
+    return {
+      DISTRIBUTED_MENU: true
+    }
   },
   computed: {
     ...mapGetters([
