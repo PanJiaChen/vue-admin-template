@@ -9,7 +9,7 @@
       text-color="#bfcbd9"
       active-text-color="#409EFF"
     >
-      <sidebar-item v-for="route in routes" :key="route.name" :item="route" :base-path="route.path"></sidebar-item>
+      <sidebar-item v-for="route in availableRoutes" :key="route.name" :item="route" :base-path="topPath+route.path"></sidebar-item>
     </el-menu>
   </el-scrollbar>
 </template>
@@ -18,14 +18,36 @@
 import { mapGetters } from 'vuex'
 import SidebarItem from './SidebarItem'
 
+const DISTRIBUTED_MENU = true
+
 export default {
   components: { SidebarItem },
   computed: {
     ...mapGetters([
       'sidebar'
     ]),
-    routes() {
-      return this.$router.options.routes
+    topRoute() {
+      return this.$route.matched[0]
+    },
+    topPath() {
+      return DISTRIBUTED_MENU
+        ? this.topRoute.path + '/'
+        : ''
+    },
+    availableRoutes() {
+      const {
+        options: {
+          routes
+        }
+      } = this.$router
+
+      if (!DISTRIBUTED_MENU) {
+        return routes
+      }
+
+      const wantedRoutes = routes.find(r => r.path === this.topRoute.path)
+
+      return (wantedRoutes && wantedRoutes.children) || []
     },
     isCollapse() {
       return !this.sidebar.opened

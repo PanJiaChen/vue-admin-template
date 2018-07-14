@@ -1,11 +1,20 @@
 <template>
-  <el-menu class="navbar" mode="horizontal">
-    <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
-    <breadcrumb></breadcrumb>
+  <el-menu class="navbar" mode="horizontal" router :default-active="$route.matched[0].path">
+    <template v-if="DISTRIBUTED_MENU">
+      <el-menu-item v-for="route in topRoutes" :key="route.path" :index="route.path">
+        <svg-icon v-if="route.meta&&route.meta.icon" :icon-class="route.meta.icon"></svg-icon>
+        <span v-if="route.meta&&route.meta.title" slot="title">{{route.meta.title}}</span>
+      </el-menu-item>
+    </template>
+
+    <template v-else>
+      <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
+      <breadcrumb></breadcrumb>
+    </template>
+
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
         <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
-        <i class="el-icon-caret-bottom"></i>
       </div>
       <el-dropdown-menu class="user-dropdown" slot="dropdown">
         <router-link class="inlineBlock" to="/">
@@ -31,11 +40,19 @@ export default {
     Breadcrumb,
     Hamburger
   },
+  data() {
+    return {
+      DISTRIBUTED_MENU: true
+    }
+  },
   computed: {
     ...mapGetters([
       'sidebar',
       'avatar'
-    ])
+    ]),
+    topRoutes() {
+      return this.$router.options.routes.filter(r => !r.hidden)
+    }
   },
   methods: {
     toggleSideBar() {
@@ -52,20 +69,17 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .navbar {
-  height: 50px;
-  line-height: 50px;
-  border-radius: 0px !important;
+  height: 56px;
+  line-height: 56px;
+  // border-radius: 0px !important;
+  .el-menu-item {
+    height: 100%;
+  }
   .hamburger-container {
-    line-height: 58px;
-    height: 50px;
+    line-height: 66px;
+    height: 100%;
     float: left;
     padding: 0 10px;
-  }
-  .screenfull {
-    position: absolute;
-    right: 90px;
-    top: 16px;
-    color: red;
   }
   .avatar-container {
     height: 50px;
