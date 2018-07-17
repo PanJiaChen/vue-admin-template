@@ -1,7 +1,7 @@
 import { formatTime } from '@/utils/index.js'
 
 describe('Utils:formatTime', () => {
-  const d = new Date(1531475641067) // "2018-07-13 17:54:01"
+  const d = new Date('2018-07-13 17:54:01') // "2018-07-13 17:54:01"
 
   it('test now', () => {
     expect(formatTime(+new Date() - 1)).toBe('刚刚')
