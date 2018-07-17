@@ -1,5 +1,5 @@
 language: node_js
 node_js: stable
-script: npm run test
+script: npm run test:ci
 notifications:
   email: false
