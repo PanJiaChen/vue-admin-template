@@ -20,8 +20,7 @@
     "nprogress": "0.2.0",
     "vue": "2.5.10",
     "vue-router": "3.0.1",
-    "vuex": "3.0.1",
-    "webpack-cli": "^3.0.8"
+    "vuex": "3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "8.5.0",
@@ -66,6 +65,7 @@
     "vue-template-compiler": "2.5.10",
     "webpack": "4.16.1",
     "webpack-bundle-analyzer": "2.13.1",
+    "webpack-cli": "3.0.8",
     "webpack-dev-server": "3.1.4",
     "webpack-merge": "4.1.3"
   },
