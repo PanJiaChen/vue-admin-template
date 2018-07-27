@@ -48,7 +48,8 @@ const webpackConfig = merge(baseWebpackConfig, {
     }),
     // extract css into its own file
     new MiniCssExtractPlugin({
-      filename: utils.assetsPath('css/[name].[chunkhash].css'),
+      filename: utils.assetsPath('css/[name].[contenthash:8].css'),
+      chunkFilename: utils.assetsPath('css/[name].[contenthash:8].css'),
     }),
     // Compress extracted CSS. We are using this plugin so that possible
     // duplicated CSS from different components can be deduped.
@@ -81,7 +82,7 @@ const webpackConfig = merge(baseWebpackConfig, {
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
       // necessary to consistently work with multiple chunks
-      chunksSortMode: 'dependency'
+      chunksSortMode: 'none'
     }),
     // keep module.id stable when vender modules does not change
     new webpack.HashedModuleIdsPlugin(),
@@ -92,11 +93,8 @@ const webpackConfig = merge(baseWebpackConfig, {
       ignore: ['.*']
     }])
   ],
+  // recordsPath: path.join(__dirname, 'records.json'),
   optimization: {
-    splitChunks: {
-      chunks: 'all',
-      name: 'vendors',
-    },
     runtimeChunk: 'single',
     minimizer: [
       new UglifyJsPlugin({
@@ -130,9 +128,23 @@ if (config.build.productionGzip) {
   )
 }
 
-if (config.build.bundleAnalyzerReport) {
+if (config.build.generateAnalyzerReport || config.build.bundleAnalyzerReport) {
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
+
+  if (config.build.bundleAnalyzerReport) {
+    webpackConfig.plugins.push(new BundleAnalyzerPlugin({
+      analyzerPort: 8080,
+      generateStatsFile: false
+    }))
+  }
+
+  if (config.build.generateAnalyzerReport) {
+    webpackConfig.plugins.push(new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false
+    }))
+  }
 }
 
 module.exports = webpackConfig
+
