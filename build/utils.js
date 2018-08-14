@@ -5,9 +5,9 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const packageConfig = require('../package.json')
 
 exports.assetsPath = function (_path) {
-  const assetsSubDirectory = process.env.NODE_ENV === 'production'
-    ? config.build.assetsSubDirectory
-    : config.dev.assetsSubDirectory
+  const assetsSubDirectory = process.env.NODE_ENV === 'production' ?
+    config.build.assetsSubDirectory :
+    config.dev.assetsSubDirectory
 
   return path.posix.join(assetsSubDirectory, _path)
 }
@@ -30,15 +30,14 @@ exports.cssLoaders = function (options) {
   }
 
   // generate loader string to be used with extract text plugin
-  function generateLoaders (loader, loaderOptions) {
+  function generateLoaders(loader, loaderOptions) {
     const loaders = []
 
     // Extract CSS when that option is specified
     // (which is the case during production build)
     if (options.extract) {
       loaders.push(MiniCssExtractPlugin.loader)
-    }
-    else {
+    } else {
       loaders.push('vue-style-loader')
     }
 
@@ -59,13 +58,14 @@ exports.cssLoaders = function (options) {
 
     return loaders
   }
-
   // https://vue-loader.vuejs.org/en/configurations/extract-css.html
   return {
     css: generateLoaders(),
     postcss: generateLoaders(),
     less: generateLoaders('less'),
-    sass: generateLoaders('sass', { indentedSyntax: true }),
+    sass: generateLoaders('sass', {
+      indentedSyntax: true
+    }),
     scss: generateLoaders('sass'),
     stylus: generateLoaders('stylus'),
     styl: generateLoaders('stylus')

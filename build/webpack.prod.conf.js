@@ -9,7 +9,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 function resolve(dir) {
@@ -17,6 +17,10 @@ function resolve(dir) {
 }
 
 const env = require('../config/prod.env')
+
+// For NamedChunksPlugin
+const seen = new Set();
+const nameLength = 4;
 
 const webpackConfig = merge(baseWebpackConfig, {
   mode: 'production',
@@ -30,42 +34,19 @@ const webpackConfig = merge(baseWebpackConfig, {
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
     path: config.build.assetsRoot,
-    filename: utils.assetsPath('js/[name].[chunkhash].js'),
-    chunkFilename: utils.assetsPath('js/[name].[chunkhash].js') //need test
+    filename: utils.assetsPath('js/[name].[chunkhash:8].js'),
+    chunkFilename: utils.assetsPath('js/[name].[chunkhash:8].js')
   },
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
       'process.env': env
     }),
-    new UglifyJsPlugin({
-      uglifyOptions: {
-        compress: {
-          warnings: false
-        }
-      },
-      sourceMap: config.build.productionSourceMap,
-      parallel: true
-    }),
     // extract css into its own file
     new MiniCssExtractPlugin({
       filename: utils.assetsPath('css/[name].[contenthash:8].css'),
-      chunkFilename: utils.assetsPath('css/[name].[contenthash:8].css'),
+      chunkFilename: utils.assetsPath('css/[name].[contenthash:8].css')
     }),
-    // Compress extracted CSS. We are using this plugin so that possible
-    // duplicated CSS from different components can be deduped.
-    // new OptimizeCSSPlugin({
-    //   cssProcessorOptions: config.build.productionSourceMap ?
-    //     {
-    //       safe: true,
-    //       map: {
-    //         inline: false
-    //       }
-    //     } :
-    //     {
-    //       safe: true
-    //     }
-    // }),
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
@@ -82,12 +63,30 @@ const webpackConfig = merge(baseWebpackConfig, {
         // more options:
         // https://github.com/kangax/html-minifier#options-quick-reference
       },
-      // necessary to consistently work with multiple chunks
-      chunksSortMode: 'none'
+      // default sort mode uses toposort which cannot handle cyclic deps
+      // in certain cases, and in webpack 4, chunk order in HTML doesn't
+      // matter anyway
     }),
     new ScriptExtHtmlWebpackPlugin({
       //`runtime` must same as runtimeChunk name. default is `runtime`
       inline: /runtime\..*\.js$/
+    }),
+    // keep chunk.id stable when chunk has no name
+    new webpack.NamedChunksPlugin(chunk => {
+      if (chunk.name) {
+        return chunk.name;
+      }
+      const modules = Array.from(chunk.modulesIterable);
+      if (modules.length > 1) {
+        const hash = require("hash-sum");
+        const joinedHash = hash(modules.map(m => m.id).join("_"));
+        let len = nameLength;
+        while (seen.has(joinedHash.substr(0, len))) len++;
+        seen.add(joinedHash.substr(0, len));
+        return `chunk-${joinedHash.substr(0, len)}`;
+      } else {
+        return modules[0].id;
+      }
     }),
     // keep module.id stable when vender modules does not change
     new webpack.HashedModuleIdsPlugin(),
@@ -98,19 +97,38 @@ const webpackConfig = merge(baseWebpackConfig, {
       ignore: ['.*']
     }])
   ],
-  // recordsPath: path.join(__dirname, 'records.json'),
   optimization: {
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        libs: {
+          name: 'chunk-libs',
+          test: /[\\/]node_modules[\\/]/,
+          priority: 10,
+          chunks: 'initial' // 只打包初始时依赖的第三方
+        },
+        elementUI: {
+          name: 'chunk-elementUI', // 单独将 elementUI 拆包
+          priority: 20, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
+          test: /[\\/]node_modules[\\/]element-ui[\\/]/
+        }
+      }
+    },
     runtimeChunk: 'single',
     minimizer: [
       new UglifyJsPlugin({
         uglifyOptions: {
-          compress: {
-            warnings: false
+          mangle: {
+            safari10: true
           }
         },
         sourceMap: config.build.productionSourceMap,
+        cache: true,
         parallel: true
       }),
+      // Compress extracted CSS. We are using this plugin so that possible
+      // duplicated CSS from different components can be deduped.
+      new OptimizeCSSAssetsPlugin()
     ],
   }
 })
@@ -146,10 +164,10 @@ if (config.build.generateAnalyzerReport || config.build.bundleAnalyzerReport) {
   if (config.build.generateAnalyzerReport) {
     webpackConfig.plugins.push(new BundleAnalyzerPlugin({
       analyzerMode: 'static',
+      reportFilename: 'bundle-report.html',
       openAnalyzer: false
     }))
   }
 }
 
 module.exports = webpackConfig
-
