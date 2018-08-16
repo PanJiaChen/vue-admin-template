@@ -4,6 +4,8 @@
 
 [线上地址](http://panjiachen.github.io/vue-admin-template)
 
+[国内访问](https://panjiachen.gitee.io/vue-admin-template)
+
 ## Extra
 
 如果你想要根据用户角色来动态生成侧边栏和 router，你可以使用改分支[permission-control](https://github.com/PanJiaChen/vue-admin-template/tree/permission-control)

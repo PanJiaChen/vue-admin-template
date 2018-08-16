@@ -25,8 +25,6 @@ npm run build
 npm run build --report
 ```
 
-https://panjiachen.gitee.io/vue-element-admin-site/zh/guide/
-
 ## Demo
 
 ![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
