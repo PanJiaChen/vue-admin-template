@@ -1,16 +1,16 @@
-# vueAdmin-template
+# vue-admin-template
 
 > A minimal vue admin template with Element UI & axios & iconfont & permission control & lint
 
-**Live demo:** http://panjiachen.github.io/vueAdmin-template
+**Live demo:** http://panjiachen.github.io/vue-admin-template
 
-[中文文档](https://github.com/PanJiaChen/vueAdmin-template/blob/master/README-zh.md)
+[中文文档](https://github.com/PanJiaChen/vue-admin-template /blob/master/README-zh.md)
 
 ## Build Setup
 
 ```bash
 # Clone project
-git clone https://github.com/PanJiaChen/vueAdmin-template.git
+git clone https://github.com/PanJiaChen/vue-admin-template .git
 
 # Install dependencies
 npm install
@@ -33,9 +33,9 @@ https://panjiachen.gitee.io/vue-element-admin-site/zh/guide/
 
 ## Extra
 
-If you want router permission && generate menu by user roles , you can use this branch [permission-control](https://github.com/PanJiaChen/vueAdmin-template/tree/permission-control)
+If you want router permission && generate menu by user roles , you can use this branch [permission-control](https://github.com/PanJiaChen/vue-admin-template /tree/permission-control)
 
-This project is based on `webpack4` development. If you want to use `webpack3` development, please use this branch [webpack3](https://github.com/PanJiaChen/vueAdmin-template/tree/webpack3)
+This project is based on `webpack4` development. If you want to use `webpack3` development, please use this branch [webpack3](https://github.com/PanJiaChen/vue-admin-template /tree/webpack3)
 
 ## Related Project
 
@@ -45,11 +45,11 @@ This project is based on `webpack4` development. If you want to use `webpack3` d
 
 ### Element-Ui using cdn tutorial
 
-First find `index.html`([root directory](https://github.com/PanJiaChen/vueAdmin-template/blob/element-ui-cdn/index.html))
+First find `index.html`([root directory](https://github.com/PanJiaChen/vue-admin-template /blob/element-ui-cdn/index.html))
 
 Import css and js of `Element`, and then import vue. Because `Element` is vue-dependent, vue must be import before it.
 
-Then find [webpack.base.conf.js](https://github.com/PanJiaChen/vueAdmin-template/blob/element-ui-cdn/build/webpack.base.conf.js)
+Then find [webpack.base.conf.js](https://github.com/PanJiaChen/vue-admin-template /blob/element-ui-cdn/build/webpack.base.conf.js)
 Add `externals` to make webpack not package vue and element.
 
 ```
@@ -67,12 +67,12 @@ And you can use `npm run build --report` to see the effect
 Pictured:
 ![demo](https://panjiachen.github.io/images/element-cdn.png)
 
-**[Detailed code](https://github.com/PanJiaChen/vueAdmin-template/commit/746aff560932704ae821f82f10b8b2a9681d5177)**
+**[Detailed code](https://github.com/PanJiaChen/vue-admin-template /commit/746aff560932704ae821f82f10b8b2a9681d5177)**
 
-**[Branch](https://github.com/PanJiaChen/vueAdmin-template/tree/element-ui-cdn)**
+**[Branch](https://github.com/PanJiaChen/vue-admin-template /tree/element-ui-cdn)**
 
 ## License
 
-[MIT](https://github.com/PanJiaChen/vueAdmin-template/blob/master/LICENSE) license.
+[MIT](https://github.com/PanJiaChen/vue-admin-template /blob/master/LICENSE) license.
 
 Copyright (c) 2017-present PanJiaChen
