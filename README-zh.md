@@ -8,6 +8,8 @@
 
 如果你想要根据用户角色来动态生成侧边栏和 router，你可以使用改分支[permission-control](https://github.com/PanJiaChen/vueAdmin-template/tree/permission-control)
 
+本项目基于`webpack4`开发，若还想使用`webpack3`开发，请使用该分支[webpack3](https://github.com/PanJiaChen/vueAdmin-template/tree/webpack3)
+
 ## 相关项目
 
 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
@@ -34,13 +36,13 @@ npm install
 # 建议不要用cnpm  安装有各种诡异的bug 可以通过如下操作解决npm速度慢的问题
 npm install --registry=https://registry.npm.taobao.org
 
-# serve with hot reload at localhost:9528
+# Serve with hot reload at localhost:9528
 npm run dev
 
-# build for production with minification
+# Build for production with minification
 npm run build
 
-# build for production and view the bundle analyzer report
+# Build for production and view the bundle analyzer report
 npm run build --report
 ```
 

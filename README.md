@@ -35,6 +35,8 @@ https://panjiachen.gitee.io/vue-element-admin-site/zh/guide/
 
 If you want router permission && generate menu by user roles , you can use this branch [permission-control](https://github.com/PanJiaChen/vueAdmin-template/tree/permission-control)
 
+This project is based on `webpack4` development. If you want to use `webpack3` development, please use this branch [webpack3](https://github.com/PanJiaChen/vueAdmin-template/tree/webpack3)
+
 ## Related Project
 
 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
