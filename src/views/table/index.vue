@@ -1,13 +1,13 @@
 <template>
   <div class="app-container">
     <el-table
-      :data="list"
       v-loading="listLoading"
+      :data="list"
       element-loading-text="Loading"
       border
       fit
       highlight-current-row>
-      <el-table-column align="center" label='ID' width="95">
+      <el-table-column align="center" label="ID" width="95">
         <template slot-scope="scope">
           {{ scope.$index }}
         </template>
@@ -46,12 +46,6 @@
 import { getList } from '@/api/table'
 
 export default {
-  data() {
-    return {
-      list: null,
-      listLoading: true
-    }
-  },
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -60,6 +54,12 @@ export default {
         deleted: 'danger'
       }
       return statusMap[status]
+    }
+  },
+  data() {
+    return {
+      list: null,
+      listLoading: true
     }
   },
   created() {

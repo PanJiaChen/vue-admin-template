@@ -16,12 +16,12 @@
 
       <template v-for="child in item.children" v-if="!child.hidden">
         <sidebar-item
-          :is-nest="true"
-          class="nest-menu"
           v-if="child.children&&child.children.length>0"
+          :is-nest="true"
           :item="child"
           :key="child.path"
-          :base-path="resolvePath(child.path)"/>
+          :base-path="resolvePath(child.path)"
+          class="nest-menu"/>
 
         <router-link v-else :to="resolvePath(child.path)" :key="child.name">
           <el-menu-item :index="resolvePath(child.path)">
