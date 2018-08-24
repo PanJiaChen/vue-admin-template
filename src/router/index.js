@@ -38,12 +38,6 @@ export const constantRouterMap = [
   }
 ]
 
-export default new Router({
-  // mode: 'history', //后端支持可开
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
-})
-
 export const asyncRouterMap = [
   {
     path: '/example',
@@ -84,7 +78,7 @@ export const asyncRouterMap = [
     path: '/nested',
     component: Layout,
     redirect: '/nested/menu1',
-    name: 'nested',
+    name: 'Nested',
     meta: {
       title: 'nested',
       icon: 'nested'
@@ -93,31 +87,31 @@ export const asyncRouterMap = [
       {
         path: 'menu1',
         component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'menu1',
+        name: 'Menu1',
         meta: { title: 'menu1' },
         children: [
           {
             path: 'menu1-1',
             component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'menu1-1',
+            name: 'Menu1-1',
             meta: { title: 'menu1-1' }
           },
           {
             path: 'menu1-2',
             component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'menu1-2',
+            name: 'Menu1-2',
             meta: { title: 'menu1-2' },
             children: [
               {
                 path: 'menu1-2-1',
                 component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'menu1-2-1',
+                name: 'Menu1-2-1',
                 meta: { title: 'menu1-2-1' }
               },
               {
                 path: 'menu1-2-2',
                 component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'menu1-2-2',
+                name: 'Menu1-2-2',
                 meta: { title: 'menu1-2-2' }
               }
             ]
@@ -125,7 +119,7 @@ export const asyncRouterMap = [
           {
             path: 'menu1-3',
             component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'menu1-3',
+            name: 'Menu1-3',
             meta: { title: 'menu1-3' }
           }
         ]
@@ -138,5 +132,22 @@ export const asyncRouterMap = [
     ]
   },
 
+  {
+    path: 'external-link',
+    component: Layout,
+    children: [
+      {
+        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
+        meta: { title: 'externalLink', icon: 'link' }
+      }
+    ]
+  },
+
   { path: '*', redirect: '/404', hidden: true }
 ]
+
+export default new Router({
+  // mode: 'history', //后端支持可开
+  scrollBehavior: () => ({ y: 0 }),
+  routes: constantRouterMap
+})
