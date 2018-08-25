@@ -1,5 +1,9 @@
 language: node_js
 node_js: stable
+install:
+  - npm install -g codecov
 script: npm run test:ci
+after_success:
+  - cat ./test/coverage/lcov.info | ./node_modules/.bin/codecov
 notifications:
   email: false
