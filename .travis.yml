@@ -5,6 +5,6 @@ install:
   - npm install -g codecov
 script: npm run test:ci
 after_success:
-  - codecov --file test/coverage/lcov.info --disable search
+  - codecov
 notifications:
   email: false
