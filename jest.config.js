@@ -12,9 +12,9 @@ module.exports = {
   testMatch: [
     '<rootDir>/(tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'
   ],
-  // collectCoverageFrom: ['src/utils/**/*.{js,vue}'],
+  collectCoverageFrom: ['src/utils/**/*.{js,vue}', '!src/utils/auth.js', '!src/utils/request.js', 'src/components/**/*.{js,vue}'],
   'coverageDirectory': './tests/coverage',
-  // 'collectCoverage': true,
+  'collectCoverage': true,
   'coverageReporters': [
     'lcov',
     'text-summary'

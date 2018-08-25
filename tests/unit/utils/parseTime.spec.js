@@ -23,4 +23,12 @@ describe('Utils:parseTime', () => {
   it('get the day of the week', () => {
     expect(parseTime(d, '{a}')).toBe('五') // 星期五
   })
+
+  it('get the day of the week', () => {
+    expect(parseTime(+d + 1000 * 60 * 60 * 24 * 2, '{a}')).toBe('日') // 星期日
+  })
+
+  it('empty argument', () => {
+    expect(parseTime()).toBeNull()
+  })
 })
