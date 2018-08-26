@@ -10,10 +10,10 @@ module.exports = {
   },
   snapshotSerializers: ['jest-serializer-vue'],
   testMatch: [
-    '<rootDir>/(tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'
+    '<rootDir>/(test/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx))'
   ],
   collectCoverageFrom: ['src/utils/**/*.{js,vue}', '!src/utils/auth.js', '!src/utils/request.js', 'src/components/**/*.{js,vue}'],
-  'coverageDirectory': './tests/coverage',
+  'coverageDirectory': './test/coverage',
   'collectCoverage': true,
   'coverageReporters': [
     'lcov',
