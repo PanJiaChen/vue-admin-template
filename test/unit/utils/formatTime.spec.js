@@ -12,7 +12,7 @@ describe('Utils:formatTime', () => {
   })
 
   it('less two minute', () => {
-    expect(formatTime(+new Date() - 60 * 2 * 1000)).toBe('2分钟前')
+    expect(formatTime(+new Date() - 60 * 2 * 1000 + 5)).toBe('2分钟前')
   })
 
   it('less two hour', () => {
