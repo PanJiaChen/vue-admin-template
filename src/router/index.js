@@ -35,8 +35,10 @@ export const constantRouterMap = [
       path: 'dashboard',
       component: () => import('@/views/dashboard/index')
     }]
-  },
+  }
+]
 
+export const asyncRouterMap = [
   {
     path: '/example',
     component: Layout,
@@ -54,7 +56,7 @@ export const constantRouterMap = [
         path: 'tree',
         name: 'Tree',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        meta: { title: 'Tree', icon: 'tree', roles: ['admin'] }
       }
     ]
   },
