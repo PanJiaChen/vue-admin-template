@@ -28,7 +28,11 @@
           :key="child.path"
           :base-path="resolvePath(child.path)"
           class="nest-menu"/>
-
+        <a v-if="isExternalLink(child.path)" :href="child.path" target="blank" :key="child.path">
+          <el-menu-item :index="resolvePath(child.path)" :class="{'submenu-title-noDropdown':!isNest}">
+            <item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" />
+          </el-menu-item>
+        </a>
         <router-link v-else :to="resolvePath(child.path)" :key="child.name">
           <el-menu-item :index="resolvePath(child.path)">
             <item v-if="child.meta" :icon="child.meta.icon" :title="child.meta.title" />
