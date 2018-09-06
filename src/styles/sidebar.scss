@@ -18,7 +18,7 @@
     left: 0;
     z-index: 1001;
     overflow: hidden;
-    //reset element-ui css
+    // reset element-ui css
     .horizontal-collapse-transition {
       transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
     }
@@ -94,7 +94,7 @@
     min-width: 180px !important;
   }
 
-  //适配移动端
+  // 适配移动端
   .mobile {
     .main-container {
       margin-left: 0px;

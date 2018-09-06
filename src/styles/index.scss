@@ -1,8 +1,13 @@
+/* icon font path, required */
+$--font-path: '~element-ui/lib/theme-chalk/fonts';
+@import "~element-ui/packages/theme-chalk/src/index";
+
 @import './variables.scss';
 @import './mixin.scss';
 @import './transition.scss';
 @import './element-ui.scss';
 @import './sidebar.scss';
+@import './svgicon.scss';
 
 body {
   height: 100%;
@@ -68,7 +73,7 @@ a:hover {
   }
 }
 
-//main-container全局样式
+// main-container全局样式
 .app-main{
   min-height: 100%
 }

@@ -9,30 +9,30 @@
   </el-breadcrumb>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      levelList: null
-    }
-  },
-  watch: {
-    $route() {
-      this.getBreadcrumb()
-    }
-  },
+<script lang="ts">
+import { Component, Vue, Watch } from 'vue-property-decorator';
+import { RouteRecord } from 'vue-router';
+
+@Component
+export default class Breadcrumb extends Vue {
+  levelList: RouteRecord[] = [];
+
   created() {
-    this.getBreadcrumb()
-  },
-  methods: {
-    getBreadcrumb() {
-      let matched = this.$route.matched.filter(item => item.name)
-      const first = matched[0]
-      if (first && first.name !== 'dashboard') {
-        matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
-      }
-      this.levelList = matched
+    this.getBreadcrumb();
+  }
+
+  @Watch('$route')
+  onRouteChange() {
+    this.getBreadcrumb();
+  }
+
+  getBreadcrumb() {
+    let matched = this.$route.matched.filter((item) => item.name);
+    const first = matched[0];
+    if (first && first.name !== 'dashboard') {
+      matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }} as RouteRecord].concat(matched);
     }
+    this.levelList = matched;
   }
 }
 </script>

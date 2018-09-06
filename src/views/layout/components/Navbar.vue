@@ -4,7 +4,7 @@
     <breadcrumb />
     <el-dropdown class="avatar-container" trigger="click">
       <div class="avatar-wrapper">
-        <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+        <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
         <i class="el-icon-caret-bottom"/>
       </div>
       <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -21,31 +21,36 @@
   </el-menu>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
+<script lang="ts">
+import Breadcrumb from '@/components/Breadcrumb/index.vue';
+import Hamburger from '@/components/Hamburger/index.vue';
+import { Component, Vue } from 'vue-property-decorator';
+import { AppModule } from '@/store/modules/app';
+import { UserModule } from '@/store/modules/user';
 
-export default {
+@Component({
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
   },
-  computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar'
-    ])
-  },
-  methods: {
-    toggleSideBar() {
-      this.$store.dispatch('ToggleSideBar')
-    },
-    logout() {
-      this.$store.dispatch('LogOut').then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
-      })
-    }
+})
+export default class Navbar extends Vue {
+  get sidebar() {
+    return AppModule.sidebar;
+  }
+
+  get avatar() {
+    return UserModule.avatar;
+  }
+
+  toggleSideBar() {
+    AppModule.ToggleSideBar(false);
+  }
+
+  logout() {
+    UserModule.LogOut().then(() => {
+      location.reload(); // 为了重新实例化vue-router对象 避免bug
+    });
   }
 }
 </script>
