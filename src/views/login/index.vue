@@ -1,16 +1,16 @@
 <template>
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-      <h3 class="title">vue-admin-template</h3>
+      <h3 class="title">vue-typescript-admin-template</h3>
       <el-form-item prop="username">
         <span class="svg-container svg-container_login">
-          <svg-icon icon-class="user" />
+          <svg-icon name="user" />
         </span>
         <el-input v-model="loginForm.username" name="username" type="text" auto-complete="on" placeholder="username" />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <svg-icon name="password" />
         </span>
         <el-input
           :type="pwdType"
@@ -20,7 +20,7 @@
           placeholder="password"
           @keyup.enter.native="handleLogin" />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon icon-class="eye" />
+          <svg-icon name="eye" />
         </span>
       </el-form-item>
       <el-form-item>
@@ -36,63 +36,63 @@
   </div>
 </template>
 
-<script>
-import { isvalidUsername } from '@/utils/validate'
+<script lang="ts">
+import { isValidUsername } from '@/utils/validate';
+import { Component, Vue, Watch } from 'vue-property-decorator';
+import { UserModule } from '@/store/modules/user';
+import { Form as ElForm } from 'element-ui';
 
-export default {
-  name: 'Login',
-  data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
+const validateUsername = (rule: any, value: string, callback: any) => {
+  if (!isValidUsername(value)) {
+    callback(new Error('请输入正确的用户名'));
+  } else {
+    callback();
+  }
+};
+const validatePass = (rule: any, value: string, callback: any) => {
+  if (value.length < 5) {
+    callback(new Error('密码不能小于5位'));
+  } else {
+    callback();
+  }
+};
+
+@Component
+export default class Login extends Vue {
+  loginForm = {
+    username: 'admin',
+    password: 'admin',
+  };
+  loginRules = {
+    username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+    password: [{ required: true, trigger: 'blur', validator: validatePass }],
+  };
+  loading = false;
+  pwdType = 'password';
+
+  showPwd() {
+    if (this.pwdType === 'password') {
+      this.pwdType = '';
+    } else {
+      this.pwdType = 'password';
+    }
+  }
+
+  handleLogin() {
+    (this.$refs.loginForm as ElForm).validate((valid: boolean) => {
+      if (valid) {
+        this.loading = true;
+        UserModule.Login(this.loginForm).then(() => {
+          this.loading = false;
+          this.$router.push({ path: '/' });
+        }).catch(() => {
+          this.loading = false;
+        });
       } else {
-        callback()
+        console.error('Login: error submit!!');
+        return false;
       }
-    }
-    const validatePass = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('密码不能小于5位'))
-      } else {
-        callback()
-      }
-    }
-    return {
-      loginForm: {
-        username: 'admin',
-        password: 'admin'
-      },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePass }]
-      },
-      loading: false,
-      pwdType: 'password'
-    }
-  },
-  methods: {
-    showPwd() {
-      if (this.pwdType === 'password') {
-        this.pwdType = ''
-      } else {
-        this.pwdType = 'password'
-      }
-    },
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('Login', this.loginForm).then(() => {
-            this.loading = false
-            this.$router.push({ path: '/' })
-          }).catch(() => {
-            this.loading = false
-          })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
-    }
+    });
   }
 }
 </script>
@@ -116,6 +116,7 @@ $light_gray:#eee;
       color: $light_gray;
       height: 47px;
       &:-webkit-autofill {
+        box-shadow: 0 0 0px 1000px $bg inset !important;
         -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
         -webkit-text-fill-color: #fff !important;
       }
@@ -128,7 +129,6 @@ $light_gray:#eee;
     color: #454545;
   }
 }
-
 </style>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
@@ -145,6 +145,7 @@ $light_gray:#eee;
     left: 0;
     right: 0;
     width: 520px;
+    max-width: 100%;
     padding: 35px 35px 15px 35px;
     margin: 120px auto;
   }

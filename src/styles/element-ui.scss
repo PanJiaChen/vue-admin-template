@@ -1,4 +1,4 @@
- //to reset element-ui default css
+ // to reset element-ui default css
 .el-upload {
   input[type="file"] {
     display: none !important;
@@ -9,7 +9,7 @@
   display: none;
 }
 
-//暂时性解决diolag 问题 https://github.com/ElemeFE/element/issues/2461
+// 暂时性解决diolag 问题 https://github.com/ElemeFE/element/issues/2461
 .el-dialog {
   transform: none;
   left: 0;
@@ -17,7 +17,7 @@
   margin: 0 auto;
 }
 
-//element ui upload
+// element ui upload
 .upload-container {
   .el-upload {
     width: 100%;

@@ -26,33 +26,27 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'Hamburger',
-  props: {
-    isActive: {
-      type: Boolean,
-      default: false
-    },
-    toggleClick: {
-      type: Function,
-      default: null
-    }
-  }
+<script lang="ts">
+import { Component, Vue, Prop } from 'vue-property-decorator';
+
+@Component
+export default class Hamburger extends Vue {
+  @Prop({ default: false }) isActive!: boolean;
+  @Prop({ default: null }) toggleClick!: () => void;
 }
 </script>
 
 <style scoped>
 .hamburger {
-	display: inline-block;
-	cursor: pointer;
-	width: 20px;
-	height: 20px;
-	transform: rotate(90deg);
-	transition: .38s;
-	transform-origin: 50% 50%;
+  display: inline-block;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  transform: rotate(90deg);
+  transition: .38s;
+  transform-origin: 50% 50%;
 }
 .hamburger.is-active {
-	transform: rotate(0deg);
+  transform: rotate(0deg);
 }
 </style>

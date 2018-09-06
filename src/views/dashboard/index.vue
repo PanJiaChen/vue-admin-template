@@ -5,16 +5,18 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import { UserModule } from '@/store/modules/user';
 
-export default {
-  name: 'Dashboard',
-  computed: {
-    ...mapGetters([
-      'name',
-      'roles'
-    ])
+@Component
+export default class Dashboard extends Vue {
+  get name() {
+    return UserModule.name;
+  }
+
+  get roles() {
+    return UserModule.roles;
   }
 }
 </script>

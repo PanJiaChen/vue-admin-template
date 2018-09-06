@@ -1,14 +1,35 @@
 # http://editorconfig.org
+
+# top-most EditorConfig file
 root = true
 
+# Unix-style newlines with a newline ending every file
 [*]
 charset = utf-8
-indent_style = space
-indent_size = 2
 end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
 
+# Indentation override for js(x), ts(x) and vue files
+[*.{js,jsx,ts,tsx,vue}]
+indent_size = 2
+indent_style = space
+
+# Indentation override for css related files
+[*.{css,styl,scss,less,sass}]
+indent_size = 2
+indent_style = space
+
+# Indentation override for html files
+[*.html]
+indent_size = 2
+indent_style = space
+
+# Trailing space override for markdown file
 [*.md]
-insert_final_newline = false
 trim_trailing_whitespace = false
+
+# Indentation override for config files
+[*.{json,yml}]
+indent_size = 2
+indent_style = space
