@@ -12,11 +12,15 @@
 
 本项目基于`webpack4`开发，若还想使用`webpack3`开发，请使用该分支[webpack3](https://github.com/PanJiaChen/vue-admin-template/tree/webpack3)
 
+如果你想使用基于 vue + typescript 的管理后台, 可以看看这个项目: [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template) (鸣谢: [@Armour](https://github.com/Armour))
+
 ## 相关项目
 
 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
 
 [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
+
+[vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template)
 
 写了一个系列的教程配套文章，如何从零构建后一个完整的后台项目:
 
