@@ -10,7 +10,8 @@
     "build": "node build/build.js",
     "build:report": "npm_config_report=true npm run build",
     "lint": "eslint --ext .js,.vue src",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
   "dependencies": {
     "axios": "0.18.0",
@@ -59,6 +60,7 @@
     "semver": "5.5.0",
     "shelljs": "0.8.2",
     "svg-sprite-loader": "3.8.0",
+    "svgo": "1.0.5",
     "uglifyjs-webpack-plugin": "1.2.7",
     "url-loader": "1.0.1",
     "vue-loader": "15.3.0",
