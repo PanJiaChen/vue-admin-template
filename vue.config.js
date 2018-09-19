@@ -1,4 +1,5 @@
 var path = require('path')
+
 function resolve(dir) {
   return path.join(__dirname, './', dir)
 }
@@ -35,5 +36,11 @@ module.exports = {
       .options({
         symbolId: 'icon-[name]'
       })
+      .end()
+
+    config
+      .when(process.env.NODE_ENV === 'development',
+        config => config.devtool('cheap-source-map')
+      )
   }
 }
