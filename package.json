@@ -5,11 +5,10 @@
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
   "author": "Pan <panfree23@gmail.com>",
   "scripts": {
-    "dev": "vue-cli-service serve --mode development",
-    "start": "npm run dev",
-    "build": "node build/build.js",
-    "build:report": "npm_config_report=true npm run build",
-    "lint": "eslint --ext .js,.vue src",
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "build:report": "vue-cli-service build --report",
+    "lint": "vue-cli-service lint --ext .js,.vue src",
     "test": "npm run lint",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },
@@ -25,6 +24,7 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "3.0.3",
+    "@vue/cli-plugin-eslint": "3.0.3",
     "@vue/cli-service": "3.0.3",
     "node-sass": "^4.9.3",
     "sass-loader": "7.1.0",
