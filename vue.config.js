@@ -42,5 +42,28 @@ module.exports = {
       .when(process.env.NODE_ENV === 'development',
         config => config.devtool('cheap-source-map')
       )
+
+    config
+      .when(process.env.NODE_ENV !== 'development',
+        config => {
+          config.optimization.splitChunks({
+            chunks: 'all',
+            cacheGroups: {
+              libs: {
+                name: 'chunk-libs',
+                test: /[\\/]node_modules[\\/]/,
+                priority: 10,
+                chunks: 'initial' // 只打包初始时依赖的第三方
+              },
+              elementUI: {
+                name: 'chunk-elementUI', // 单独将 elementUI 拆包
+                priority: 20, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
+                test: /[\\/]node_modules[\\/]element-ui[\\/]/
+              }
+            }
+          })
+          config.optimization.runtimeChunk('single')
+        }
+      )
   }
 }
