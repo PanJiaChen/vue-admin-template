@@ -23,9 +23,9 @@
     "vuex": "3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "3.0.3",
-    "@vue/cli-plugin-eslint": "3.0.3",
-    "@vue/cli-service": "3.0.3",
+    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-eslint": "3.0.5",
+    "@vue/cli-service": "3.0.5",
     "node-sass": "^4.9.3",
     "path-to-regexp": "2.4.0",
     "sass-loader": "7.1.0",
@@ -35,7 +35,7 @@
     "vue-template-compiler": "2.5.17"
   },
   "engines": {
-    "node": ">= 6.0.0",
+    "node": ">= 8.9",
     "npm": ">= 3.0.0"
   },
   "browserslist": [
