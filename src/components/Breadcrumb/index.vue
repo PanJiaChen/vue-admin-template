@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import pathToRegexp from 'path-to-regexp'
+
 export default {
   data() {
     return {
@@ -26,7 +28,15 @@ export default {
   },
   methods: {
     getBreadcrumb() {
-      let matched = this.$route.matched.filter(item => item.name)
+      const { params } = this.$route
+      let matched = this.$route.matched.filter(item => {
+        if (item.name) {
+          // To solve this problem https://github.com/PanJiaChen/vue-element-admin/issues/561
+          var toPath = pathToRegexp.compile(item.path)
+          item.path = toPath(params)
+          return true
+        }
+      })
       const first = matched[0]
       if (first && first.name !== 'dashboard') {
         matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
