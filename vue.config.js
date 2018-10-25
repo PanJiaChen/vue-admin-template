@@ -1,10 +1,20 @@
-var path = require('path')
+// Explanation of each configuration item You can find it in https://cli.vuejs.org/config/
+
+const path = require('path')
 
 function resolve(dir) {
   return path.join(__dirname, './', dir)
 }
 
 module.exports = {
+  /**
+   * You can set by yourself according to actual condition
+   * You will need to set this if you plan to deploy your site under a sub path,
+   * for example GitHub pages. If you plan to deploy your site to https://foo.github.io/bar/,
+   * then assetsPublicPath should be set to "/bar/".
+   * In most cases please use '/' !!!
+   * Detail https://cli.vuejs.org/config/#baseurl
+   */
   baseUrl: '/',
   outputDir: 'dist',
   assetsDir: 'static',
@@ -18,6 +28,13 @@ module.exports = {
       errors: true
     }
     // proxy: {}
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@': resolve('src')
+      }
+    }
   },
   chainWebpack: config => {
     config.plugins.delete('preload')
@@ -46,7 +63,14 @@ module.exports = {
     config
       .when(process.env.NODE_ENV !== 'development',
         config => {
-          config.optimization.splitChunks({
+          config
+          .plugin('ScriptExtHtmlWebpackPlugin')
+          .use('script-ext-html-webpack-plugin', [{
+              // `runtime` must same as runtimeChunk name. default is `runtime`
+            inline: /runtime\..*\.js$/
+          }])
+          config
+          .optimization.splitChunks({
             chunks: 'all',
             cacheGroups: {
               libs: {
