@@ -8,7 +8,7 @@
     "dev": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "build:report": "vue-cli-service build --report",
-    "lint": "vue-cli-service lint --ext .js,.vue src",
+    "lint": "vue-cli-service lint",
     "test": "npm run lint",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
   },

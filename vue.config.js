@@ -31,7 +31,7 @@ module.exports = {
   },
 
   configureWebpack: {
-     // We provide the app's title in Webpack's name field, so that
+    // We provide the app's title in Webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: 'vue-admin-template',
     resolve: {
@@ -68,28 +68,28 @@ module.exports = {
       .when(process.env.NODE_ENV !== 'development',
         config => {
           config
-          .plugin('ScriptExtHtmlWebpackPlugin')
-          .use('script-ext-html-webpack-plugin', [{
+            .plugin('ScriptExtHtmlWebpackPlugin')
+            .use('script-ext-html-webpack-plugin', [{
               // `runtime` must same as runtimeChunk name. default is `runtime`
-            inline: /runtime\..*\.js$/
-          }])
+              inline: /runtime\..*\.js$/
+            }])
           config
-          .optimization.splitChunks({
-            chunks: 'all',
-            cacheGroups: {
-              libs: {
-                name: 'chunk-libs',
-                test: /[\\/]node_modules[\\/]/,
-                priority: 10,
-                chunks: 'initial' // 只打包初始时依赖的第三方
-              },
-              elementUI: {
-                name: 'chunk-elementUI', // 单独将 elementUI 拆包
-                priority: 20, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
-                test: /[\\/]node_modules[\\/]element-ui[\\/]/
+            .optimization.splitChunks({
+              chunks: 'all',
+              cacheGroups: {
+                libs: {
+                  name: 'chunk-libs',
+                  test: /[\\/]node_modules[\\/]/,
+                  priority: 10,
+                  chunks: 'initial' // 只打包初始时依赖的第三方
+                },
+                elementUI: {
+                  name: 'chunk-elementUI', // 单独将 elementUI 拆包
+                  priority: 20, // 权重要大于 libs 和 app 不然会被打包进 libs 或者 app
+                  test: /[\\/]node_modules[\\/]element-ui[\\/]/
+                }
               }
-            }
-          })
+            })
           config.optimization.runtimeChunk('single')
         }
       )
