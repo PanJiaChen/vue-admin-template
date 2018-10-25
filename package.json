@@ -6,8 +6,9 @@
   "author": "Pan <panfree23@gmail.com>",
   "scripts": {
     "dev": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "build:report": "vue-cli-service build --report",
+    "build": "node build/index.js",
+    "build:report": "node build/index.js --report",
+    "build:preview": "node build/index.js --preview",
     "lint": "vue-cli-service lint",
     "test": "npm run lint",
     "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
@@ -18,6 +19,7 @@
     "js-cookie": "2.2.0",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
+    "serve": "10.0.2",
     "vue": "2.5.17",
     "vue-router": "3.0.1",
     "vuex": "3.0.1"
@@ -26,10 +28,14 @@
     "@vue/cli-plugin-babel": "^3.0.5",
     "@vue/cli-plugin-eslint": "3.0.5",
     "@vue/cli-service": "3.0.5",
+    "chalk": "2.4.1",
+    "connect": "3.6.6",
     "node-sass": "^4.9.3",
     "path-to-regexp": "2.4.0",
+    "runjs": "4.3.2",
     "sass-loader": "7.1.0",
     "script-ext-html-webpack-plugin": "2.0.1",
+    "server-static": "^2.0.5",
     "svg-sprite-loader": "3.8.0",
     "svgo": "1.0.5",
     "vue-template-compiler": "2.5.17"
