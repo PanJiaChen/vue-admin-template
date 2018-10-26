@@ -25,7 +25,7 @@
     "vuex": "3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.5",
+    "@vue/cli-plugin-babel": "3.0.5",
     "@vue/cli-plugin-eslint": "3.0.5",
     "@vue/cli-service": "3.0.5",
     "chalk": "2.4.1",
@@ -35,7 +35,7 @@
     "runjs": "4.3.2",
     "sass-loader": "7.1.0",
     "script-ext-html-webpack-plugin": "2.0.1",
-    "server-static": "^2.0.5",
+    "server-static": "2.0.5",
     "svg-sprite-loader": "3.8.0",
     "svgo": "1.0.5",
     "vue-template-compiler": "2.5.17"
