@@ -1,17 +1,17 @@
 {
   "name": "vue-admin-template",
   "version": "3.8.0",
-  "license": "MIT",
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
   "author": "Pan <panfree23@gmail.com>",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build": "node build/index.js",
-    "build:report": "node build/index.js --report",
     "build:preview": "node build/index.js --preview",
+    "build:report": "node build/index.js --report",
+    "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml",
     "lint": "vue-cli-service lint",
-    "test": "npm run lint",
-    "svgo": "svgo -f src/icons/svg --config=src/icons/svgo.yml"
+    "test:unit": "vue-cli-service test:unit",
+    "test": "npm run lint && npm run test:unit"
   },
   "dependencies": {
     "axios": "0.18.0",
@@ -27,7 +27,11 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "3.0.5",
     "@vue/cli-plugin-eslint": "3.0.5",
+    "@vue/cli-plugin-unit-jest": "3.0.5",
     "@vue/cli-service": "3.0.5",
+    "@vue/test-utils": "1.0.0-beta.20",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "23.6.0",
     "chalk": "2.4.1",
     "connect": "3.6.6",
     "node-sass": "^4.9.3",
@@ -40,13 +44,14 @@
     "svgo": "1.0.5",
     "vue-template-compiler": "2.5.17"
   },
-  "engines": {
-    "node": ">= 8.9",
-    "npm": ">= 3.0.0"
-  },
   "browserslist": [
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "engines": {
+    "node": ">= 8.9",
+    "npm": ">= 3.0.0"
+  },
+  "license": "MIT"
 }
