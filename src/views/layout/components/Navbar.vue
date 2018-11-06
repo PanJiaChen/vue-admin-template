@@ -76,6 +76,7 @@ export default {
       cursor: pointer;
       margin-top: 5px;
       position: relative;
+      line-height: initial;
       .user-avatar {
         width: 40px;
         height: 40px;
