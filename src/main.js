@@ -12,6 +12,9 @@ import App from './App'
 import router from './router'
 import store from './store'
 
+import { sync } from 'vuex-router-sync' // Route state merge
+sync(store, router)
+
 import '@/icons' // icon
 import '@/permission' // permission control
 
