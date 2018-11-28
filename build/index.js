@@ -4,11 +4,10 @@ const config = require('../vue.config.js')
 const rawArgv = process.argv.slice(2)
 const args = rawArgv.join(' ')
 
-if (process.env.npm_config_preview||rawArgv.includes('--preview')) {
+if (process.env.npm_config_preview || rawArgv.includes('--preview')) {
   run(`vue-cli-service build ${args}`)
 
   const port = 9526
-  const host = 'http://localhost:' + port
   const basePath = config.baseUrl
 
   var connect = require('connect')
@@ -22,7 +21,7 @@ if (process.env.npm_config_preview||rawArgv.includes('--preview')) {
     })
   )
 
-  app.listen(port, function () {
+  app.listen(port, function() {
     console.log(
       chalk.green(`> Listening at  http://localhost:${port}${basePath}`)
     )
