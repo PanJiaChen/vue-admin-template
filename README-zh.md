@@ -8,7 +8,7 @@
 
 ## Extra
 
-如果你想要根据用户角色来动态生成侧边栏和 router，你可以使用改分支[permission-control](https://github.com/PanJiaChen/vue-admin-template/tree/permission-control)
+如果你想要根据用户角色来动态生成侧边栏和 router，你可以使用该分支[permission-control](https://github.com/PanJiaChen/vue-admin-template/tree/permission-control)
 
 本项目基于`webpack4`开发，若还想使用`webpack3`开发，请使用该分支[webpack3](https://github.com/PanJiaChen/vue-admin-template/tree/webpack3)
 
