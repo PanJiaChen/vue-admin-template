@@ -4,10 +4,10 @@
       :show-timeout="200"
       :default-active="$route.path"
       :collapse="isCollapse"
+      :background-color="variables.menuBg"
+      :text-color="variables.menuText"
+      :active-text-color="variables.menuActiveText"
       mode="vertical"
-      background-color="#304156"
-      text-color="#bfcbd9"
-      active-text-color="#409EFF"
     >
       <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path"/>
     </el-menu>
@@ -16,6 +16,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import variables from '@/styles/variables.scss'
 import SidebarItem from './SidebarItem'
 
 export default {
@@ -26,6 +27,9 @@ export default {
     ]),
     routes() {
       return this.$router.options.routes
+    },
+    variables() {
+      return variables
     },
     isCollapse() {
       return !this.sidebar.opened
