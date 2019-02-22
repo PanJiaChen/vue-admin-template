@@ -1,6 +1,6 @@
 {
   "name": "vue-admin-template",
-  "version": "3.8.0",
+  "version": "3.9.0",
   "license": "MIT",
   "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
   "author": "Pan <panfree23@gmail.com>",
