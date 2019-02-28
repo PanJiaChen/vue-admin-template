@@ -3,17 +3,18 @@ export default {
   name: 'MenuItem',
   functional: true,
   props: {
-    icon: {
-      type: String,
-      default: ''
-    },
-    title: {
-      type: String,
-      default: ''
+    meta: {
+      type: Object,
+      default: () => {
+        return {
+          title: '',
+          icon: ''
+        }
+      }
     }
   },
   render(h, context) {
-    const { icon, title } = context.props
+    const { icon, title } = context.props.meta
     const vnodes = []
 
     if (icon) {
