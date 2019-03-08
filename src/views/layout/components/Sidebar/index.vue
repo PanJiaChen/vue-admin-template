@@ -1,5 +1,5 @@
 <template>
-  <el-scrollbar wrap-class="scrollbar-wrapper">
+  <el-scrollbar ref="scrollbar" wrap-class="scrollbar-wrapper">
     <el-menu
       :show-timeout="200"
       :default-active="$route.path"
@@ -8,6 +8,8 @@
       :text-color="variables.menuText"
       :active-text-color="variables.menuActiveText"
       mode="vertical"
+      @close="change"
+      @open="change"
     >
       <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path"/>
     </el-menu>
@@ -33,6 +35,13 @@ export default {
     },
     isCollapse() {
       return !this.sidebar.opened
+    }
+  },
+  methods: {
+    change() {
+      setTimeout(() => {
+        this.$refs.scrollbar.update()
+      }, 500) // update after animation
     }
   }
 }
