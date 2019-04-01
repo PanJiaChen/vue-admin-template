@@ -13,12 +13,13 @@
           <svg-icon icon-class="password" />
         </span>
         <el-input
-          :type="pwdType"
           v-model="loginForm.password"
+          :type="pwdType"
           name="password"
           auto-complete="on"
           placeholder="password"
-          @keyup.enter.native="handleLogin" />
+          @keyup.enter.native="handleLogin"
+        />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="pwdType === 'password' ? 'eye' : 'eye-open'" />
         </span>

@@ -5,26 +5,30 @@ const rawArgv = process.argv.slice(2)
 const args = rawArgv.join(' ')
 
 if (process.env.npm_config_preview || rawArgv.includes('--preview')) {
+  const report = rawArgv.includes('--report')
+
   run(`vue-cli-service build ${args}`)
 
   const port = 9526
-  const basePath = config.baseUrl
+  const publicPath = config.publicPath
 
   var connect = require('connect')
   var serveStatic = require('serve-static')
   const app = connect()
 
   app.use(
-    basePath,
+    publicPath,
     serveStatic('./dist', {
       index: ['index.html', '/']
     })
   )
 
-  app.listen(port, function() {
-    console.log(
-      chalk.green(`> Listening at  http://localhost:${port}${basePath}`)
-    )
+  app.listen(port, function () {
+    console.log(chalk.green(`> Preview at  http://localhost:${port}${publicPath}`))
+    if (report) {
+      console.log(chalk.green(`> Report at  http://localhost:${port}${publicPath}/report.html`))
+    }
+
   })
 } else {
   run(`vue-cli-service build ${args}`)
