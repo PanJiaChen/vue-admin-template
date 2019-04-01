@@ -1,9 +1,11 @@
 import router from './router'
 import store from './store'
-import NProgress from 'nprogress' // Progress 进度条
-import 'nprogress/nprogress.css'// Progress 进度条样式
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
 import { Message } from 'element-ui'
-import { getToken } from '@/utils/auth' // 验权
+import { getToken } from '@/utils/auth' // getToken from cookie
+
+NProgress.configure({ showSpinner: false })// NProgress configuration
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
