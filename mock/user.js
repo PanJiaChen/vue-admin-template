@@ -1,4 +1,3 @@
-import { param2Obj } from './utils'
 
 const tokens = {
   admin: {
@@ -24,41 +23,62 @@ const users = {
   }
 }
 
-export default {
-  login: res => {
-    const { username } = JSON.parse(res.body)
-    const data = tokens[username]
+export default [
+  // user login
+  {
+    url: '/user/login',
+    type: 'post',
+    response: config => {
+      const { username } = config.body
+      const token = tokens[username]
 
-    if (data) {
+      // mock error
+      if (!token) {
+        return {
+          code: 60204,
+          message: 'Account and password are incorrect.'
+        }
+      }
+
       return {
         code: 20000,
-        data
+        data: token
       }
     }
-    return {
-      code: 60204,
-      message: 'Account and password are incorrect.'
-    }
   },
-  getInfo: res => {
-    const { token } = param2Obj(res.url)
-    const info = users[token]
 
-    if (info) {
+  // get user info
+  {
+    url: '/user/info\.*',
+    type: 'get',
+    response: config => {
+      const { token } = config.query
+      const info = users[token]
+
+      // mock error
+      if (!info) {
+        return {
+          code: 50008,
+          message: 'Login failed, unable to get user details.'
+        }
+      }
+
       return {
         code: 20000,
         data: info
       }
     }
-    return {
-      code: 50008,
-      message: 'Login failed, unable to get user details.'
-    }
   },
-  logout: () => {
-    return {
-      code: 20000,
-      data: 'success'
+
+  // user logout
+  {
+    url: '/user/logout',
+    type: 'post',
+    response: _ => {
+      return {
+        code: 20000,
+        data: 'success'
+      }
     }
   }
-}
+]

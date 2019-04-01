@@ -7,7 +7,7 @@ function resolve(dir) {
 }
 
 const name = pkg.name || 'vue-admin-template' // page title
-const port = 9527 // dev port
+const port = 9528 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
