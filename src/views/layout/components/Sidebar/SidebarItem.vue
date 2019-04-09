@@ -51,13 +51,11 @@ export default {
     let sideBarItem
     if (onlyOneChild && (!onlyOneChild.children || onlyOneChild.noShowingChildren) && !this.item.alwaysShow) {
       sideBarItem =
-        <div class='menu-wrapper'>
-          <app-link to={this.resolvePath(onlyOneChild.path)}>
-            <el-menu-item index={this.resolvePath(onlyOneChild.path)} class={{ 'submenu-title-noDropdown': !this.isNest }}>
-              <item meta={Object.assign({}, this.item.meta, onlyOneChild.meta)} />
-            </el-menu-item>
-          </app-link>
-        </div>
+        <app-link to={this.resolvePath(onlyOneChild.path)}>
+          <el-menu-item index={this.resolvePath(onlyOneChild.path)} class={{ 'submenu-title-noDropdown': !this.isNest }}>
+            <item meta={Object.assign({}, this.item.meta, onlyOneChild.meta)} />
+          </el-menu-item>
+        </app-link>
     } else {
       sideBarItem =
         <el-submenu ref='subMenu' index={this.resolvePath(this.item.path)} popper-append-to-body>
