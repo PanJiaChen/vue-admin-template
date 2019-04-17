@@ -2,6 +2,12 @@
  * Created by jiachenpan on 16/11/18.
  */
 
+/**
+ * Parse the time to string
+ * @param {(Object|string|number)} time
+ * @param {string} cFormat
+ * @returns {string}
+ */
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
@@ -40,6 +46,11 @@ export function parseTime(time, cFormat) {
   return time_str
 }
 
+/**
+ * @param {number} time
+ * @param {string} option
+ * @returns {string}
+ */
 export function formatTime(time, option) {
   if (('' + time).length === 10) {
     time = parseInt(time) * 1000
