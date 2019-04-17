@@ -31,19 +31,6 @@ html {
   box-sizing: inherit;
 }
 
-a,
-a:focus,
-a:hover {
-  cursor: pointer;
-  color: inherit;
-  outline: none;
-  text-decoration: none;
-}
-
-div:focus {
-  outline: none;
-}
-
 a:focus,
 a:active {
   outline: none;
@@ -57,6 +44,10 @@ a:hover {
   text-decoration: none;
 }
 
+div:focus {
+  outline: none;
+}
+
 .clearfix {
   &:after {
     visibility: hidden;
@@ -68,11 +59,7 @@ a:hover {
   }
 }
 
-//main-container全局样式
-.app-main {
-  min-height: 100%
-}
-
+// main-container global css
 .app-container {
   padding: 20px;
 }
