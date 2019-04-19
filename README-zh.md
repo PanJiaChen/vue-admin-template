@@ -6,7 +6,7 @@
 
 [国内访问](https://panjiachen.gitee.io/vue-admin-template)
 
-目前版本为 `v4.0+` 基于 `vue-cli` 进行构建，若发现问题，欢迎提 issue。若你想使用旧版本，可以切换分支到[tag/3.11.0]()，它不依赖 `vue-cli`。
+目前版本为 `v4.0+` 基于 `vue-cli` 进行构建，若发现问题，欢迎提 issue。若你想使用旧版本，可以切换分支到[tag/3.11.0](https://github.com/PanJiaChen/vue-admin-template/tree/tag/3.11.0)，它不依赖 `vue-cli`。
 
 ## Extra
 
@@ -40,7 +40,7 @@ cd vue-admin-template
 # 安装依赖
 npm install
 
-# 建议不要直接使用 cnpm 安装，会有各种诡异的bug。可以通过如下操作解决 npm 下载速度慢的问题
+# 建议不要直接使用 cnpm 安装以来，会有各种诡异的 bug。可以通过如下操作解决 npm 下载速度慢的问题
 npm install --registry=https://registry.npm.taobao.org
 
 # 启动服务
