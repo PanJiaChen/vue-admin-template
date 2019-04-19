@@ -16,6 +16,7 @@
           placeholder="Username"
           name="username"
           type="text"
+          tabindex="1"
           auto-complete="on"
         />
       </el-form-item>
@@ -31,6 +32,7 @@
           :type="passwordType"
           placeholder="Password"
           name="password"
+          tabindex="2"
           auto-complete="on"
           @keyup.enter.native="handleLogin"
         />
