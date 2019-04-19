@@ -17,7 +17,6 @@ import Layout from '@/layout'
  * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
  * name:'router-name'             the name is used by <keep-alive> (must set!!!)
  * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
     title: 'title'               the name show in sidebar and breadcrumb (recommend set)
     icon: 'svg-name'             the icon show in the sidebar
     breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
@@ -155,6 +154,17 @@ export const constantRoutes = [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
         meta: { title: 'External Link', icon: 'link' }
+      }
+    ]
+  },
+
+  {
+    path: 'donate',
+    component: Layout,
+    children: [
+      {
+        path: 'https://panjiachen.gitee.io/vue-element-admin-site/zh/donate/',
+        meta: { title: 'Donate', icon: 'donate' }
       }
     ]
   },

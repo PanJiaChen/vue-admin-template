@@ -15,6 +15,13 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 
+import VueAnalytics from 'vue-analytics'
+
+Vue.use(VueAnalytics, {
+  id: 'UA-109340118-1',
+  router
+})
+
 /**
  * If you don't want to use mock-server
  * you want to use mockjs for request interception

@@ -6,6 +6,7 @@
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
       </div>
+      <AD />
       <app-main />
     </div>
   </div>
@@ -14,13 +15,15 @@
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
+import AD from '@/components/AD'
 
 export default {
   name: 'Layout',
   components: {
     Navbar,
     Sidebar,
-    AppMain
+    AppMain,
+    AD
   },
   mixins: [ResizeMixin],
   computed: {
