@@ -14,10 +14,10 @@ English | [简体中文](./README-zh.md)
 
 ```bash
 # clone the project
-git clone https://github.com/PanJiaChen/vue-element-admin.git
+git clone https://github.com/PanJiaChen/vue-admin-template.git
 
 # enter the project directory
-cd vue-element-admin
+cd vue-admin-template
 
 # install dependency
 npm install
