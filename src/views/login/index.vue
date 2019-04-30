@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
-      <div class="title-container" style="text-align: center">
+      <div class="title-container">
         <img class="title" src="@/assets/title_logo.png" alt="logo" style="width: auto">
       </div>
 
@@ -214,6 +214,7 @@ $light_gray:#eee;
 
   .title-container {
     position: relative;
+    text-align: center;
 
     .title {
       font-size: 26px;
