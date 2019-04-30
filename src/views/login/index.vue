@@ -2,8 +2,8 @@
   <div class="login-container">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
-      <div class="title-container">
-        <h3 class="title">Login Form</h3>
+      <div class="title-container" style="text-align: center">
+        <img class="title" src="@/assets/title_logo.png" alt="logo" style="width: auto">
       </div>
 
       <el-form-item prop="username">
