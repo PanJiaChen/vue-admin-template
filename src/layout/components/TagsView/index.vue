@@ -13,8 +13,7 @@
         @contextmenu.prevent.native="openMenu(tag,$event)"
       >
         {{ generateTitle(tag.title) }}
-<!--        <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />-->
-        <span v-if="!(visitedViews.length === 1 && tag.title === 'Dashboard')" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
+        <span v-if="!tag.meta.affix" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
