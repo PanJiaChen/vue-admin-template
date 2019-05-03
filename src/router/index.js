@@ -49,9 +49,9 @@ export const constantRoutes = [
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
-      name: 'Dashboard',
+      name: 'dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard' }
     }]
   }
 ]
@@ -61,6 +61,163 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  {
+    path: '/piccmp',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: '以图识人',
+        component: () => import('@/views/piccmp/index'),
+        meta: { title: '以图识人', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/videocmp',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: '以片识人',
+        component: () => import('@/views/videocmp/index'),
+        meta: { title: '以片识人', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/schoolmgmt',
+    component: Layout,
+    redirect: '/schoolmgmt/display',
+    name: '学校管理',
+    meta: { title: '学校管理', icon: 'example' },
+    children: [
+      {
+        path: 'create',
+        name: '创建学校',
+        component: () => import('@/views/schoolmgmt/create/index'),
+        meta: { title: '创建学校', icon: 'table' }
+      },
+      {
+        path: 'delete',
+        name: '删除学校',
+        component: () => import('@/views/schoolmgmt/delete/index'),
+        meta: { title: '删除学校', icon: 'table' }
+      },
+      {
+        path: 'display',
+        name: '查看学校',
+        component: () => import('@/views/schoolmgmt/display/index'),
+        meta: { title: '查看学校', icon: 'table' }
+      },
+      {
+        path: 'update',
+        name: '修改学校',
+        component: () => import('@/views/schoolmgmt/update/index'),
+        meta: { title: '修改学校', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/usermgmt',
+    component: Layout,
+    redirect: '/usermgmt/display',
+    name: '用户管理',
+    meta: { title: '用户管理', icon: 'example' },
+    children: [
+      {
+        path: 'create',
+        name: '创建用户',
+        component: () => import('@/views/usermgmt/create/index'),
+        meta: { title: '创建用户', icon: 'table' }
+      },
+      {
+        path: 'delete',
+        name: '删除用户',
+        component: () => import('@/views/usermgmt/delete/index'),
+        meta: { title: '删除用户', icon: 'table' }
+      },
+      {
+        path: 'display',
+        name: '查看用户',
+        component: () => import('@/views/usermgmt/display/index'),
+        meta: { title: '查看用户', icon: 'table' }
+      },
+      {
+        path: 'update',
+        name: '修改用户',
+        component: () => import('@/views/usermgmt/update/index'),
+        meta: { title: '修改用户', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/facemgmt',
+    component: Layout,
+    redirect: '/facemgmt/display',
+    name: '人脸库管理',
+    meta: { title: '人脸库管理', icon: 'example' },
+    children: [
+      {
+        path: 'create',
+        name: '创建人脸库',
+        component: () => import('@/views/facemgmt/create/index'),
+        meta: { title: '创建人脸库', icon: 'table' }
+      },
+      {
+        path: 'delete',
+        name: '删除人脸库',
+        component: () => import('@/views/facemgmt/delete/index'),
+        meta: { title: '删除人脸库', icon: 'table' }
+      },
+      {
+        path: 'display',
+        name: '查看人脸库',
+        component: () => import('@/views/facemgmt/display/index'),
+        meta: { title: '查看人脸库', icon: 'table' }
+      }
+    ]
+  },
+
+  {
+    path: '/settings',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: '系统设置',
+        component: () => import('@/views/settings/index'),
+        meta: { title: '系统设置', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/logmgmt',
+    component: Layout,
+    redirect: '/logmgmt/userlog',
+    name: '日志管理',
+    meta: { title: '日志管理', icon: 'example' },
+    children: [
+      {
+        path: 'syslog',
+        name: '系统日志',
+        component: () => import('@/views/logmgmt/syslog/index'),
+        meta: { title: '系统日志', icon: 'table' }
+      },
+      {
+        path: 'userlog',
+        name: '用户操作日志',
+        component: () => import('@/views/logmgmt/userlog/index'),
+        meta: { title: '用户操作日志', icon: 'table' }
+      }
+    ]
+  },
+
   {
     path: '/nested',
     component: Layout,
