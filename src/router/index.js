@@ -69,7 +69,7 @@ export const asyncRoutes = [
         path: 'index',
         name: '以图识人',
         component: () => import('@/views/piccmp/index'),
-        meta: { title: '以图识人', icon: 'form' }
+        meta: { title: '以图识人', icon: 'facecompare' }
       }
     ]
   },
@@ -82,7 +82,7 @@ export const asyncRoutes = [
         path: 'index',
         name: '以片识人',
         component: () => import('@/views/videocmp/index'),
-        meta: { title: '以片识人', icon: 'form' }
+        meta: { title: '以片识人', icon: 'video' }
       }
     ]
   },
@@ -92,31 +92,31 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/schoolmgmt/display',
     name: '学校管理',
-    meta: { title: '学校管理', icon: 'example' },
+    meta: { title: '学校管理', icon: 'school' },
     children: [
       {
         path: 'create',
         name: '创建学校',
         component: () => import('@/views/schoolmgmt/create/index'),
-        meta: { title: '创建学校', icon: 'table' }
+        meta: { title: '创建学校', icon: 'create' }
       },
       {
         path: 'delete',
         name: '删除学校',
         component: () => import('@/views/schoolmgmt/delete/index'),
-        meta: { title: '删除学校', icon: 'table' }
+        meta: { title: '删除学校', icon: 'delete' }
       },
       {
         path: 'display',
         name: '查看学校',
         component: () => import('@/views/schoolmgmt/display/index'),
-        meta: { title: '查看学校', icon: 'table' }
+        meta: { title: '查看学校', icon: 'display' }
       },
       {
         path: 'update',
         name: '修改学校',
         component: () => import('@/views/schoolmgmt/update/index'),
-        meta: { title: '修改学校', icon: 'table' }
+        meta: { title: '修改学校', icon: 'update' }
       }
     ]
   },
@@ -126,31 +126,31 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/usermgmt/display',
     name: '用户管理',
-    meta: { title: '用户管理', icon: 'example' },
+    meta: { title: '用户管理', icon: 'user' },
     children: [
       {
         path: 'create',
         name: '创建用户',
         component: () => import('@/views/usermgmt/create/index'),
-        meta: { title: '创建用户', icon: 'table' }
+        meta: { title: '创建用户', icon: 'create' }
       },
       {
         path: 'delete',
         name: '删除用户',
         component: () => import('@/views/usermgmt/delete/index'),
-        meta: { title: '删除用户', icon: 'table' }
+        meta: { title: '删除用户', icon: 'delete' }
       },
       {
         path: 'display',
         name: '查看用户',
         component: () => import('@/views/usermgmt/display/index'),
-        meta: { title: '查看用户', icon: 'table' }
+        meta: { title: '查看用户', icon: 'display' }
       },
       {
         path: 'update',
         name: '修改用户',
         component: () => import('@/views/usermgmt/update/index'),
-        meta: { title: '修改用户', icon: 'table' }
+        meta: { title: '修改用户', icon: 'update' }
       }
     ]
   },
@@ -160,25 +160,25 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/facemgmt/display',
     name: '人脸库管理',
-    meta: { title: '人脸库管理', icon: 'example' },
+    meta: { title: '人脸库管理', icon: 'facegroup' },
     children: [
       {
         path: 'create',
         name: '创建人脸库',
         component: () => import('@/views/facemgmt/create/index'),
-        meta: { title: '创建人脸库', icon: 'table' }
+        meta: { title: '创建人脸库', icon: 'create' }
       },
       {
         path: 'delete',
         name: '删除人脸库',
         component: () => import('@/views/facemgmt/delete/index'),
-        meta: { title: '删除人脸库', icon: 'table' }
+        meta: { title: '删除人脸库', icon: 'delete' }
       },
       {
         path: 'display',
         name: '查看人脸库',
         component: () => import('@/views/facemgmt/display/index'),
-        meta: { title: '查看人脸库', icon: 'table' }
+        meta: { title: '查看人脸库', icon: 'display' }
       }
     ]
   },
@@ -191,7 +191,7 @@ export const asyncRoutes = [
         path: 'index',
         name: '系统设置',
         component: () => import('@/views/settings/index'),
-        meta: { title: '系统设置', icon: 'form' }
+        meta: { title: '系统设置', icon: 'settings' }
       }
     ]
   },
@@ -201,19 +201,19 @@ export const asyncRoutes = [
     component: Layout,
     redirect: '/logmgmt/userlog',
     name: '日志管理',
-    meta: { title: '日志管理', icon: 'example' },
+    meta: { title: '日志管理', icon: 'log' },
     children: [
       {
         path: 'syslog',
         name: '系统日志',
         component: () => import('@/views/logmgmt/syslog/index'),
-        meta: { title: '系统日志', icon: 'table' }
+        meta: { title: '系统日志', icon: 'syslog' }
       },
       {
         path: 'userlog',
         name: '用户操作日志',
         component: () => import('@/views/logmgmt/userlog/index'),
-        meta: { title: '用户操作日志', icon: 'table' }
+        meta: { title: '用户操作日志', icon: 'user' }
       }
     ]
   },
