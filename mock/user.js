@@ -5,21 +5,30 @@ const tokens = {
   },
   editor: {
     token: 'editor-token'
+  },
+  user: {
+    token: 'user-token'
   }
 }
 
 const users = {
   'admin-token': {
     roles: ['admin'],
-    introduction: 'I am a super administrator',
+    introduction: '我是超级管理员，拥有所有学校的全部菜单权限',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Super Admin'
+    name: '超级管理员'
   },
   'editor-token': {
     roles: ['editor'],
-    introduction: 'I am an editor',
+    introduction: '我是学校管理员，拥有所属学校的部分菜单权限',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Normal Editor'
+    name: '学校管理员'
+  },
+  'user-token': {
+    roles: ['user'],
+    introduction: '我是普通用户，拥有所属学校的识人功能权限',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+    name: '普通用户'
   }
 }
 
