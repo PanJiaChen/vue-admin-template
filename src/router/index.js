@@ -83,7 +83,7 @@ export const asyncRoutes = [
         name: '以图识人',
         component: () => import('@/views/piccmp/index'),
         meta: { title: '以图识人', icon: 'facecompare' },
-        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
+        // redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       }
     ]
   },
