@@ -53,6 +53,19 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard' }
     }]
+  },
+
+  {
+    path: '/construction',
+    component: Layout,
+    hidden: true,
+    redirect: '/construction/index',
+    children: [{
+      path: 'index',
+      name: '建设中',
+      component: () => import('@/views/construction/index'),
+      // meta: { title: '建设中', icon: 'dashboard' }
+    }]
   }
 ]
 
@@ -69,7 +82,8 @@ export const asyncRoutes = [
         path: 'index',
         name: '以图识人',
         component: () => import('@/views/piccmp/index'),
-        meta: { title: '以图识人', icon: 'facecompare' }
+        meta: { title: '以图识人', icon: 'facecompare' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       }
     ]
   },
@@ -82,7 +96,8 @@ export const asyncRoutes = [
         path: 'index',
         name: '以片识人',
         component: () => import('@/views/videocmp/index'),
-        meta: { title: '以片识人', icon: 'video' }
+        meta: { title: '以片识人', icon: 'video' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       }
     ]
   },
@@ -98,25 +113,29 @@ export const asyncRoutes = [
         path: 'create',
         name: '创建学校',
         component: () => import('@/views/schoolmgmt/create/index'),
-        meta: { title: '创建学校', icon: 'create' }
+        meta: { title: '创建学校', icon: 'create' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       },
       {
         path: 'delete',
         name: '删除学校',
         component: () => import('@/views/schoolmgmt/delete/index'),
-        meta: { title: '删除学校', icon: 'delete' }
+        meta: { title: '删除学校', icon: 'delete' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       },
       {
         path: 'display',
         name: '查看学校',
         component: () => import('@/views/schoolmgmt/display/index'),
-        meta: { title: '查看学校', icon: 'display' }
+        meta: { title: '查看学校', icon: 'display' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       },
       {
         path: 'update',
         name: '修改学校',
         component: () => import('@/views/schoolmgmt/update/index'),
-        meta: { title: '修改学校', icon: 'update' }
+        meta: { title: '修改学校', icon: 'update' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       }
     ]
   },
@@ -132,25 +151,29 @@ export const asyncRoutes = [
         path: 'create',
         name: '创建用户',
         component: () => import('@/views/usermgmt/create/index'),
-        meta: { title: '创建用户', icon: 'create' }
+        meta: { title: '创建用户', icon: 'create' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       },
       {
         path: 'delete',
         name: '删除用户',
         component: () => import('@/views/usermgmt/delete/index'),
-        meta: { title: '删除用户', icon: 'delete' }
+        meta: { title: '删除用户', icon: 'delete' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       },
       {
         path: 'display',
         name: '查看用户',
         component: () => import('@/views/usermgmt/display/index'),
-        meta: { title: '查看用户', icon: 'display' }
+        meta: { title: '查看用户', icon: 'display' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       },
       {
         path: 'update',
         name: '修改用户',
         component: () => import('@/views/usermgmt/update/index'),
-        meta: { title: '修改用户', icon: 'update' }
+        meta: { title: '修改用户', icon: 'update' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       }
     ]
   },
@@ -166,19 +189,22 @@ export const asyncRoutes = [
         path: 'create',
         name: '创建人脸库',
         component: () => import('@/views/facemgmt/create/index'),
-        meta: { title: '创建人脸库', icon: 'create' }
+        meta: { title: '创建人脸库', icon: 'create' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       },
       {
         path: 'delete',
         name: '删除人脸库',
         component: () => import('@/views/facemgmt/delete/index'),
-        meta: { title: '删除人脸库', icon: 'delete' }
+        meta: { title: '删除人脸库', icon: 'delete' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       },
       {
         path: 'display',
         name: '查看人脸库',
         component: () => import('@/views/facemgmt/display/index'),
-        meta: { title: '查看人脸库', icon: 'display' }
+        meta: { title: '查看人脸库', icon: 'display' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       }
     ]
   },
@@ -191,7 +217,8 @@ export const asyncRoutes = [
         path: 'index',
         name: '系统设置',
         component: () => import('@/views/settings/index'),
-        meta: { title: '系统设置', icon: 'settings' }
+        meta: { title: '系统设置', icon: 'settings' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       }
     ]
   },
@@ -207,17 +234,19 @@ export const asyncRoutes = [
         path: 'syslog',
         name: '系统日志',
         component: () => import('@/views/logmgmt/syslog/index'),
-        meta: { title: '系统日志', icon: 'syslog' }
+        meta: { title: '系统日志', icon: 'syslog' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       },
       {
         path: 'userlog',
         name: '用户操作日志',
         component: () => import('@/views/logmgmt/userlog/index'),
-        meta: { title: '用户操作日志', icon: 'user' }
+        meta: { title: '用户操作日志', icon: 'user' },
+        redirect: '/construction' //  TODO：未开发的功能会自动跳转到建设中页面，完成后请去除此行
       }
     ]
   },
-
+  /*
   {
     path: '/nested',
     component: Layout,
@@ -322,6 +351,7 @@ export const asyncRoutes = [
       }
     ]
   },
+   */
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
