@@ -76,6 +76,11 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
+    config.module
+      .rule('pug')
+        .test(/\.pug$/)
+        .use('pug')
+          .loader('pug-plain-loader')
 
     // set preserveWhitespace
     config.module
