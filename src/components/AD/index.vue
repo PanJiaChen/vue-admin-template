@@ -27,7 +27,7 @@ export default {
         ? '165'
         : '164'
       const template = 'horizontal'
-      axios.get(`https://api.codefund.app/properties/${codefundId}/funder.html?template=${template}`)
+      axios.get(`https://codefund.io/properties/${codefundId}/funder.html?template=${template}`)
         .then(function(response) {
           document.getElementById('codefund').innerHTML = response.data
         })
