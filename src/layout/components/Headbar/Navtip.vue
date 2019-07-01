@@ -1,13 +1,11 @@
 <template>
-  <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-
-    <breadcrumb class="breadcrumb-container" />
+  <div class="navtip">
+    <hamburger class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -23,7 +21,7 @@
             <el-dropdown-item>Docs</el-dropdown-item>
           </a>
           <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">Log Out</span>
+            <div @click="logout">Log Out</div>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -32,20 +30,11 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 
 export default {
   components: {
-    Breadcrumb,
     Hamburger
-  },
-  computed: {
-    ...mapGetters([
-      'sidebar',
-      'avatar'
-    ])
   },
   methods: {
     toggleSideBar() {
@@ -60,7 +49,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.navbar {
+.navtip {
   height: 50px;
   overflow: hidden;
   position: relative;
@@ -78,10 +67,6 @@ export default {
     &:hover {
       background: rgba(0, 0, 0, .025)
     }
-  }
-
-  .breadcrumb-container {
-    float: left;
   }
 
   .right-menu {
@@ -111,29 +96,6 @@ export default {
       }
     }
 
-    .avatar-container {
-      margin-right: 30px;
-
-      .avatar-wrapper {
-        margin-top: 5px;
-        position: relative;
-
-        .user-avatar {
-          cursor: pointer;
-          width: 40px;
-          height: 40px;
-          border-radius: 10px;
-        }
-
-        .el-icon-caret-bottom {
-          cursor: pointer;
-          position: absolute;
-          right: -20px;
-          top: 25px;
-          font-size: 12px;
-        }
-      }
-    }
   }
 }
 </style>
