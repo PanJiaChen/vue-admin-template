@@ -18,10 +18,10 @@ export function getAreasList() {
 
 export function createAnArea(postCode) {
   const url = 'https://netapi.danderdee.com/api/areas'
-  const pyaload = {
+  const payload = {
     postCode: postCode
   }
-  this.$http.post(url, pyaload, {
+  this.$http.post(url, payload, {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded'
