@@ -1,4 +1,3 @@
-
 <template>
   <!-- eslint-disable vue/require-component-is -->
   <component v-bind="linkProps(to)">
@@ -7,9 +6,12 @@
 </template>
 
 <script>
-import { isExternal } from '@/utils/validate'
+import { IsExternal } from '@/mixins'
 
+/** @type {import('vue').VueConstructor} */
 export default {
+  name: 'SidebarLink',
+  mixins: [IsExternal],
   props: {
     to: {
       type: String,
@@ -17,18 +19,18 @@ export default {
     }
   },
   methods: {
-    linkProps(url) {
-      if (isExternal(url)) {
+    linkProps(href) {
+      if (this.isExternal(href)) {
         return {
           is: 'a',
-          href: url,
+          href,
           target: '_blank',
           rel: 'noopener'
         }
       }
       return {
         is: 'router-link',
-        to: url
+        to: href
       }
     }
   }

@@ -1,3 +1,4 @@
+@import '~normalize.css/normalize.css'; // A modern alternative to CSS resets
 @import './variables.scss';
 @import './mixin.scss';
 @import './transition.scss';
@@ -9,7 +10,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
+    Microsoft YaHei, Arial, sans-serif;
 }
 
 label {
@@ -53,13 +55,15 @@ div:focus {
     visibility: hidden;
     display: block;
     font-size: 0;
-    content: " ";
+    content: ' ';
     clear: both;
     height: 0;
   }
 }
 
-// main-container global css
-.app-container {
+// layout-root global CSS, which contains
+// - layout-root-sidebar
+// - layout-root-main
+.layout-root-main {
   padding: 20px;
 }

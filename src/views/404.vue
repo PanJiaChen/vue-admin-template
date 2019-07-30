@@ -22,6 +22,7 @@
 
 <script>
 
+/** @type {import('vue').VueConstructor} */
 export default {
   name: 'Page404',
   computed: {

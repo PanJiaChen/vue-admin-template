@@ -4,7 +4,7 @@ describe('Hamburger.vue', () => {
   it('toggle click', () => {
     const wrapper = shallowMount(Hamburger)
     const mockFn = jest.fn()
-    wrapper.vm.$on('toggleClick', mockFn)
+    wrapper.vm.$on('layout-hamburger-click', mockFn)
     wrapper.find('.hamburger').trigger('click')
     expect(mockFn).toBeCalled()
   })

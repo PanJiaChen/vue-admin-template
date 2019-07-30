@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-import Layout from '@/layout'
+import AppLayout from '@/AppLayout'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -45,7 +45,7 @@ export const constantRoutes = [
 
   {
     path: '/',
-    component: Layout,
+    component: AppLayout,
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
@@ -57,7 +57,7 @@ export const constantRoutes = [
 
   {
     path: '/example',
-    component: Layout,
+    component: AppLayout,
     redirect: '/example/table',
     name: 'Example',
     meta: { title: 'Example', icon: 'example' },
@@ -79,7 +79,7 @@ export const constantRoutes = [
 
   {
     path: '/form',
-    component: Layout,
+    component: AppLayout,
     children: [
       {
         path: 'index',
@@ -92,7 +92,7 @@ export const constantRoutes = [
 
   {
     path: '/nested',
-    component: Layout,
+    component: AppLayout,
     redirect: '/nested/menu1',
     name: 'Nested',
     meta: {
@@ -150,7 +150,7 @@ export const constantRoutes = [
 
   {
     path: 'external-link',
-    component: Layout,
+    component: AppLayout,
     children: [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',

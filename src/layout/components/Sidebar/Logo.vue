@@ -1,31 +1,47 @@
 <template>
-  <div class="sidebar-logo-container" :class="{'collapse':collapse}">
+  <div class="sidebar-logo-container" :class="{ collapse: collapse }">
     <transition name="sidebarLogoFade">
-      <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
+      <router-link
+        v-if="collapse"
+        key="collapse"
+        class="sidebar-logo-link"
+        to="/"
+      >
         <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 v-else class="sidebar-title">{{ title }} </h1>
+        <h1 v-else class="sidebar-title">{{ title }}</h1>
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
         <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 class="sidebar-title">{{ title }} </h1>
+        <h1 class="sidebar-title">{{ title }}</h1>
       </router-link>
     </transition>
   </div>
 </template>
 
 <script>
+/**
+ * Improve this. Later. @TODO
+ * And use settings.js' value at sidebarLogoUrl
+ * https://medium.com/huddle-engineering/branding-huddles-ui-using-css-variables-and-webpack-8613dba8aaba
+ */
+import logo from '@/assets/layout/sidebar-logo.png'
+
+/** @type {import('vue').VueConstructor} */
 export default {
   name: 'SidebarLogo',
   props: {
     collapse: {
       type: Boolean,
       required: true
+    },
+    title: {
+      type: String,
+      default: 'Vue Admin Template'
     }
   },
   data() {
     return {
-      title: 'Vue Admin Template',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      logo
     }
   }
 }
