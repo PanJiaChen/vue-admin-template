@@ -1,14 +1,16 @@
 <template>
   <layout
+    :sidebaaar="sidebar"
     :fixed-header="fixedHeader"
-    :sidebar-opened="sidebarOpened"
     :sidebar-menu-config="sidebarMenuConfig"
     :sidebar-menu-routes="sidebarMenuRoutes"
+    :sidebar-logo-url="sidebarLogoUrl"
+    :show-logo="sidebarLogo"
     @layout-click-outside="handleClickOutside"
-    @sidebar="handleSidebar"
-    @logout="handleLogout"
-    @toggle-sidebar="handleToggleSidebar"
+    @layout-sidebar="handleSidebar"
+    @layout-sidebar-toggle="handleLayoutToggleSidebar"
     @layout-variant="handleLayoutVariant"
+    @logout="handleLogout"
   >
     <app-main />
   </layout>
@@ -23,7 +25,7 @@
  * similar to here.
  */
 
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Layout from '@/layout'
 import AppMain from './AppMain'
 import variables from '@/styles/variables.scss'
@@ -38,12 +40,18 @@ export default {
   computed: {
     ...mapState({
       fixedHeader: state => state.settings.fixedHeader,
-      layoutVariant: state => state.app.device,
+      layoutVariant: state => state.layout.device,
       sidebarLogo: state => state.settings.sidebarLogo,
-      sidebarOpened: state => state.app.sidebar.opened
+      sidebarOpened: state => state.layout.sidebar.opened
     }),
+    ...mapGetters(['sidebar', 'device']),
     variables() {
       return variables
+    },
+    sidebarLogoUrl() {
+      let sidebarLogoUrl = 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      sidebarLogoUrl = 'http://lorempixel.com/400/200/'
+      return sidebarLogoUrl
     },
     sidebarMenuConfig() {
       const defaultActive = this.defaultActive
@@ -76,32 +84,35 @@ export default {
     $route() {
       const isMobile = this.layoutVariant === 'mobile'
       if (isMobile && this.sidebarOpened) {
-        this.$emit('layout-sidebar', { opened: false, withoutAnimation: true })
+        this.$store.dispatch('layout/closeSideBar', { withoutAnimation: true })
       }
     }
   },
   methods: {
     async handleSidebar({ opened = false }) {
-      if (opened !== this.sidebarOpened) {
-        await this.handleToggleSidebar()
+      const sidebarOpened = this.sidebar.opened
+      if (opened !== sidebarOpened) {
+        await this.handleLayoutToggleSidebar()
       }
     },
     async handleLayoutVariant(layoutVariant) {
       const isString = typeof layoutVariant === 'string'
       if (isString && layoutVariant !== this.layoutVariant) {
-        await this.$store.dispatch('app/toggleDevice', layoutVariant)
+        await this.$store.dispatch('layout/toggleDevice', layoutVariant)
       }
     },
     async handleClickOutside() {
-      await this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+      await this.$store.dispatch('layout/closeSideBar', { withoutAnimation: false })
     },
     async handleLogout() {
       const redirect = this.$route.fullPath
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${redirect}`)
     },
-    async handleToggleSidebar() {
-      await this.$store.dispatch('app/toggleSideBar')
+    async handleLayoutToggleSidebar() {
+      // const opened = this.sidebar.opened
+      // console.log('handleSidebar', { opened })
+      await this.$store.dispatch('layout/toggleSideBar')
     }
   }
 }

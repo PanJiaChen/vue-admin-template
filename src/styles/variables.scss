@@ -28,13 +28,13 @@ $--color-text-placeholder: #D0E1E7;
 // sidebar
 $menuText: #bfcbd9;
 $menuActiveText: #409eff;
-$subMenuActiveText: #f4f4f5; // https://github.com/ElemeFE/element/issues/12951
+$subMenuActiveText: $menuText;
 
-$menuBg: #304156;
-$menuHover: #263445;
+$menuBg: $--color-primary;
+$menuHover: lighten($--color-primary, 10%);
 
 $subMenuBg: #1f2d3d;
-$subMenuHover: #001528;
+$subMenuHover: $--border-color-lighter;
 
 $sideBarWidth: 210px;
 

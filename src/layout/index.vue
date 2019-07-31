@@ -3,21 +3,25 @@
     <div
       v-if="isMobileAndOpened"
       class="drawer-bg"
-      @click="$emit('layout-click-outside')"
+      @click="$emit('layout-sidebar', { opened: false })"
     />
     <layout-sidebar
+      class="layout-sidebar"
       :show-logo="showLogo"
-      :collapsed="sidebarOpened"
+      :logo-url="sidebarLogoUrl"
+      :collapsed="sidebarCollapsed"
       :menu-routes="sidebarMenuRoutes"
       :menu-config="sidebarMenuConfig"
     />
-    <div class="layout-root-main">
+    <div class="layout-main">
       <div :class="{ 'fixed-header': fixedHeader }">
-        <layout-navbar v-bind="{ ...$attrs }" />
+        <layout-navbar :sidebaaar="sidebaaar" @layout-hamburger-click="$emit('layout-sidebar-toggle')" />
       </div>
-      <slot>
-        <p>...</p>
-      </slot>
+      <div class="layout-main-slot">
+        <slot>
+          <p>...</p>
+        </slot>
+      </div>
     </div>
   </div>
 </template>
@@ -40,13 +44,17 @@ export default {
     'layout-sidebar': Sidebar
   },
   props: {
-    sidebarOpened: {
-      type: Boolean,
-      default: true
+    sidebaaar: {
+      type: Object,
+      default: () => ({ opened: true, withoutAnimation: true })
+    },
+    sidebarLogoUrl: {
+      type: String,
+      required: false
     },
     showLogo: {
       type: Boolean,
-      default: false
+      default: true
     },
     sidebarMenuConfig: {
       type: Object,
@@ -62,6 +70,14 @@ export default {
     }
   },
   computed: {
+    sidebarCollapsed() {
+      return this.sidebarOpened !== true
+    },
+    sidebarOpened() {
+      const { opened = false } = this.sidebaaar
+      // console.log('layout.computed.sidebarOpened', opened)
+      return opened
+    },
     isMobileAndOpened() {
       const mobile = this.layoutVariant === 'mobile'
       const opened = this.sidebarOpened
@@ -71,12 +87,14 @@ export default {
       const opened = this.sidebarOpened
       const mobile = this.layoutVariant === 'mobile'
       const desktop = this.layoutVariant === 'desktop'
-      return {
+      const classMap = {
         'is-layout-sidebar-hidden': !opened,
         'is-layout-sidebar-opened': opened,
         'is-layout-mobile': mobile,
         'is-layout-desktop': desktop
       }
+      // console.log('Layout.computed.classObj', classMap)
+      return classMap
     }
   }
 }
@@ -91,7 +109,7 @@ export default {
   position: relative;
   height: 100%;
   width: 100%;
-  &.mobile.is-layout-sidebar-opened {
+  &.is-layout-mobile.is-layout-sidebar-opened {
     position: fixed;
     top: 0;
   }
@@ -119,7 +137,7 @@ export default {
   width: calc(100% - 54px);
 }
 
-.mobile .fixed-header {
+.is-layout-mobile .fixed-header {
   width: 100%;
 }
 </style>

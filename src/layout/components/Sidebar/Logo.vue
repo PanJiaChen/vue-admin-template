@@ -1,17 +1,17 @@
 <template>
-  <div class="sidebar-logo-container" :class="{ collapse: collapse }">
+  <div :class="classObj" :data-logo-url="logoUrl">
     <transition name="sidebarLogoFade">
       <router-link
         v-if="collapse"
         key="collapse"
-        class="sidebar-logo-link"
+        class="sidebar-logo-router-link"
         to="/"
       >
-        <img v-if="logo" :src="logo" class="sidebar-logo">
+        <img v-if="hasLogoUrl" :src="logoUrl">
         <h1 v-else class="sidebar-title">{{ title }}</h1>
       </router-link>
-      <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
+      <router-link v-else key="expand" class="sidebar-logo-router-link" to="/">
+        <img v-if="hasLogoUrl" :src="logoUrl">
         <h1 class="sidebar-title">{{ title }}</h1>
       </router-link>
     </transition>
@@ -19,13 +19,6 @@
 </template>
 
 <script>
-/**
- * Improve this. Later. @TODO
- * And use settings.js' value at sidebarLogoUrl
- * https://medium.com/huddle-engineering/branding-huddles-ui-using-css-variables-and-webpack-8613dba8aaba
- */
-import logo from '@/assets/layout/sidebar-logo.png'
-
 /** @type {import('vue').VueConstructor} */
 export default {
   name: 'SidebarLogo',
@@ -37,11 +30,42 @@ export default {
     title: {
       type: String,
       default: 'Vue Admin Template'
+    },
+    logoUrl: {
+      type: String,
+      default:
+        'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
     }
   },
-  data() {
-    return {
-      logo
+  computed: {
+    hasLogoUrl() {
+      const hasLogo = String(this.logoUrl).length > 1
+      return hasLogo
+    },
+    imageData() {
+      if (this.hasLogoUrl) {
+        const logoUrl = this.logoUrl
+        return import(logoUrl)
+      }
+
+      return {
+        render(
+          /** @type {import('vue').CreateElement} */
+          h,
+        ) {
+          return h('span', ['<!-- No logoUrl -->'])
+        }
+      }
+    },
+    classObj() {
+      const collapsed = this.collapse === true
+      const hasLogo = this.hasLogo
+
+      return {
+        'layout-sidebar-logo--component': true,
+        'is-collapsed': collapsed,
+        'has-logo': hasLogo
+      }
     }
   }
 }
@@ -57,20 +81,19 @@ export default {
   opacity: 0;
 }
 
-.sidebar-logo-container {
+.layout-sidebar-logo--component {
   position: relative;
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: #2b2f3a;
   text-align: center;
   overflow: hidden;
 
-  & .sidebar-logo-link {
+  & .sidebar-logo-router-link {
     height: 100%;
     width: 100%;
 
-    & .sidebar-logo {
+    & img {
       width: 32px;
       height: 32px;
       vertical-align: middle;
@@ -89,8 +112,8 @@ export default {
     }
   }
 
-  &.collapse {
-    .sidebar-logo {
+  &.is-collapsed {
+    img {
       margin-right: 0px;
     }
   }

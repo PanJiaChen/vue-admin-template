@@ -1,5 +1,5 @@
 <template>
-  <div class="layout-root-main">
+  <div class="layout-main">
     <el-form ref="form" :model="form" label-width="120px">
       <el-form-item label="Activity name">
         <el-input v-model="form.name" />

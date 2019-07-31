@@ -1,5 +1,6 @@
 import Cookies from 'js-cookie'
 
+// Foo
 const state = {
   sidebar: {
     opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,

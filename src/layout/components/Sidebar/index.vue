@@ -1,12 +1,9 @@
 <template>
-  <div :class="classObj">
-    <logo
-      v-if="showLogo"
-      :collapse="collapsed"
-    />
+  <div class="layout-sidebar--component">
+    <sidebar-logo v-if="showLogo" :collapse="collapse" :logo-url="logoUrl" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
-        :collapse="collapsed"
+        :collapse="collapse"
         :unique-opened="false"
         :collapse-transition="false"
         v-bind="menuConfig"
@@ -25,17 +22,19 @@
 
 <script>
 import SidebarItem from './Item'
+import SidebarLogo from './Logo'
 
 /** @type {import('vue').VueConstructor} */
 export default {
   name: 'Sidebar',
   components: {
-    SidebarItem
+    SidebarItem,
+    SidebarLogo
   },
   props: {
-    collapsed: {
+    collapse: {
       type: Boolean,
-      default: true
+      default: false
     },
     menuConfig: {
       type: Object,
@@ -43,21 +42,32 @@ export default {
     },
     menuRoutes: {
       type: Array,
-      default: () => ([])
+      default: () => []
     },
     showLogo: {
       type: Boolean,
       default: true
+    },
+    logoUrl: {
+      type: String,
+      required: false
     }
   },
   computed: {
     classObj() {
-      const hasLogo = this.showLogo
+      const showLogo = this.showLogo
       return {
-        'has-logo': hasLogo,
-        'layout-root-sidebar': true
+        'has-logo': showLogo
       }
     }
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.layout-sidebar--component {
+  .layout-sidebar-logo--component {
+    margin: 10px 0;
+  }
+}
+</style>

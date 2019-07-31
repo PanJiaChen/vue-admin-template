@@ -1,12 +1,12 @@
-#app {
-  .layout-root-main {
+.layout-root {
+  .layout-main {
     min-height: 100%;
     transition: margin-left 0.28s;
     margin-left: $sideBarWidth;
     position: relative;
   }
 
-  .layout-root-sidebar {
+  .layout-sidebar {
     transition: width 0.28s;
     width: $sideBarWidth !important;
     background-color: $menuBg;
@@ -87,11 +87,11 @@
   }
 
   .is-layout-sidebar-hidden {
-    .layout-root-sidebar {
+    .layout-sidebar {
       width: 54px !important;
     }
 
-    .layout-root-sidebar {
+    .layout-sidebar {
       margin-left: 54px;
     }
 
@@ -144,18 +144,18 @@
   }
 
   // mobile responsive
-  .mobile {
-    .layout-root-sidebar {
+  .is-layout-mobile {
+    .layout-sidebar {
       margin-left: 0px;
     }
 
-    .layout-root-sidebar {
+    .layout-sidebar {
       transition: transform 0.28s;
       width: $sideBarWidth !important;
     }
 
     &.is-layout-sidebar-hidden {
-      .layout-root-sidebar {
+      .layout-sidebar {
         pointer-events: none;
         transition-duration: 0.3s;
         transform: translate3d(-$sideBarWidth, 0, 0);
@@ -164,8 +164,8 @@
   }
 
   .withoutAnimation {
-    .layout-root-sidebar,
-    .layout-root-sidebar {
+    .layout-sidebar,
+    .layout-sidebar {
       transition: none;
     }
   }

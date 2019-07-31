@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!item.hidden" class="menu-wrapper">
+  <div v-if="!item.hidden" class="menu-wrapper layout-sidebar-item--component">
     <template
       v-if="
         hasOneShowingChild(item.children, item) &&
@@ -7,7 +7,10 @@
           !item.alwaysShow
       "
     >
-      <sidebar-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
+      <sidebar-link
+        v-if="onlyOneChild.meta"
+        :to="resolvePath(onlyOneChild.path)"
+      >
         <el-menu-item
           :index="resolvePath(onlyOneChild.path)"
           :class="{ 'submenu-title-noDropdown': !isNest }"
@@ -83,7 +86,7 @@ export default {
   },
   methods: {
     hasOneShowingChild(children = [], parent) {
-      const showingChildren = children.filter(item => {
+      const showingChildren = children.filter((item) => {
         if (item.hidden) {
           return false
         } else {

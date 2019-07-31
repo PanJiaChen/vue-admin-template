@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <hamburger
-      :is-active="sidebarOpened"
+      :is-active="isActive"
       class="hamburger-container"
       @layout-hamburger-click="$emit('layout-hamburger-click')"
     />
@@ -58,9 +58,9 @@ export default {
     Hamburger
   },
   props: {
-    sidebarOpened: {
-      type: Boolean,
-      default: true
+    sidebaaar: {
+      type: Object,
+      default: () => ({ opened: true, withoutAnimation: true })
     },
     avatarImageBaseUrl: {
       type: String,
@@ -72,6 +72,11 @@ export default {
     }
   },
   computed: {
+    isActive() {
+      const { opened = false } = this.sidebaaar
+      // console.log('Navabar.computed.isActive', opened)
+      return !opened
+    },
     avatarImage() {
       const hasBaseUrl = String(this.avatarImageBaseUrl).length > 1
       const hasAvatarImageViewQueryParam =

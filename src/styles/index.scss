@@ -62,8 +62,8 @@ div:focus {
 }
 
 // layout-root global CSS, which contains
-// - layout-root-sidebar
-// - layout-root-main
-.layout-root-main {
+// - layout-sidebar
+// - layout-main
+.layout-main .layout-main-slot {
   padding: 20px;
 }
