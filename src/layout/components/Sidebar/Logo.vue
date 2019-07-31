@@ -1,9 +1,9 @@
 <template>
-  <div :class="classObj" :data-logo-url="logoUrl">
+  <div :class="classObj">
     <transition name="sidebarLogoFade">
       <router-link
-        v-if="collapse"
-        key="collapse"
+        v-if="collapsed"
+        key="collapsed"
         class="sidebar-logo-router-link"
         to="/"
       >
@@ -22,11 +22,8 @@
 /** @type {import('vue').VueConstructor} */
 export default {
   name: 'SidebarLogo',
+
   props: {
-    collapse: {
-      type: Boolean,
-      required: true
-    },
     title: {
       type: String,
       default: 'Vue Admin Template'
@@ -37,28 +34,22 @@ export default {
         'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
     }
   },
+
+  inject: ['layout'],
+
   computed: {
     hasLogoUrl() {
-      const hasLogo = String(this.logoUrl).length > 1
-      return hasLogo
+      const hasLogoUrl = String(this.logoUrl).length > 1
+      return hasLogoUrl
     },
-    imageData() {
-      if (this.hasLogoUrl) {
-        const logoUrl = this.logoUrl
-        return import(logoUrl)
-      }
 
-      return {
-        render(
-          /** @type {import('vue').CreateElement} */
-          h,
-        ) {
-          return h('span', ['<!-- No logoUrl -->'])
-        }
-      }
+    collapsed() {
+      const sidebarCollapsed = this.layout.sidebarCollapsed
+      return sidebarCollapsed
     },
+
     classObj() {
-      const collapsed = this.collapse === true
+      const collapsed = this.collapsed
       const hasLogo = this.hasLogo
 
       return {
@@ -84,7 +75,6 @@ export default {
 .layout-sidebar-logo--component {
   position: relative;
   width: 100%;
-  height: 50px;
   line-height: 50px;
   text-align: center;
   overflow: hidden;
@@ -112,10 +102,10 @@ export default {
     }
   }
 
-  &.is-collapsed {
-    img {
-      margin-right: 0px;
-    }
-  }
+  // &.is-collapsed {
+  //   img {
+  //     margin-right: 0px;
+  //   }
+  // }
 }
 </style>

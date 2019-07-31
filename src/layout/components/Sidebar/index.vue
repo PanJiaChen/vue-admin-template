@@ -1,9 +1,9 @@
 <template>
-  <div class="layout-sidebar--component">
-    <sidebar-logo v-if="showLogo" :collapse="collapse" :logo-url="logoUrl" />
+  <div :class="classObj" :data-logo-url="logoUrl">
+    <sidebar-logo v-if="logoShow" :logo-url="logoUrl" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
-        :collapse="collapse"
+        :collapse="collapsed"
         :unique-opened="false"
         :collapse-transition="false"
         v-bind="menuConfig"
@@ -21,21 +21,19 @@
 </template>
 
 <script>
-import SidebarItem from './Item'
-import SidebarLogo from './Logo'
 
 /** @type {import('vue').VueConstructor} */
 export default {
-  name: 'Sidebar',
+  name: 'LayoutSidebar',
+
   components: {
-    SidebarItem,
-    SidebarLogo
+    'sidebar-item': () => import('./Item'),
+    'sidebar-logo': () => import('./Logo')
   },
+
+  inject: ['layout'],
+
   props: {
-    collapse: {
-      type: Boolean,
-      default: false
-    },
     menuConfig: {
       type: Object,
       default: () => ({})
@@ -43,21 +41,31 @@ export default {
     menuRoutes: {
       type: Array,
       default: () => []
-    },
-    showLogo: {
-      type: Boolean,
-      default: true
-    },
-    logoUrl: {
-      type: String,
-      required: false
     }
   },
+
   computed: {
+    logoShow() {
+      return this.layout.logoHidden === false
+    },
+
+    logoUrl() {
+      const logoUrl = this.layout.logoUrl
+      return logoUrl
+    },
+
+    collapsed() {
+      const sidebarCollapsed = this.layout.sidebarCollapsed
+      return sidebarCollapsed
+    },
+
     classObj() {
-      const showLogo = this.showLogo
+      const logoShow = this.logoShow
+      const logoUrlEmpty = String(this.logoUrl).length < 1
       return {
-        'has-logo': showLogo
+        'layout-sidebar--component': true,
+        'layout-sidebar-logo-show': logoShow,
+        'layout-sidebar-logo-url-empty': logoUrlEmpty
       }
     }
   }

@@ -58,11 +58,14 @@ import FixiOSBug from './FixiOSBug'
 /** @type {import('vue').VueConstructor} */
 export default {
   name: 'SidebarItem',
+
   components: {
     SidebarMenuItem,
     SidebarLink
   },
+
   mixins: [IsExternal, FixiOSBug],
+
   props: {
     // route object
     item: {
@@ -78,12 +81,14 @@ export default {
       default: ''
     }
   },
+
   data() {
     // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
     // TODO: refactor with render function
     this.onlyOneChild = null
     return {}
   },
+
   methods: {
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter((item) => {
@@ -109,6 +114,7 @@ export default {
 
       return false
     },
+
     resolvePath(routePath) {
       if (this.isExternal(routePath)) {
         return routePath

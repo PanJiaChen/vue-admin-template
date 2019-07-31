@@ -7,15 +7,13 @@
     />
     <layout-sidebar
       class="layout-sidebar"
-      :show-logo="showLogo"
-      :logo-url="sidebarLogoUrl"
       :collapsed="sidebarCollapsed"
       :menu-routes="sidebarMenuRoutes"
       :menu-config="sidebarMenuConfig"
     />
     <div class="layout-main">
       <div :class="{ 'fixed-header': fixedHeader }">
-        <layout-navbar :sidebaaar="sidebaaar" @layout-hamburger-click="$emit('layout-sidebar-toggle')" />
+        <layout-navbar @layout-hamburger-click="toggleOpenedSidebar(sidebaaar)" />
       </div>
       <div class="layout-main-slot">
         <slot>
@@ -23,6 +21,9 @@
         </slot>
       </div>
     </div>
+    <layout-right-panel>
+      <slot name="right-panel" />
+    </layout-right-panel>
   </div>
 </template>
 
@@ -34,27 +35,41 @@
  * any ties to vue-router, or vuex directly.
  */
 
-import { Navbar, Sidebar } from './components'
-
 /** @type {import('vue').VueConstructor} */
 export default {
   name: 'Layout',
+
   components: {
-    'layout-navbar': Navbar,
-    'layout-sidebar': Sidebar
+    'layout-navbar': () => import('./components/Navbar'),
+    'layout-sidebar': () => import('./components/Sidebar'),
+    'layout-right-panel': () => import('./components/right-panel')
   },
+
   props: {
     sidebaaar: {
       type: Object,
-      default: () => ({ opened: true, withoutAnimation: true })
+      default() {
+        return {
+          opened: true,
+          withoutAnimation: false
+        }
+      }
     },
-    sidebarLogoUrl: {
+    rightPanel: {
+      type: Object,
+      default() {
+        return {
+          opened: false
+        }
+      }
+    },
+    logoUrl: {
       type: String,
-      required: false
+      default: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
     },
-    showLogo: {
+    logoHidden: {
       type: Boolean,
-      default: true
+      default: false
     },
     sidebarMenuConfig: {
       type: Object,
@@ -69,20 +84,24 @@ export default {
       default: true
     }
   },
+
   computed: {
     sidebarCollapsed() {
       return this.sidebarOpened !== true
     },
+
     sidebarOpened() {
       const { opened = false } = this.sidebaaar
       // console.log('layout.computed.sidebarOpened', opened)
       return opened
     },
+
     isMobileAndOpened() {
       const mobile = this.layoutVariant === 'mobile'
       const opened = this.sidebarOpened
       return opened && mobile
     },
+
     classObj() {
       const opened = this.sidebarOpened
       const mobile = this.layoutVariant === 'mobile'
@@ -95,6 +114,63 @@ export default {
       }
       // console.log('Layout.computed.classObj', classMap)
       return classMap
+    }
+  },
+
+  provide() {
+    return {
+      layout: this
+    }
+  },
+
+  methods: {
+    setSidebarState(state = {}) {
+      const changeset = { opened: false, ...state }
+      const previousState = { ...this.sidebaaar }
+      let hasChanges = false
+      for (const [prop, val] of Object.entries(changeset)) {
+        if (this.sidebaaar[prop] !== val) {
+          hasChanges = true
+          this.$set(this.sidebaaar, prop, val)
+        }
+      }
+      if (hasChanges) {
+        this.$emit('layout-sidebar', this.sidebaaar)
+      }
+      const changedState = { ...this.sidebaaar }
+      console.log('Layout.methods.setSidebarState', { hasChanges, changeset, previousState, changedState })
+    },
+
+    toggleOpenedSidebar(state = {}) {
+      const changeset = { opened: false, ...state }
+      const { opened } = changeset
+      this.setSidebarState({
+        opened: !opened
+      })
+    },
+
+    setRightPanelState(state = {}) {
+      const changeset = { opened: false, ...state }
+      // const previousState = { ...this.rightPanel }
+      let hasChanges = false
+      for (const [prop, val] of Object.entries(changeset)) {
+        if (this.rightPanel[prop] !== val) {
+          hasChanges = true
+          this.$set(this.rightPanel, prop, val)
+        }
+      }
+      if (hasChanges) {
+        this.$emit('layout-right-panel', this.rightPanel)
+      }
+      // const changedState = { ...this.rightPanel }
+      // console.log('Layout.methods.setRightPanelState', { hasChanges, changeset, previousState, changedState })
+    },
+    toggleOpenedRightPanel(state = {}) {
+      // console.log('Layout.methods.toggleOpenedRightPanel', { ...state })
+      const { opened } = state
+      this.setRightPanelState({
+        opened: !opened
+      })
     }
   }
 }

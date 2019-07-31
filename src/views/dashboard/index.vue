@@ -1,6 +1,16 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
+    <dl>
+      <dt>Right Panel</dt>
+      <dd>
+        <el-button @click="$store.dispatch('layout/toggleRightPanel')">Right Panel</el-button>
+      </dd>
+      <dt>Sidebar</dt>
+      <dd>
+        <el-button @click="$store.dispatch('layout/toggleSidebar')">Sidebar</el-button>
+      </dd>
+    </dl>
   </div>
 </template>
 

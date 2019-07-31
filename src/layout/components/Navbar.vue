@@ -53,15 +53,16 @@ import Hamburger from '@/components/Hamburger'
 
 /** @type {import('vue').VueConstructor} */
 export default {
+  name: 'LayoutNavbar',
+
   components: {
     Breadcrumb,
     Hamburger
   },
+
+  inject: ['layout'],
+
   props: {
-    sidebaaar: {
-      type: Object,
-      default: () => ({ opened: true, withoutAnimation: true })
-    },
     avatarImageBaseUrl: {
       type: String,
       default: ''
@@ -71,12 +72,14 @@ export default {
       default: 'imageView2/1/w/80/h/80'
     }
   },
+
   computed: {
+
     isActive() {
-      const { opened = false } = this.sidebaaar
-      // console.log('Navabar.computed.isActive', opened)
-      return !opened
+      const sidebarOpened = this.layout.sidebarOpened
+      return sidebarOpened
     },
+
     avatarImage() {
       const hasBaseUrl = String(this.avatarImageBaseUrl).length > 1
       const hasAvatarImageViewQueryParam =
