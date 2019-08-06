@@ -4,7 +4,6 @@
     :right-panel="rightPanel"
     :fixed-header="fixedHeader"
     :sidebar-menu-config="sidebarMenuConfig"
-    :sidebar-menu-routes="sidebarMenuRoutes"
     :logo-url="logoUrl"
     :logo-hidden="logoHidden"
     @layout-click-outside="handleClickOutside"

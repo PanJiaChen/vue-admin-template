@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <div class="layout-navbar layout-navbar--component" :class="{'layout-navbar-fixed': isFixed }">
     <hamburger
       :is-active="isActive"
       class="hamburger-container"
@@ -75,6 +75,11 @@ export default {
 
   computed: {
 
+    isFixed() {
+      const fixedHeader = this.layout.fixedHeader
+      return fixedHeader
+    },
+
     isActive() {
       const sidebarOpened = this.layout.sidebarOpened
       return sidebarOpened
@@ -99,12 +104,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.navbar {
+.layout-navbar {
   height: 50px;
   overflow: hidden;
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+
+  &.layout-navbar-fixed {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    transition: width 0.28s;
+  }
 
   .hamburger-container {
     line-height: 46px;

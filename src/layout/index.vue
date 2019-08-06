@@ -8,14 +8,16 @@
     <layout-sidebar
       class="layout-sidebar"
       :collapsed="sidebarCollapsed"
-      :menu-routes="sidebarMenuRoutes"
-      :menu-config="sidebarMenuConfig"
     />
     <div class="layout-main">
-      <div :class="{ 'fixed-header': fixedHeader }">
-        <layout-navbar @layout-hamburger-click="toggleOpenedSidebar(sidebaaar)" />
-      </div>
-      <div class="layout-main-slot">
+      <layout-navbar
+        ref="layoutNavbarRef"
+        @layout-hamburger-click="toggleOpenedSidebar(sidebaaar)"
+      />
+      <div
+        class="layout-main-slot layout-main-wrapper"
+        :style="layoutMainWrapperStyles"
+      >
         <slot>
           <p>...</p>
         </slot>
@@ -35,14 +37,18 @@
  * any ties to vue-router, or vuex directly.
  */
 
+import LayoutNavbar from './components/Navbar'
+import LayoutSidebar from './components/Sidebar'
+import LayoutRightPanel from './components/right-panel'
+
 /** @type {import('vue').VueConstructor} */
 export default {
   name: 'Layout',
 
   components: {
-    'layout-navbar': () => import('./components/Navbar'),
-    'layout-sidebar': () => import('./components/Sidebar'),
-    'layout-right-panel': () => import('./components/right-panel')
+    LayoutNavbar,
+    LayoutSidebar,
+    LayoutRightPanel
   },
 
   props: {
@@ -71,13 +77,16 @@ export default {
       type: Boolean,
       default: false
     },
+    // Pass any parameters you get from Element UI theme
+    // As parameters for an el-menu object
+    // https://element.eleme.io/#/en-US/component/menu#menu-attribute
     sidebarMenuConfig: {
       type: Object,
-      default: () => ({})
-    },
-    sidebarMenuRoutes: {
-      type: Array,
-      default: () => ([])
+      default: () => ({
+        // backgroundColor: '#304156',
+        // textColor: '#bfcbd9',
+        // activeTextColor: '#409eff'
+      })
     },
     fixedHeader: {
       type: Boolean,
@@ -85,7 +94,26 @@ export default {
     }
   },
 
+  data() {
+    return {
+      // We'll use Vue to get a more accurate value, see at mounted LifeCycle hook.
+      layoutNavbarHeight: '50px'
+    }
+  },
+
   computed: {
+    layoutMainWrapperStyles() {
+      const paddingTop = this.layoutNavbarHeight
+      const fixedHeader = this.fixedHeader
+      const styles = {}
+      if (fixedHeader) {
+        Object.assign(styles, { paddingTop })
+        // const minHeight = `calc(100vh - ${layoutNavbarHeight}`
+        // Object.assign(styles, {minHeight})
+      }
+      return styles
+    },
+
     sidebarCollapsed() {
       return this.sidebarOpened !== true
     },
@@ -121,6 +149,36 @@ export default {
     return {
       layout: this
     }
+  },
+
+  mounted() {
+    /**
+     * On mounted Vue LifeCycle hook, get the actual Navbar height.
+     * Piggy back on the DOM to compute CSS, and get us its value.
+     */
+    this.$nextTick(() => {
+      if ('layoutNavbarRef' in this.$refs) {
+        const layoutNavbarRef = this.$refs.layoutNavbarRef
+        const { $el } = layoutNavbarRef
+        const {
+          /** @type {import('Window').document} */
+          ownerDocument
+        } = $el
+        const {
+          /** @type {import('Window')} */
+          defaultView
+        } = ownerDocument
+        // defaultView represent window. But this code is sensitive to
+        // only running when it is client-side, but using Vue.js' so
+        // we do not rely on global object, and will make this code
+        // ALSO work on SSR
+        const computedStyle = defaultView.getComputedStyle($el)
+        const { height } = computedStyle
+        this.layoutNavbarHeight = height
+        // const layoutNavbarHeight = this.layoutNavbarHeight
+        // console.log('layout.mounted $refs.layoutNavbarRef', { height, layoutNavbarHeight })
+      }
+    })
   },
 
   methods: {
@@ -180,6 +238,10 @@ export default {
 @import '~@/styles/mixin.scss';
 @import '~@/styles/variables.scss';
 
+.layout-main-wrapper {
+  background-color: aqua;
+}
+
 .layout-root {
   @include clearfix;
   position: relative;
@@ -200,20 +262,18 @@ export default {
   z-index: 999;
 }
 
-.fixed-header {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 9;
-  width: calc(100% - #{$sideBarWidth});
-  transition: width 0.28s;
+.layout-main-wrapper {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
 }
-
-.is-layout-sidebar-hidden .fixed-header {
+.layout-navbar.layout-navbar-fixed {
+  width: calc(100% - #{$sideBarWidth});
+}
+.is-layout-sidebar-hidden .layout-navbar-fixed {
   width: calc(100% - 54px);
 }
-
-.is-layout-mobile .fixed-header {
+.is-layout-mobile .layout-navbar-fixed {
   width: 100%;
 }
 </style>
