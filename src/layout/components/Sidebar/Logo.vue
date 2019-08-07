@@ -19,15 +19,15 @@
 </template>
 
 <script>
+import { LayoutDependent } from '../../mixins'
+
 /** @type {import('vue').VueConstructor} */
 export default {
-  name: 'SidebarLogo',
+  name: 'LayoutSidebarLogo',
+
+  mixins: [LayoutDependent],
 
   props: {
-    title: {
-      type: String,
-      default: 'Vue Admin Template'
-    },
     logoUrl: {
       type: String,
       default:
@@ -35,9 +35,15 @@ export default {
     }
   },
 
-  inject: ['layout'],
-
   computed: {
+    title() {
+      return this.layout.logoTitle
+    },
+
+    hasTitle() {
+      return this.title !== ''
+    },
+
     hasLogoUrl() {
       const hasLogoUrl = String(this.logoUrl).length > 1
       return hasLogoUrl
@@ -54,6 +60,7 @@ export default {
 
       return {
         'layout-sidebar-logo--component': true,
+        'layout-sidebar-logo--no-title': !this.hasTitle,
         'is-collapsed': collapsed,
         'has-logo': hasLogo
       }
@@ -70,6 +77,10 @@ export default {
 .sidebarLogoFade-enter,
 .sidebarLogoFade-leave-to {
   opacity: 0;
+}
+
+.layout-sidebar-logo--no-title .title {
+  display: none;
 }
 
 .layout-sidebar-logo--component {
@@ -102,10 +113,10 @@ export default {
     }
   }
 
-  // &.is-collapsed {
-  //   img {
-  //     margin-right: 0px;
-  //   }
-  // }
+  &.is-collapsed {
+    img {
+      margin-right: 0px;
+    }
+  }
 }
 </style>

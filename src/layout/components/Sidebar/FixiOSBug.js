@@ -1,4 +1,3 @@
-
 export default {
   props: {
     isMobile: {
@@ -15,7 +14,9 @@ export default {
   methods: {
     $fixBugIniOS() {
       const { subMenu } = this.$refs
-      const hasHandleMouseleave = subMenu ? Reflect.has(subMenu, 'handleMouseleave') : false
+      const hasHandleMouseleave = subMenu
+        ? Reflect.has(subMenu, 'handleMouseleave')
+        : false
       if (hasHandleMouseleave) {
         const isMobile = this.isMobile
         const handleMouseleave = subMenu.handleMouseleave

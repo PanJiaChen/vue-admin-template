@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!item.hidden" class="menu-wrapper layout-sidebar-item--component">
+  <div v-if="!item.hidden" class="layout-sidebar-item--component">
     <template
       v-if="
         hasOneShowingChild(item.children, item) &&
@@ -7,20 +7,21 @@
           !item.alwaysShow
       "
     >
-      <sidebar-link
+      <layout-sidebar-link
         v-if="onlyOneChild.meta"
         :to="resolvePath(onlyOneChild.path)"
       >
         <el-menu-item
           :index="resolvePath(onlyOneChild.path)"
           :class="{ 'submenu-title-no-dropdown': !isNest }"
+          @click="layout.emitNavigate($event)"
         >
-          <sidebar-menu-item
+          <layout-sidebar-menu-item
             :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"
             :title="onlyOneChild.meta.title"
           />
         </el-menu-item>
-      </sidebar-link>
+      </layout-sidebar-link>
     </template>
 
     <el-submenu
@@ -29,14 +30,14 @@
       :index="resolvePath(item.path)"
       popper-append-to-body
     >
-      <template slot="title">
-        <sidebar-menu-item
+      <template #title>
+        <layout-sidebar-menu-item
           v-if="item.meta"
           :icon="item.meta && item.meta.icon"
           :title="item.meta.title"
         />
       </template>
-      <sidebar-item
+      <layout-sidebar-item
         v-for="child in item.children"
         :key="child.path"
         :is-nest="true"
@@ -50,21 +51,21 @@
 
 <script>
 import path from 'path'
-import { IsExternal } from '@/mixins'
-import SidebarMenuItem from './MenuItem'
-import SidebarLink from './Link'
-import FixiOSBug from './FixiOSBug'
+import LayoutSidebarMenuItem from './MenuItem.vue'
+import LayoutSidebarLink from './Link.vue'
+import FixiOSBug from './FixiOSBug.js'
+import { IsExternal, LayoutDependent } from '../../mixins'
 
 /** @type {import('vue').VueConstructor} */
 export default {
-  name: 'SidebarItem',
+  name: 'LayoutSidebarItem',
 
   components: {
-    SidebarMenuItem,
-    SidebarLink
+    LayoutSidebarMenuItem,
+    LayoutSidebarLink
   },
 
-  mixins: [IsExternal, FixiOSBug],
+  mixins: [FixiOSBug, IsExternal, LayoutDependent],
 
   props: {
     // route object

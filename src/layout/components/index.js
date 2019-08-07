@@ -1,2 +1,6 @@
-export { default as Navbar } from './Navbar'
-export { default as Sidebar } from './Sidebar'
+export { default as LayoutNavbar } from './Navbar.vue'
+export { default as LayoutRightPanel } from './RightPanel.vue'
+export { default as LayoutSidebar } from './Sidebar/index.vue'
+export { default as LayoutHamburger } from './Hamburger.vue'
+export { default as SvgIcon } from './SvgIcon.vue'
+export { default as LayoutBreadcrumb } from './Breadcrumb.vue'

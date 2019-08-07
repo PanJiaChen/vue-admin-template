@@ -1,11 +1,9 @@
 <template>
   <div :class="classObj" :data-logo-url="logoUrl">
-    <sidebar-logo v-if="logoShow" :logo-url="logoUrl" />
-    <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu
-        v-bind="elMenuConfig"
-      >
-        <sidebar-item
+    <layout-sidebar-logo v-if="logoShow" :logo-url="logoUrl" />
+    <el-scrollbar wrap-class="scrollbar-container">
+      <el-menu v-bind="elMenuConfig">
+        <layout-sidebar-item
           v-for="route in menuRoutes"
           :key="route.path"
           :item="route"
@@ -17,19 +15,20 @@
 </template>
 
 <script>
-import SidebarItem from './Item'
-import SidebarLogo from './Logo'
+import LayoutSidebarItem from './Item.vue'
+import LayoutSidebarLogo from './Logo.vue'
+import { LayoutDependent } from '../../mixins'
 
 /** @type {import('vue').VueConstructor} */
 export default {
   name: 'LayoutSidebar',
 
   components: {
-    SidebarItem,
-    SidebarLogo
+    LayoutSidebarItem,
+    LayoutSidebarLogo
   },
 
-  inject: ['layout'],
+  mixins: [LayoutDependent],
 
   computed: {
     elMenuConfig() {

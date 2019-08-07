@@ -1,8 +1,10 @@
 <script>
 /** @type {import('vue').VueConstructor} */
 export default {
-  name: 'SidebarMenuItem',
+  name: 'LayoutSidebarMenuItem',
+
   functional: true,
+
   props: {
     icon: {
       type: String,
@@ -13,17 +15,19 @@ export default {
       default: ''
     }
   },
+
   render(h, context) {
     const { icon, title } = context.props
     const vnodes = []
 
-    if (icon) {
-      vnodes.push(<svg-icon icon-class={icon} />)
+    if (icon !== '') {
+      vnodes.push(h('svg-icon', { props: { iconClass: icon }}))
     }
 
     if (title) {
-      vnodes.push(<span slot='title'>{title}</span>)
+      vnodes.push(h('span', { slot: 'title' }, [title]))
     }
+
     return vnodes
   }
 }

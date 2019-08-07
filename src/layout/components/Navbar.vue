@@ -1,45 +1,37 @@
 <template>
-  <div class="layout-navbar layout-navbar--component" :class="{'layout-navbar-fixed': isFixed }">
-    <hamburger
-      :is-active="isActive"
-      class="hamburger-container"
-      @layout-hamburger-click="$emit('layout-hamburger-click')"
-    />
+  <div :class="classObj" class="layout-navbar--component">
+    <div class="navbar-left">
+      <div class="navbar-left-item">
+        <layout-hamburger />
+      </div>
+      <slot name="navbarLeft">
+        <div class="navbar-left-item navbar-breadcrumb-parent">
+          <layout-breadcrumb />
+        </div>
+      </slot>
+    </div>
 
-    <breadcrumb class="breadcrumb-container" />
-
-    <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
-          <slot name="avatar">
-            <img
-              v-if="avatarImage !== ''"
-              :src="avatarImage"
-              class="user-avatar"
-            >
-          </slot>
+    <div class="navbar-right">
+      <el-dropdown class="avatar-container navbar-right-item" trigger="click">
+        <div class="avatar-container">
+          <component :is="avatarSlot.is" :key="avatarSlot.key">
+            <img v-if="hasAvatarImage" :src="avatarImage" class="user-avatar">
+          </component>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/">
-            <el-dropdown-item>
-              Home
-            </el-dropdown-item>
-          </router-link>
-          <a
-            target="_blank"
-            href="https://github.com/PanJiaChen/vue-admin-template/"
-          >
-            <el-dropdown-item>Github</el-dropdown-item>
-          </a>
-          <a
-            target="_blank"
-            href="https://panjiachen.github.io/vue-element-admin-site/#/"
-          >
-            <el-dropdown-item>Docs</el-dropdown-item>
-          </a>
+          <component :is="avatarDropdownSlot.is" :key="avatarDropdownSlot.key">
+            <router-link to="/">
+              <el-dropdown-item>
+                Home
+              </el-dropdown-item>
+            </router-link>
+          </component>
           <el-dropdown-item divided>
-            <span style="display:block;" @click="$emit('logout')">Log Out</span>
+            <span
+              style="display:block;"
+              @click="layout.$emit('logout')"
+            >Log Out</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -48,95 +40,109 @@
 </template>
 
 <script>
-import Breadcrumb from '@/components/Breadcrumb'
-import Hamburger from '@/components/Hamburger'
+import LayoutBreadcrumb from './Breadcrumb.vue'
+import LayoutHamburger from './Hamburger.vue'
+import { LayoutDependent } from '../mixins'
 
 /** @type {import('vue').VueConstructor} */
 export default {
   name: 'LayoutNavbar',
 
   components: {
-    Breadcrumb,
-    Hamburger
+    LayoutBreadcrumb,
+    LayoutHamburger
   },
 
-  inject: ['layout'],
-
-  props: {
-    avatarImageBaseUrl: {
-      type: String,
-      default: ''
-    },
-    avatarImageViewQueryParam: {
-      type: String,
-      default: 'imageView2/1/w/80/h/80'
-    }
-  },
+  mixins: [LayoutDependent],
 
   computed: {
+    avatarSlot() {
+      // rel=#UpdatingLocalSlot Method 2
+      const name = 'avatar'
+      const slot = this.createComponentDefinition(name)
+      return slot
+    },
 
-    isFixed() {
+    avatarDropdownSlot() {
+      // rel=#UpdatingLocalSlot Method 2
+      const name = 'avatarDropdown'
+      const slot = this.createComponentDefinition(name)
+      return slot
+    },
+
+    userSessionBox() {
+      const { avatar = '', name = '' } = this.layout.navbarUserSessionBox
+      return {
+        avatar,
+        name
+      }
+    },
+
+    fixedHeader() {
       const fixedHeader = this.layout.fixedHeader
       return fixedHeader
     },
 
-    isActive() {
+    sidebarOpened() {
       const sidebarOpened = this.layout.sidebarOpened
       return sidebarOpened
     },
 
+    hasAvatarImage() {
+      return String(this.userSessionBox.avatar).length > 1
+    },
+
     avatarImage() {
-      const hasBaseUrl = String(this.avatarImageBaseUrl).length > 1
-      const hasAvatarImageViewQueryParam =
-        String(this.avatarImageViewQueryParam).length > 1
+      const hasBaseUrl = String(this.userSessionBox.avatar).length > 1
       if (!hasBaseUrl) {
         return ''
       }
-      const baseUrl = this.avatarImageBaseUrl
-      const queryParams = hasAvatarImageViewQueryParam
-        ? '?' + this.avatarImageViewQueryParam
-        : ''
-      const src = `${baseUrl}${queryParams}`
-      return src
+      return this.userSessionBox.avatar
+    },
+
+    classObj() {
+      const fixedHeader = this.fixedHeader
+      const sidebarOpened = this.sidebarOpened
+      const classMap = {
+        'is-layout-navbar-sidebar-opened': sidebarOpened,
+        'is-layout-navbar-fixed': fixedHeader,
+        'layout-navbar': true
+      }
+      return classMap
+    }
+  },
+
+  methods: {
+    slotMountAll() {
+      // rel=#UpdatingLocalSlot Method 1
+      this.slotMount('navbarLeft', 'navbarLeft')
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.layout-navbar {
-  height: 50px;
-  overflow: hidden;
-  position: relative;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+<style lang="scss">
+.layout-navbar--component {
 
-  &.layout-navbar-fixed {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 9;
-    transition: width 0.28s;
-  }
-
-  .hamburger-container {
-    line-height: 46px;
-    height: 100%;
+  .navbar-left {
     float: left;
-    cursor: pointer;
-    transition: background 0.3s;
-    -webkit-tap-highlight-color: transparent;
 
-    &:hover {
-      background: rgba(0, 0, 0, 0.025);
+    .navbar-left-item {
+      display: inline-block;
+    }
+
+    /**
+     * Notice we're not overriding layout-breadcrumb
+     * But rather adjust it to suit WHEN USED AS PART of the Navbar
+     *
+     * NOTE: It would be best to NOT use padding as way of aligning.
+     */
+    .navbar-breadcrumb-parent {
+      padding: 18px 0px;
     }
   }
 
-  .breadcrumb-container {
-    float: left;
-  }
-
-  .right-menu {
+  .navbar-right {
     float: right;
     height: 100%;
     line-height: 50px;
@@ -145,7 +151,7 @@ export default {
       outline: none;
     }
 
-    .right-menu-item {
+    .navbar-right-item {
       display: inline-block;
       padding: 0 8px;
       height: 100%;
@@ -162,11 +168,33 @@ export default {
         }
       }
     }
+  }
+}
+</style>
+
+<style lang="scss" scoped>
+.layout-navbar--component {
+  height: 50px;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+
+  &.is-layout-navbar-fixed {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    transition: width 0.28s;
+    width: 100%;
+  }
+
+  .navbar-right {
 
     .avatar-container {
       margin-right: 30px;
 
-      .avatar-wrapper {
+      .avatar-container {
         margin-top: 5px;
         position: relative;
 

@@ -2,29 +2,24 @@
   <div :class="classObj" class="layout--component">
     <div
       v-if="isMobileAndOpened"
-      class="drawer-bg"
+      class="is-layout-focus-backdrop focus-backdrop"
       @click="$emit('layout-sidebar', { opened: false })"
     />
-    <layout-sidebar
-      class="layout-sidebar"
-      :collapsed="sidebarCollapsed"
-    />
+    <layout-sidebar class="layout-sidebar" :collapsed="sidebarCollapsed" />
     <div class="layout-main">
       <layout-navbar
         ref="layoutNavbarRef"
-        @layout-hamburger-click="toggleOpenedSidebar(sidebaaar)"
+        class="layout-navbar-container"
+        @layout-hamburger-click="toggleOpenedSidebar(sidebarState)"
       />
-      <div
-        class="layout-main-wrapper"
-        :style="layoutMainWrapperStyles"
-      >
+      <div class="layout-main-container" :style="layoutMainContainerStyles">
         <slot>
           <p>...</p>
         </slot>
       </div>
     </div>
     <layout-right-panel>
-      <slot name="right-panel" />
+      <slot name="rightPanel" />
     </layout-right-panel>
   </div>
 </template>
@@ -37,25 +32,28 @@
  * any ties to vue-router, or vuex directly.
  */
 
-import LayoutNavbar from './components/Navbar'
-import LayoutSidebar from './components/Sidebar'
-import LayoutRightPanel from './components/right-panel'
-import LayoutVariantMixin from './layout-variant'
+import * as components from './components'
+import { LayoutVariant, LayoutProvider, LayoutSidebarMenu } from './mixins'
 
 /** @type {import('vue').VueConstructor} */
-export default {
+const main = {
   name: 'Layout',
 
-  components: {
-    LayoutNavbar,
-    LayoutSidebar,
-    LayoutRightPanel
-  },
+  components,
 
-  mixins: [LayoutVariantMixin],
+  mixins: [LayoutVariant, LayoutSidebarMenu, LayoutProvider],
 
   props: {
-    sidebaaar: {
+    navbarState: {
+      type: Object,
+      default: () => {
+        return {
+          fixed: false
+        }
+      }
+    },
+
+    sidebarState: {
       type: Object,
       default: () => {
         return {
@@ -65,7 +63,7 @@ export default {
       }
     },
 
-    rightPanel: {
+    rightPanelState: {
       type: Object,
       default: () => {
         return {
@@ -74,126 +72,35 @@ export default {
       }
     },
 
+    navbarUserSessionBox: {
+      type: Object,
+      default: () => {
+        return {
+          avatar: '',
+          name: ''
+        }
+      }
+    },
+
+    avatarImageBaseUrl: {
+      type: String,
+      default: ''
+    },
+
     logoUrl: {
       type: String,
-      default: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      default:
+        'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+    },
+
+    logoTitle: {
+      type: String,
+      default: 'Vue Admin Template'
     },
 
     logoHidden: {
       type: Boolean,
       default: false
-    },
-
-    /**
-     * Sidebar menu configuration.
-     *
-     * You can pass [any properties that Element UI el-menu][el-menu-attributes] can accept.
-     *
-     * [el-menu-attributes]: https://element.eleme.io/#/en-US/component/menu#menu-attribute
-     *
-     * For example:
-     *
-     * ```js
-     * const sidebarMenuConfig = {
-     *   backgroundColor: '#304156',
-     *   textColor: '#bfcbd9',
-     *   activeTextColor: '#409eff'
-     * }
-     * ```
-     *
-     * Then
-     *
-     * ```
-     * <layout
-     *   :sidebar-menu-config="sidebarMenuConfig"
-     * />
-     * ```
-     */
-    sidebarMenuConfig: {
-      type: Object,
-      default: () => ({})
-    },
-
-    /**
-     * Sidebar navigation.
-     *
-     * We can either leverage Vue Router's Array of RouteConfig.
-     * The main requirement is that each item has the following shape
-     *
-     * ```
-     * {
-     *   path: '/',
-     *   name: 'home',
-     *   meta: {
-     *     title: 'Home',
-     *     icon: 'home'
-     *   }
-     * }
-     * ```
-     *
-     * Vue Router supports meta properties, if we set title and icon, it should work.
-     * If you use Nuxt.js, [you can add a meta key in pages][nuxt-router-meta]
-     *
-     * [nuxt-router-meta]: https://github.com/nuxt/nuxt.js/tree/2.x/examples/routes-meta
-     *
-     * Or, alternatively, you can pass menu items directly.
-     *
-     * ```javascript
-     * const routes = [
-     *   {
-     *     path: '/',
-     *     redirect: '/dashboard',
-     *     children: [
-     *       {
-     *         path: 'dashboard',
-     *         name: 'Dashboard',
-     *         meta: {
-     *           title: 'Dashboard',
-     *           icon: 'dashboard'
-     *         }
-     *       }
-     *     ]
-     *   },
-     *   {
-     *     path: '/about',
-     *     name: 'About',
-     *     meta: {
-     *       title: 'About',
-     *       icon: 'user'
-     *     }
-     *   }
-     * ]
-     * ```
-     *
-     * If you have a vue-router instance, when importing layout, you can pass it directly;
-     *
-     * ```
-     * <layout
-     *   :sidebar-menu-routes="$router.options.routes"
-     * />
-     * ```
-     *
-     * @type {Array<import('vue-router').RouteConfig>}
-     */
-    sidebarMenuRoutes: {
-      type: Array,
-      default: () => {
-        /** @type {Array<import('vue-router').RouteConfig[]} */
-        return [
-          {
-            path: '/',
-            meta: {
-              title: 'Home',
-              icon: 'dashboard'
-            }
-          }
-        ]
-      }
-
-    },
-    fixedHeader: {
-      type: Boolean,
-      default: true
     }
   },
 
@@ -205,7 +112,7 @@ export default {
   },
 
   computed: {
-    layoutMainWrapperStyles() {
+    layoutMainContainerStyles() {
       const paddingTop = this.layoutNavbarHeight
       const fixedHeader = this.fixedHeader
       const styles = {}
@@ -217,13 +124,16 @@ export default {
       return styles
     },
 
+    fixedHeader() {
+      return this.navbarState.fixed === true
+    },
+
     sidebarCollapsed() {
       return this.sidebarOpened !== true
     },
 
     sidebarOpened() {
-      const { opened = false } = this.sidebaaar
-      // console.log('layout.computed.sidebarOpened', opened)
+      const { opened = false } = this.sidebarState
       return opened
     },
 
@@ -243,14 +153,7 @@ export default {
         'is-layout-mobile': mobile,
         'is-layout-desktop': desktop
       }
-      // console.log('Layout.computed.classObj', classMap)
       return classMap
-    }
-  },
-
-  provide() {
-    return {
-      layout: this
     }
   },
 
@@ -278,8 +181,6 @@ export default {
         const computedStyle = defaultView.getComputedStyle($el)
         const { height } = computedStyle
         this.layoutNavbarHeight = height
-        // const layoutNavbarHeight = this.layoutNavbarHeight
-        // console.log('layout.mounted $refs.layoutNavbarRef', { height, layoutNavbarHeight })
       }
     })
   },
@@ -289,13 +190,13 @@ export default {
       const changeset = { opened: false, ...state }
       let hasChanges = false
       for (const [prop, val] of Object.entries(changeset)) {
-        if (this.sidebaaar[prop] !== val) {
+        if (this.sidebarState[prop] !== val) {
           hasChanges = true
-          this.$set(this.sidebaaar, prop, val)
+          this.$set(this.sidebarState, prop, val)
         }
       }
       if (hasChanges) {
-        this.$emit('layout-sidebar', this.sidebaaar)
+        this.$emit('layout-sidebar', this.sidebarState)
       }
     },
 
@@ -307,36 +208,74 @@ export default {
       })
     },
 
+    setNavbarState(state = {}) {
+      const changeset = { fixed: false, ...state }
+      let hasChanges = false
+      for (const [prop, val] of Object.entries(changeset)) {
+        if (this.navbarState[prop] !== val) {
+          hasChanges = true
+          this.$set(this.navbarState, prop, val)
+        }
+      }
+      if (hasChanges) {
+        this.$emit('layout-navbar', this.navbarState)
+      }
+    },
+
     setRightPanelState(state = {}) {
       const changeset = { opened: false, ...state }
       let hasChanges = false
       for (const [prop, val] of Object.entries(changeset)) {
-        if (this.rightPanel[prop] !== val) {
+        if (this.rightPanelState[prop] !== val) {
           hasChanges = true
-          this.$set(this.rightPanel, prop, val)
+          this.$set(this.rightPanelState, prop, val)
         }
       }
       if (hasChanges) {
-        this.$emit('layout-right-panel', this.rightPanel)
+        this.$emit('layout-right-panel', this.rightPanelState)
       }
     },
+
     toggleOpenedRightPanel(state = {}) {
-      // console.log('Layout.methods.toggleOpenedRightPanel', { ...state })
       const { opened } = state
       this.setRightPanelState({
         opened: !opened
       })
+    },
+
+    emitNavigate(event) {
+      const isMobileAndOpened = this.isMobileAndOpened
+      this.$emit('navigate', event)
+      // console.log('Layout.methods.emitNavigate', { isMobileAndOpened })
+
+      if (isMobileAndOpened) {
+        this.setSidebarState({
+          opened: false
+        })
+      }
     }
   }
 }
+
+export default main
 </script>
 
-<style lang="scss" scoped>
-@import '~@/styles/mixin.scss';
-@import '~@/styles/variables.scss';
+<style>
+.focus-backdrop {
+  background: rgba(0, 0, 0, 0.8);
+  transition: opacity 0.3s cubic-bezier(0.8, 0.3, 0.1, 1);
+}
+.is-layout-focus-backdrop {
+  width: 100%;
+  top: 0;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+}
+</style>
 
+<style lang="scss" scoped>
 .layout--component {
-  @include clearfix;
   position: relative;
   height: 100%;
   width: 100%;
@@ -345,27 +284,9 @@ export default {
     top: 0;
   }
 }
-.drawer-bg {
-  background: #000;
-  opacity: 0.3;
-  width: 100%;
-  top: 0;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-}
-.layout-main-wrapper {
+.layout-main-container {
   width: 100%;
   position: relative;
   overflow: hidden;
-}
-.layout-navbar.layout-navbar-fixed {
-  width: calc(100% - #{$sideBarWidth});
-}
-.is-layout-sidebar-hidden .layout-navbar-fixed {
-  width: calc(100% - 54px);
-}
-.is-layout-mobile .layout-navbar-fixed {
-  width: 100%;
 }
 </style>

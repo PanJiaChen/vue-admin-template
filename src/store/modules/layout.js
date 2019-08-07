@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import { fixedHeader } from '@/settings'
 
 // Foo
 const state = {
@@ -8,6 +9,9 @@ const state = {
   },
   rightPanel: {
     opened: false
+  },
+  navbar: {
+    fixed: fixedHeader
   },
   device: 'desktop'
 }
@@ -40,6 +44,9 @@ const mutations = {
   },
   SIDEBAR_OPENED(state, opened) {
     state.sidebar.opened = opened
+  },
+  NAVBAR_FIXED(state, fixed) {
+    state.navbar.fixed = fixed
   }
 }
 

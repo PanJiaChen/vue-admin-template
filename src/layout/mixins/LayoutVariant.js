@@ -4,7 +4,6 @@ export function onMounted() {
   const hasMethod = Reflect.has(this, 'checkIfMobile')
   const hasResizeHandler = Reflect.has(this, 'onResize')
   const hasEl = Reflect.has(this, '$el')
-  // console.log('layout-variant onMounted', { hasMethod, hasResizeHandler, hasEl })
   if (hasMethod && hasResizeHandler && hasEl) {
     const isMobile = this.checkIfMobile()
     const { defaultView } = this.$el.ownerDocument
@@ -26,7 +25,6 @@ export function checkIfMobile() {
   const hasEl = Reflect.has(this, '$el')
   const mobileBreakPoint = this.mobileBreakPoint ? this.mobileBreakPoint : WIDTH
   let isMobile = false
-  // console.log('layout-variant checkIfMobile', { mobileBreakPoint, hasEl })
   if (hasEl) {
     const $el = this.$el
     let bodyRectWidth = mobileBreakPoint
@@ -50,7 +48,7 @@ export function checkIfMobile() {
 }
 
 /** @type {import('vue').VueConstructor} */
-const mixin = {
+const main = {
   data() {
     const layoutVariant = 'desktop'
     const layoutIsHidden = false
@@ -94,10 +92,12 @@ const mixin = {
       const isMobile = this.checkIfMobile(this)
       const layoutVariant = isMobile ? 'mobile' : 'desktop'
       const layoutVariantChanged = layoutVariant !== this.layoutVariant
-      console.log('layout-variant.methods.onResize', { hidden, isMobile, layoutVariant, layoutVariantChanged })
       this.layoutVariant = layoutVariant
       if (!hidden && layoutVariantChanged) {
         this.$emit('layout-variant', layoutVariant)
+        this.$emit('layout-navbar', {
+          fixed: isMobile
+        })
         this.$emit('layout-sidebar', {
           opened: !isMobile,
           withoutAnimation: true
@@ -107,4 +107,4 @@ const mixin = {
   }
 }
 
-export default mixin
+export default main
