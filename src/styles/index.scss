@@ -10,8 +10,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB,
-    Microsoft YaHei, Arial, sans-serif;
+  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
 }
 
 label {
@@ -59,11 +58,4 @@ div:focus {
     clear: both;
     height: 0;
   }
-}
-
-// layout-root global CSS, which contains
-// - layout-sidebar
-// - layout-main
-.layout-main .layout-main-slot {
-  padding: 20px;
 }

@@ -4,6 +4,7 @@ export function onMounted() {
   const hasMethod = Reflect.has(this, 'checkIfMobile')
   const hasResizeHandler = Reflect.has(this, 'onResize')
   const hasEl = Reflect.has(this, '$el')
+  // console.log('layout-variant onMounted', { hasMethod, hasResizeHandler, hasEl })
   if (hasMethod && hasResizeHandler && hasEl) {
     const isMobile = this.checkIfMobile()
     const { defaultView } = this.$el.ownerDocument
@@ -25,6 +26,7 @@ export function checkIfMobile() {
   const hasEl = Reflect.has(this, '$el')
   const mobileBreakPoint = this.mobileBreakPoint ? this.mobileBreakPoint : WIDTH
   let isMobile = false
+  // console.log('layout-variant checkIfMobile', { mobileBreakPoint, hasEl })
   if (hasEl) {
     const $el = this.$el
     let bodyRectWidth = mobileBreakPoint
@@ -76,31 +78,30 @@ const mixin = {
     }
   },
   async beforeDestroy() {
-    const handler = this.$resizeHandler
+    const handler = this.onResize
     const $el = this.$el
     await this.$nextTick(async() => {
       const { defaultView } = $el.ownerDocument
       defaultView.removeEventListener('resize', handler)
     })
   },
-  mounted() {
-    this.$nextTick(onMounted.bind(this))
+  async mounted() {
+    await this.$nextTick(onMounted.bind(this))
   },
   methods: {
-    $resizeHandler() {
+    onResize() {
       const { hidden = false } = this.$el.ownerDocument
       const isMobile = this.checkIfMobile(this)
       const layoutVariant = isMobile ? 'mobile' : 'desktop'
       const layoutVariantChanged = layoutVariant !== this.layoutVariant
+      console.log('layout-variant.methods.onResize', { hidden, isMobile, layoutVariant, layoutVariantChanged })
       this.layoutVariant = layoutVariant
       if (!hidden && layoutVariantChanged) {
         this.$emit('layout-variant', layoutVariant)
-        if (isMobile) {
-          this.$emit('layout-sidebar', {
-            opened: false,
-            withoutAnimation: true
-          })
-        }
+        this.$emit('layout-sidebar', {
+          opened: !isMobile,
+          withoutAnimation: true
+        })
       }
     }
   }

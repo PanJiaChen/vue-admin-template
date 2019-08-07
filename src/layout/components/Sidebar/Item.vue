@@ -13,7 +13,7 @@
       >
         <el-menu-item
           :index="resolvePath(onlyOneChild.path)"
-          :class="{ 'submenu-title-noDropdown': !isNest }"
+          :class="{ 'submenu-title-no-dropdown': !isNest }"
         >
           <sidebar-menu-item
             :icon="onlyOneChild.meta.icon || (item.meta && item.meta.icon)"

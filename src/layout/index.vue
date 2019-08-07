@@ -1,5 +1,5 @@
 <template>
-  <div :class="classObj" class="layout-root">
+  <div :class="classObj" class="layout--component">
     <div
       v-if="isMobileAndOpened"
       class="drawer-bg"
@@ -15,7 +15,7 @@
         @layout-hamburger-click="toggleOpenedSidebar(sidebaaar)"
       />
       <div
-        class="layout-main-slot layout-main-wrapper"
+        class="layout-main-wrapper"
         :style="layoutMainWrapperStyles"
       >
         <slot>
@@ -40,6 +40,7 @@
 import LayoutNavbar from './components/Navbar'
 import LayoutSidebar from './components/Sidebar'
 import LayoutRightPanel from './components/right-panel'
+import LayoutVariantMixin from './layout-variant'
 
 /** @type {import('vue').VueConstructor} */
 export default {
@@ -51,42 +52,144 @@ export default {
     LayoutRightPanel
   },
 
+  mixins: [LayoutVariantMixin],
+
   props: {
     sidebaaar: {
       type: Object,
-      default() {
+      default: () => {
         return {
           opened: true,
           withoutAnimation: false
         }
       }
     },
+
     rightPanel: {
       type: Object,
-      default() {
+      default: () => {
         return {
           opened: false
         }
       }
     },
+
     logoUrl: {
       type: String,
       default: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
     },
+
     logoHidden: {
       type: Boolean,
       default: false
     },
-    // Pass any parameters you get from Element UI theme
-    // As parameters for an el-menu object
-    // https://element.eleme.io/#/en-US/component/menu#menu-attribute
+
+    /**
+     * Sidebar menu configuration.
+     *
+     * You can pass [any properties that Element UI el-menu][el-menu-attributes] can accept.
+     *
+     * [el-menu-attributes]: https://element.eleme.io/#/en-US/component/menu#menu-attribute
+     *
+     * For example:
+     *
+     * ```js
+     * const sidebarMenuConfig = {
+     *   backgroundColor: '#304156',
+     *   textColor: '#bfcbd9',
+     *   activeTextColor: '#409eff'
+     * }
+     * ```
+     *
+     * Then
+     *
+     * ```
+     * <layout
+     *   :sidebar-menu-config="sidebarMenuConfig"
+     * />
+     * ```
+     */
     sidebarMenuConfig: {
       type: Object,
-      default: () => ({
-        // backgroundColor: '#304156',
-        // textColor: '#bfcbd9',
-        // activeTextColor: '#409eff'
-      })
+      default: () => ({})
+    },
+
+    /**
+     * Sidebar navigation.
+     *
+     * We can either leverage Vue Router's Array of RouteConfig.
+     * The main requirement is that each item has the following shape
+     *
+     * ```
+     * {
+     *   path: '/',
+     *   name: 'home',
+     *   meta: {
+     *     title: 'Home',
+     *     icon: 'home'
+     *   }
+     * }
+     * ```
+     *
+     * Vue Router supports meta properties, if we set title and icon, it should work.
+     * If you use Nuxt.js, [you can add a meta key in pages][nuxt-router-meta]
+     *
+     * [nuxt-router-meta]: https://github.com/nuxt/nuxt.js/tree/2.x/examples/routes-meta
+     *
+     * Or, alternatively, you can pass menu items directly.
+     *
+     * ```javascript
+     * const routes = [
+     *   {
+     *     path: '/',
+     *     redirect: '/dashboard',
+     *     children: [
+     *       {
+     *         path: 'dashboard',
+     *         name: 'Dashboard',
+     *         meta: {
+     *           title: 'Dashboard',
+     *           icon: 'dashboard'
+     *         }
+     *       }
+     *     ]
+     *   },
+     *   {
+     *     path: '/about',
+     *     name: 'About',
+     *     meta: {
+     *       title: 'About',
+     *       icon: 'user'
+     *     }
+     *   }
+     * ]
+     * ```
+     *
+     * If you have a vue-router instance, when importing layout, you can pass it directly;
+     *
+     * ```
+     * <layout
+     *   :sidebar-menu-routes="$router.options.routes"
+     * />
+     * ```
+     *
+     * @type {Array<import('vue-router').RouteConfig>}
+     */
+    sidebarMenuRoutes: {
+      type: Array,
+      default: () => {
+        /** @type {Array<import('vue-router').RouteConfig[]} */
+        return [
+          {
+            path: '/',
+            meta: {
+              title: 'Home',
+              icon: 'dashboard'
+            }
+          }
+        ]
+      }
+
     },
     fixedHeader: {
       type: Boolean,
@@ -184,7 +287,6 @@ export default {
   methods: {
     setSidebarState(state = {}) {
       const changeset = { opened: false, ...state }
-      const previousState = { ...this.sidebaaar }
       let hasChanges = false
       for (const [prop, val] of Object.entries(changeset)) {
         if (this.sidebaaar[prop] !== val) {
@@ -195,8 +297,6 @@ export default {
       if (hasChanges) {
         this.$emit('layout-sidebar', this.sidebaaar)
       }
-      const changedState = { ...this.sidebaaar }
-      console.log('Layout.methods.setSidebarState', { hasChanges, changeset, previousState, changedState })
     },
 
     toggleOpenedSidebar(state = {}) {
@@ -209,7 +309,6 @@ export default {
 
     setRightPanelState(state = {}) {
       const changeset = { opened: false, ...state }
-      // const previousState = { ...this.rightPanel }
       let hasChanges = false
       for (const [prop, val] of Object.entries(changeset)) {
         if (this.rightPanel[prop] !== val) {
@@ -220,8 +319,6 @@ export default {
       if (hasChanges) {
         this.$emit('layout-right-panel', this.rightPanel)
       }
-      // const changedState = { ...this.rightPanel }
-      // console.log('Layout.methods.setRightPanelState', { hasChanges, changeset, previousState, changedState })
     },
     toggleOpenedRightPanel(state = {}) {
       // console.log('Layout.methods.toggleOpenedRightPanel', { ...state })
@@ -238,11 +335,7 @@ export default {
 @import '~@/styles/mixin.scss';
 @import '~@/styles/variables.scss';
 
-.layout-main-wrapper {
-  background-color: aqua;
-}
-
-.layout-root {
+.layout--component {
   @include clearfix;
   position: relative;
   height: 100%;
@@ -261,7 +354,6 @@ export default {
   position: absolute;
   z-index: 999;
 }
-
 .layout-main-wrapper {
   width: 100%;
   position: relative;

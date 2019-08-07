@@ -1,5 +1,5 @@
-.layout-root {
-  .layout-main {
+.layout--component {
+  & > .layout-main {
     min-height: 100%;
     transition: margin-left 0.28s;
     margin-left: $sideBarWidth;
@@ -64,7 +64,7 @@
     }
 
     // menu hover
-    .submenu-title-noDropdown,
+    .submenu-title-no-dropdown,
     .el-submenu__title {
       &:hover {
         background-color: $menuHover !important;
@@ -86,16 +86,23 @@
     }
   }
 
-  .is-layout-sidebar-hidden {
+  &.is-layout-mobile {
+    & > .layout-main {
+      margin-left: 54px;
+    }
+  }
+
+  &.is-layout-sidebar-hidden.is-layout-desktop {
+    & > .layout-main {
+      margin-left: 54px;
+    }
+  }
+
+  &.is-layout-sidebar-hidden {
     .layout-sidebar {
       width: 54px !important;
     }
-
-    .layout-sidebar {
-      margin-left: 54px;
-    }
-
-    .submenu-title-noDropdown {
+    .submenu-title-no-dropdown {
       padding: 0 !important;
       position: relative;
 
