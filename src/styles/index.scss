@@ -1,3 +1,4 @@
+@import '~normalize.css/normalize.css'; // A modern alternative to CSS resets
 @import './variables.scss';
 @import './mixin.scss';
 @import './transition.scss';
@@ -53,13 +54,8 @@ div:focus {
     visibility: hidden;
     display: block;
     font-size: 0;
-    content: " ";
+    content: ' ';
     clear: both;
     height: 0;
   }
-}
-
-// main-container global css
-.app-container {
-  padding: 20px;
 }

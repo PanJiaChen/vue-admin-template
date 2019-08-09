@@ -1,6 +1,6 @@
 <template>
-  <div class="app-container">
-    <el-form ref="form" :model="form" label-width="120px">
+  <div style="padding:30px;">
+    <el-form ref="form" :model="form" label-width="150px">
       <el-form-item label="Activity name">
         <el-input v-model="form.name" />
       </el-form-item>

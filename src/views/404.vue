@@ -1,5 +1,5 @@
 <template>
-  <div class="wscn-http404-container">
+  <div class="wscn-http404-container" style="padding:30px;">
     <div class="wscn-http404">
       <div class="pic-404">
         <img class="pic-404__parent" src="@/assets/404_images/404.png" alt="404">
@@ -22,6 +22,7 @@
 
 <script>
 
+/** @type {import('vue').VueConstructor} */
 export default {
   name: 'Page404',
   computed: {

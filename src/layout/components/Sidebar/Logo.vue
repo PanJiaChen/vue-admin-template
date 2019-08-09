@@ -1,31 +1,69 @@
 <template>
-  <div class="sidebar-logo-container" :class="{'collapse':collapse}">
+  <div :class="classObj">
     <transition name="sidebarLogoFade">
-      <router-link v-if="collapse" key="collapse" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 v-else class="sidebar-title">{{ title }} </h1>
+      <router-link
+        v-if="collapsed"
+        key="collapsed"
+        class="sidebar-logo-router-link"
+        to="/"
+      >
+        <img v-if="hasLogoUrl" :src="logoUrl">
+        <h1 v-else class="sidebar-title">{{ title }}</h1>
       </router-link>
-      <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img v-if="logo" :src="logo" class="sidebar-logo">
-        <h1 class="sidebar-title">{{ title }} </h1>
+      <router-link v-else key="expand" class="sidebar-logo-router-link" to="/">
+        <img v-if="hasLogoUrl" :src="logoUrl">
+        <h1 class="sidebar-title">{{ title }}</h1>
       </router-link>
     </transition>
   </div>
 </template>
 
 <script>
+import { LayoutDependent } from '../../mixins'
+
+/** @type {import('vue').VueConstructor} */
 export default {
-  name: 'SidebarLogo',
+  name: 'LayoutSidebarLogo',
+
+  mixins: [LayoutDependent],
+
   props: {
-    collapse: {
-      type: Boolean,
-      required: true
+    logoUrl: {
+      type: String,
+      default:
+        'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
     }
   },
-  data() {
-    return {
-      title: 'Vue Admin Template',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+
+  computed: {
+    title() {
+      return this.layout.logoTitle
+    },
+
+    hasTitle() {
+      return this.title !== ''
+    },
+
+    hasLogoUrl() {
+      const hasLogoUrl = String(this.logoUrl).length > 1
+      return hasLogoUrl
+    },
+
+    collapsed() {
+      const sidebarCollapsed = this.layout.sidebarCollapsed
+      return sidebarCollapsed
+    },
+
+    classObj() {
+      const collapsed = this.collapsed
+      const hasLogo = this.hasLogo
+
+      return {
+        'layout-sidebar-logo--component': true,
+        'layout-sidebar-logo--no-title': !this.hasTitle,
+        'is-collapsed': collapsed,
+        'has-logo': hasLogo
+      }
     }
   }
 }
@@ -41,20 +79,22 @@ export default {
   opacity: 0;
 }
 
-.sidebar-logo-container {
+.layout-sidebar-logo--no-title .title {
+  display: none;
+}
+
+.layout-sidebar-logo--component {
   position: relative;
   width: 100%;
-  height: 50px;
   line-height: 50px;
-  background: #2b2f3a;
   text-align: center;
   overflow: hidden;
 
-  & .sidebar-logo-link {
+  & .sidebar-logo-router-link {
     height: 100%;
     width: 100%;
 
-    & .sidebar-logo {
+    & img {
       width: 32px;
       height: 32px;
       vertical-align: middle;
@@ -73,8 +113,8 @@ export default {
     }
   }
 
-  &.collapse {
-    .sidebar-logo {
+  &.is-collapsed {
+    img {
       margin-right: 0px;
     }
   }

@@ -1,6 +1,20 @@
 <template>
-  <div class="dashboard-container">
+  <div class="dashboard-container" style="padding:30px;">
     <div class="dashboard-text">name: {{ name }}</div>
+    <dl>
+      <dt>Right Panel</dt>
+      <dd>
+        <el-button @click="$store.dispatch('layout/toggleRightPanel')">Right Panel</el-button>
+      </dd>
+      <dt>Sidebar</dt>
+      <dd>
+        <el-button @click="$store.dispatch('layout/toggleSidebar')">Sidebar</el-button>
+      </dd>
+      <dt>SVG Icon</dt>
+      <dd>
+        <svg-icon />
+      </dd>
+    </dl>
   </div>
 </template>
 
@@ -19,9 +33,6 @@ export default {
 
 <style lang="scss" scoped>
 .dashboard {
-  &-container {
-    margin: 30px;
-  }
   &-text {
     font-size: 30px;
     line-height: 46px;

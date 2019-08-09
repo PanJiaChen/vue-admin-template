@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container">
+  <div style="padding:30px;">
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -7,6 +7,7 @@
       border
       fit
       highlight-current-row
+      stripe
     >
       <el-table-column align="center" label="ID" width="95">
         <template slot-scope="scope">
