@@ -14,11 +14,13 @@
 
 ## 相关项目
 
-[vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
+- [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)
 
-[electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
+- [electron-vue-admin](https://github.com/PanJiaChen/electron-vue-admin)
 
-[vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template)
+- [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template)
+
+- [awesome-project](https://github.com/PanJiaChen/vue-element-admin/issues/2312)
 
 写了一个系列的教程配套文章，如何从零构建后一个完整的后台项目:
 
