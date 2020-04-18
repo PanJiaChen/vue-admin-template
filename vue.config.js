@@ -6,14 +6,14 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'vue Admin Template' // page title
+const name = defaultSettings.title || '毕业设计' // page title
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
 // For example, Mac: sudo npm run
 // You can change the port by the following methods:
 // port = 9528 npm run dev OR npm run dev --port = 9528
-const port = process.env.port || process.env.npm_config_port || 9528 // dev port
+const port = process.env.port || process.env.npm_config_port || 8080 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -29,14 +29,37 @@ module.exports = {
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
   productionSourceMap: false,
+  // devServer: {
+  //   port: port,
+  //   open: true,
+  //   overlay: {
+  //     warnings: false,
+  //     errors: true
+  //   },
+  //   before: require('./mock/mock-server.js')
+  // },
   devServer: {
-    port: port,
-    open: true,
-    overlay: {
-      warnings: false,
-      errors: true
-    },
-    before: require('./mock/mock-server.js')
+    // overlay: { // 让浏览器 overlay 同时显示警告和错误
+    //   warnings: true,
+    //   errors: true
+    // },
+    // open: false, // 是否打开浏览器
+    // host: "localhost",
+    // port: "8080", // 代理断就
+    // https: false,
+    // hotOnly: false, // 热更新
+    proxy: {
+      '/api': {
+        target:
+          'http://127.0.0.1:9000', // 目标代理接口地址
+        // secure: false,
+        changeOrigin: true, // 开启代理，在本地创建一个虚拟服务端
+        ws: true, // 是否启用websockets
+        pathRewrite: {
+          '^/api': '/'
+        }
+      }
+    }
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
