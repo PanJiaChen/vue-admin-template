@@ -9,7 +9,7 @@
       label-position="left"
     >
       <div class="title-container">
-        <h3 class="title">Register Form</h3>
+        <h3 class="title">注册</h3>
       </div>
 
       <el-form-item prop="username">
@@ -90,11 +90,14 @@ export default {
   data() {
     // 注册校验
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error('用户名已存在'))
-      } else {
-        callback()
-      }
+      const s = validUsername(value)
+      s.then(function(value) {
+        if (value) {
+          callback(new Error('用户名已存在'))
+        } else {
+          callback()
+        }
+      })
     }
     // 密码校验
     const validatePassword = (rule, value, callback) => {
@@ -176,6 +179,9 @@ export default {
     },
     gotoLogin() {
       this.$router.push('/login')
+    },
+    valiUsername(username) {
+
     }
   }
 }

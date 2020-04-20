@@ -1,10 +1,10 @@
 /**
  * Created by PanJiaChen on 16/11/18.
  */
-
+import { isexist } from '@/api/user'
 /**
  * @param {string} path
- * @returns {Boolean}
+ * @returns {Promise}
  */
 export function isExternal(path) {
   return /^(https?:|mailto:|tel:)/.test(path)
@@ -12,9 +12,20 @@ export function isExternal(path) {
 
 /**
  * @param {string} str
- * @returns {Boolean}
+ * @returns {Promise}
  */
+
 export function validUsername(str) {
-  const valid_map = ['admin', 'editor']
-  return valid_map.indexOf(str.trim()) >= 0
+  // /*
+  //   校验用户名是否存在
+  // */
+
+  return new Promise((resolve, reject) => {
+    isexist({ username: str.trim() }).then(response => {
+      resolve(response.msg === 'true')
+    }).catch(error => {
+      reject(error)
+    })
+  })
 }
+
