@@ -1,7 +1,6 @@
 import request from '@/utils/request'
 
 export function login(data) {
-  console.log('logindata:', data)
   return request({
     url: '/user/login',
     method: 'post',
@@ -27,7 +26,7 @@ export function isexist(data) {
 
 export function getInfo(token) {
   return request({
-    url: '/vue-admin-template/user/info',
+    url: '/user/info',
     method: 'get',
     params: { token }
   })
