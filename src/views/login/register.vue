@@ -178,7 +178,7 @@ export default {
       })
     },
     gotoLogin() {
-      this.$router.push('/login')
+      this.$router.push('/login?redirect=%2Fdashboard')
     },
     valiUsername(username) {
 

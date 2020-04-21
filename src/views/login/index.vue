@@ -137,7 +137,7 @@ export default {
           this.$store
             .dispatch('user/login', this.loginForm) // 登录操作 ./store/modules/user.js
             .then(() => {
-              this.$router.push({ path: this.redirect || '/' })
+              this.$router.push('/')
               this.loading = false
             })
             .catch(() => {
