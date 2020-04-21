@@ -2,16 +2,28 @@
   <div class="app-container">
     <el-input v-model="filterText" placeholder="Filter keyword" style="margin-bottom:30px;" />
 
-    <el-tree
+    <!-- <el-tree
       ref="tree2"
       :data="data2"
       :props="defaultProps"
       :filter-node-method="filterNode"
       class="filter-tree"
       default-expand-all
+    /> -->
+    <el-tree
+      ref="tree2"
+      :filter-node-method="filterNode"
+      class="filter-tree"
+      :data="data2"
+      show-checkbox
+      node-key="id"
+      :default-expanded-keys="expanded_keys"
+      :default-checked-keys="checked_keys"
+      :props="defaultProps"
     />
-
+    <el-button />
   </div>
+
 </template>
 
 <script>
@@ -19,6 +31,8 @@ export default {
 
   data() {
     return {
+      expanded_keys: [1], // 展开
+      checked_keys: [], // 点击
       filterText: '',
       data2: [{
         id: 1,

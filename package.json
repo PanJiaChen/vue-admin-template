@@ -16,12 +16,14 @@
   },
   "dependencies": {
     "axios": "0.18.1",
+    "echarts": "^4.7.0",
     "element-ui": "2.13.0",
     "js-cookie": "2.2.0",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
     "vue": "2.6.10",
+    "vue-count-to": "^1.0.13",
     "vue-router": "3.0.6",
     "vuex": "3.1.0"
   },

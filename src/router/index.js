@@ -41,7 +41,6 @@ export const constantRoutes = [
     component: () => import('@/views/login/register'),
     hidden: true
   },
-
   {
     path: '/404',
     component: () => import('@/views/404'),
@@ -59,7 +58,31 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
+  {
+    path: '/file',
+    component: Layout,
+    redirect: '/file/list',
+    name: 'file',
+    meta: {
+      title: '云盘',
+      icon: 'fold'
+    },
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/file/index'),
+        name: '文件列表',
+        meta: { title: '文件列表', icon: 'documentation' }
+      },
+      {
+        path: 'upload',
+        name: '上传文件',
+        component: () => import('@/views/file/upload'),
+        meta: { title: '上传文件', icon: 'upload' }
+      }
+    ]
 
+  },
   {
     path: '/example',
     component: Layout,
