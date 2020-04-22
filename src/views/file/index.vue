@@ -21,14 +21,14 @@
             class="btn_upload"
             type="text"
             size="mini"
-            @click="dialogUpload = true"
+            @click="uploadFile"
           >
             <i class="el-icon-upload" />
           </el-button>
 
           <el-dialog title="文件上传" :visible.sync="dialogUpload" width="80%">
 
-            <Upload />
+            <Upload :path="path" />
           </el-dialog>
 
           <el-button
@@ -36,7 +36,7 @@
             class="btn_del"
             type="text"
             size="mini"
-            @click="() => remove(node, data)"
+            @click="delFile(data)"
           >
             <i class="el-icon-folder-delete" />
           </el-button>
@@ -70,38 +70,39 @@ export default {
       checked_keys: [], // 点击
       filterText: '',
       dialogUpload: false,
+      path: '',
       data2: [{
-        id: 'fold_1',
-        label: 'Level one 1',
+        id: 'root',
+        label: 'root',
         children: [{
-          id: 'fold_1_1',
-          label: 'Level two 1-1',
+          id: 'root_src',
+          label: 'src',
           children: [{
-            id: 'file_1',
+            id: 'root_src_filehash1',
             label: 'Level three 1-1-1'
           }, {
-            id: 10,
+            id: 'root_src_filehash',
             label: 'Level three 1-1-2'
           }]
         }]
       }, {
-        id: 2,
+        id: '2',
         label: 'Level one 2',
         children: [{
-          id: 5,
+          id: '5',
           label: 'Level two 2-1'
         }, {
-          id: 6,
+          id: '6',
           label: 'Level two 2-2'
         }]
       }, {
-        id: 3,
+        id: '3',
         label: 'Level one 3',
         children: [{
-          id: 7,
+          id: '7',
           label: 'Level two 3-1'
         }, {
-          id: 8,
+          id: '8',
           label: 'Level two 3-2'
         }]
       }],
@@ -122,16 +123,15 @@ export default {
       if (!value) return true
       return data.label.indexOf(value) !== -1
     },
-    uploadFile(del) {
-      // 上传
-      // 获取当前被选中的id
-      // console.log(this.$refs.tree.getCurrentKey())
-      console.log(del)
+    uploadFile() {
+      this.dialogUpload = true
+      this.path = this.$refs.tree.getCurrentKey()
     },
-    delFile() {
+    delFile(data) {
       // 删除
       // 获取当前被选中的id
       console.log(this.$refs.tree.getCurrentKey())
+      // console.log(data.id)
     },
     mouseenter(data) {
       this.$set(data, 'del', true)
