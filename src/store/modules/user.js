@@ -1,12 +1,14 @@
 import { login, logout, getInfo, register } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+import { uploadInit, uploadChunk, getStreamReader } from '@/api/file'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    uploadid: ''
   }
 }
 
@@ -24,7 +26,11 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_UPLOADID: (state, uploadid) => {
+    state.uploadid = uploadid
   }
+
 }
 
 const actions = {
@@ -88,6 +94,40 @@ const actions = {
         commit('RESET_STATE')
         resolve()
       }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  uploadInit({ commit, state }, fileInfo) {
+    const { file, filePath, fileHash, fileSize } = fileInfo
+
+    return new Promise((resolve, reject) => {
+      uploadInit({ filePath: filePath, fileHash: fileHash, fileSize: fileSize }).then(response => {
+        // console.log(response)
+        commit('SET_UPLOADID', response.data.UploadId)
+        // ---------------------------------------------
+
+        const read = getStreamReader(file);
+
+        (async() => {
+          let chunk
+          var chunk_index = 0
+          while ((chunk = await read())) {
+            chunk_index++
+            console.log('chunk', chunk)
+            await uploadChunk({ chunk_index: chunk_index, chunk: chunk, uploadid: response.data.UploadId }).then(response => {
+              console.log('chunk', response)
+            }).catch(error => {
+              console.log(error)
+            })
+          }
+        })()
+
+        // ---------------------------------------------
+        resolve(response)
+      }).catch(error => {
+        console.log(error)
         reject(error)
       })
     })

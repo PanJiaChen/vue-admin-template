@@ -7,7 +7,6 @@
       action="/api/file/upload"
       multiple
       :http-request="multipartUpload"
-      :before-upload="InitmultipartUpload"
     >
       <i class="el-icon-upload" />
       <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
@@ -18,16 +17,28 @@
 
 <script>
 import sha1 from 'js-sha1'
+import { mapGetters } from 'vuex'
+import store from '@/store'
+import axios from 'axios'
+import { UploadChunk } from '@/api/file'
+
 export default {
   props: ['path'],
+  store,
   data() {
     return {
       loadingtext: 'Loading1',
       fileHash: ''
     }
   },
+  computed: {
+    ...mapGetters([
+      'UploadId'
+    ])
+  },
   methods: {
-    InitmultipartUpload(file) {
+    multipartUpload(params) {
+      const file = params.file
       const fileName = file.name
       const fileSize = file.size
       // const fileType = file.type
@@ -39,9 +50,9 @@ export default {
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       })
-      console.log('init')
 
       const read = this.getStreamReader(file);
+
       (async() => {
         let chunk
         const hasher = sha1.create()
@@ -52,31 +63,39 @@ export default {
         var fileHash = hasher.hex()
         console.log(fileHash)
 
-        loading.close()
-
         // 初始化分块传输
-        await this.multipartInit(fileSize, fileHash)
+
+        const res = this.multipartInit(fileSize, fileHash)
+        this.fileHash = fileHash
+        loading.close()
+        res.then(function(response) {
+          const uploadid = response.data.data.UploadId
+          UploadChunk(file, uploadid)
+        })
       })()
-    },
-    multipartUpload(params) {
-      console.log('upload')
     },
     multipartInit(filesize, filehash) {
       const data = {
         filePath: this.path,
         fileHash: filehash,
         fileSize: filesize
+
       }
-      console.log(data)
 
-      this.$store
-        .dispatch('file/uploadInit', data) // 请求初始化
-        .then(() => {
-
-        })
-        .catch(() => {
-          console.log('catch')
-        })
+      // 发送 POST 请求
+      return axios({
+        method: 'post',
+        url: '/api/file/init',
+        data
+      })
+      // this.$store
+      //   .dispatch('user/uploadInit', data) // 请求初始化
+      //   .then(function(params) {
+      //     // console.log('123123', params)
+      //   })
+      //   .catch(error => {
+      //     console.log(error)
+      //   })
     },
     // 分读取
     getStreamReader(file, chunkSize = 5 * 1024 * 1024) {
@@ -86,7 +105,7 @@ export default {
         return new Promise(function(resolve, reject) {
           if (offset >= file.size) return resolve(null)
 
-          // console.log('filename:', file.name, (offset / file.size) * 100 + '%')
+          console.log('filename:', file.name, (offset / file.size) * 100 + '%')
 
           reader.onloadend = function() {
             resolve(reader.result)
