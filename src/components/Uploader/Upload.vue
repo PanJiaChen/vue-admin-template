@@ -85,7 +85,7 @@ export default {
       // 发送 POST 请求
       return axios({
         method: 'post',
-        url: '/api/file/init',
+        url: '/api/file/chunk/init',
         data
       })
       // this.$store

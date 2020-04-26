@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export function uploadInit(data) {
   return request({
-    url: '/file/init',
+    url: '/file/chunk/init',
     method: 'post',
     data
   })
@@ -50,8 +50,7 @@ export function UploadChunk(file, uploadid) {
     let file
     while ((file = await read())) {
       // uploadChunk(file, uploadid)
-      // console.log(file)
-
+      console.log(file)
     }
   })()
 }
