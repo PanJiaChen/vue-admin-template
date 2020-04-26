@@ -7,11 +7,13 @@
       :filter-node-method="filterNode"
       class="filter-tree"
       :data="data2"
-      show-checkbox
       node-key="id"
+      lazy
+      accordion
+      :load="loadNode"
       :default-expanded-keys="expanded_keys"
       :default-checked-keys="checked_keys"
-      :props="defaultProps"
+      :props="props"
     >
       <span slot-scope="{ node, data }" class="custom-tree-node" style="width:100%;" @mouseenter="mouseenter(data)" @mouseleave="mouseleave(data)">
         <span>{{ node.label }}</span>
@@ -30,7 +32,15 @@
 
             <Upload :path="path" />
           </el-dialog>
-
+          <el-button
+            v-show="data.del"
+            class="btn_download"
+            type="text"
+            size="mini"
+            @click="uploadFile"
+          >
+            <svg-icon icon-class="download" />
+          </el-button>
           <el-button
             v-show="data.del"
             class="btn_del"
@@ -106,9 +116,10 @@ export default {
           label: 'Level two 3-2'
         }]
       }],
-      defaultProps: {
-        children: 'children',
-        label: 'label'
+      props: {
+        label: 'name',
+        children: 'zones',
+        isLeaf: 'leaf'
       }
     }
   },
@@ -138,6 +149,30 @@ export default {
     },
     mouseleave(data) {
       this.$set(data, 'del', false)
+    },
+    loadNode(node, resolve) {
+      const data = [{
+        name: '文件列表',
+        zones: 'root'
+      }]
+      if (node.level === 0) {
+        return resolve(data)
+      }
+      if (node.level >= 1) {
+        console.log(node.data.zones)
+        const data = {
+          'zones': node.data.zones
+        }
+        this.$store
+          .dispatch('folder/getTreeInfo', data) // 登录操作 ./store/modules/user.js
+          .then(res => {
+            return resolve(res)
+          })
+          .catch(() => {
+            return resolve([])
+          })
+        return resolve([])
+      }
     }
 
   }
@@ -153,7 +188,7 @@ export default {
     font-size: 22px;
     padding-right: 8px;
   }
-  .btn_upload,.btn_del{
+  .btn_upload,.btn_del,.btn_download {
     font-size: 24px;
   }
 
