@@ -6,7 +6,7 @@
       ref="tree"
       :filter-node-method="filterNode"
       class="filter-tree"
-      :data="data2"
+
       node-key="id"
       lazy
       accordion
@@ -23,7 +23,7 @@
             class="btn_upload"
             type="text"
             size="mini"
-            @click="uploadFile"
+            @click="uploadFile(data)"
           >
             <i class="el-icon-upload" />
           </el-button>
@@ -37,7 +37,7 @@
             class="btn_download"
             type="text"
             size="mini"
-            @click="uploadFile"
+            @click="download(data)"
           >
             <svg-icon icon-class="download" />
           </el-button>
@@ -53,20 +53,14 @@
         </span>
       </span>
     </el-tree>
-    <!-- <el-tree ref="tree" class="filter-tree" :data="data2" :props="defaultProps" default-expand-all node-key="id" :filter-node-method="filterNode">
-      <span slot-scope="{ node, data }" class="custom-tree-node" style="width:100%;" @mouseenter="mouseenter(data)" @mouseleave="mouseleave(data)">
-        <span>{{ node.label }}</span>
-        <el-link v-show="data.del" size="mini" type="primary" style="float:right;" icon="el-icon-delete" @click="alert('删除')" />
-        <el-link v-show="data.del" size="mini" type="primary" style="margin-right: 10px;float:right;" icon="el-icon-edit" @click="alert('修改')" />
-      </span>
-
-    </el-tree> -->
   </div>
 
 </template>
 
 <script>
 import Upload from '@/components/Uploader/Upload'
+// import fileDownload from 'js-file-download'
+// import axios from 'axios'
 
 export default {
   name: 'FileList',
@@ -134,9 +128,14 @@ export default {
       if (!value) return true
       return data.label.indexOf(value) !== -1
     },
-    uploadFile() {
+    uploadFile(data) {
       this.dialogUpload = true
-      this.path = this.$refs.tree.getCurrentKey()
+      this.path = data.zones
+    },
+    download(tree) {
+      // console.log(tree.zones)
+
+      window.open('/api/download?filehash=' + tree.zones, '_blank')
     },
     delFile(data) {
       // 删除

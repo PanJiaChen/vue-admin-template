@@ -8,3 +8,11 @@ export function getTreeInfo(data) {
   })
 }
 
+export function download(query) {
+  return request({
+    url: '/file/download',
+    method: 'get',
+    params: query,
+    responseType: 'blob'
+  })
+}
