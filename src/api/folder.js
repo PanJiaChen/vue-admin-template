@@ -16,3 +16,11 @@ export function download(query) {
     responseType: 'blob'
   })
 }
+
+export function deleteFile(data) {
+  return request({
+    url: '/file/delete',
+    method: 'post',
+    data
+  })
+}

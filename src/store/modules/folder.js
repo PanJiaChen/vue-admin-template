@@ -1,4 +1,4 @@
-import { getTreeInfo, download } from '@/api/folder'
+import { getTreeInfo, download, deleteFile } from '@/api/folder'
 
 const actions = {
   getTreeInfo({ commit, state }, treeInfo) {
@@ -17,6 +17,17 @@ const actions = {
     const { zones } = treeInfo
     return new Promise((resolve, reject) => {
       download({ zones: zones }).then(response => {
+        console.log(response)
+      }).catch(error => {
+        console.log(error)
+        reject(error)
+      })
+    })
+  },
+  delete({ commit, state }, treeInfo) {
+    const { zones } = treeInfo
+    return new Promise((resolve, reject) => {
+      deleteFile({ zones: zones }).then(response => {
         console.log(response)
       }).catch(error => {
         console.log(error)

@@ -46,9 +46,22 @@
             class="btn_del"
             type="text"
             size="mini"
+            @click="addFolder(data)"
+          >
+            <svg-icon icon-class="NewFolder" />
+          </el-button>
+          <el-dialog title="新增文件夹" :visible.sync="dialogNewFolder" width="80%">
+            <NewFolder :path="path" />
+          </el-dialog>
+
+          <el-button
+            v-show="data.del"
+            class="btn_del"
+            type="text"
+            size="mini"
             @click="delFile(data)"
           >
-            <i class="el-icon-folder-delete" />
+            <svg-icon icon-class="delete" />
           </el-button>
         </span>
       </span>
@@ -59,13 +72,16 @@
 
 <script>
 import Upload from '@/components/Uploader/Upload'
+import NewFolder from '@/components/Uploader/NewFolder'
+
 // import fileDownload from 'js-file-download'
 // import axios from 'axios'
 
 export default {
   name: 'FileList',
   components: {
-    Upload
+    Upload,
+    NewFolder
   },
 
   data() {
@@ -74,42 +90,8 @@ export default {
       checked_keys: [], // 点击
       filterText: '',
       dialogUpload: false,
+      dialogNewFolder: false,
       path: '',
-      data2: [{
-        id: 'root',
-        label: 'root',
-        children: [{
-          id: 'root_src',
-          label: 'src',
-          children: [{
-            id: 'root_src_filehash1',
-            label: 'Level three 1-1-1'
-          }, {
-            id: 'root_src_filehash',
-            label: 'Level three 1-1-2'
-          }]
-        }]
-      }, {
-        id: '2',
-        label: 'Level one 2',
-        children: [{
-          id: '5',
-          label: 'Level two 2-1'
-        }, {
-          id: '6',
-          label: 'Level two 2-2'
-        }]
-      }, {
-        id: '3',
-        label: 'Level one 3',
-        children: [{
-          id: '7',
-          label: 'Level two 3-1'
-        }, {
-          id: '8',
-          label: 'Level two 3-2'
-        }]
-      }],
       props: {
         label: 'name',
         children: 'zones',
@@ -137,11 +119,25 @@ export default {
 
       window.open('/api/download?filehash=' + tree.zones, '_blank')
     },
-    delFile(data) {
+    addFolder(tree) {
+      this.dialogNewFolder = true
+      this.path = tree.zones
+    },
+    delFile(tree) {
       // 删除
-      // 获取当前被选中的id
-      console.log(this.$refs.tree.getCurrentKey())
-      // console.log(data.id)
+      // 获取当前被选中的tree.zones
+      console.log(tree.zones)
+      const data = {
+        'zones': tree.zones
+      }
+      this.$store
+        .dispatch('folder/delete', data)
+        .then(() => {
+
+        })
+        .catch(() => {
+
+        })
     },
     mouseenter(data) {
       this.$set(data, 'del', true)
