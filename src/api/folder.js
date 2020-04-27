@@ -24,3 +24,11 @@ export function deleteFile(data) {
     data
   })
 }
+
+export function addFolder(data) {
+  return request({
+    url: '/folder/add',
+    method: 'post',
+    data
+  })
+}

@@ -1,4 +1,5 @@
-import { getTreeInfo, download, deleteFile } from '@/api/folder'
+import { getTreeInfo, download, deleteFile, addFolder } from '@/api/folder'
+import { Message } from 'element-ui'
 
 const actions = {
   getTreeInfo({ commit, state }, treeInfo) {
@@ -29,6 +30,17 @@ const actions = {
     return new Promise((resolve, reject) => {
       deleteFile({ zones: zones }).then(response => {
         console.log(response)
+      }).catch(error => {
+        console.log(error)
+        reject(error)
+      })
+    })
+  },
+  addFolder({ commit, state }, treeInfo) {
+    const { zones, folderName } = treeInfo
+    return new Promise((resolve, reject) => {
+      addFolder({ zones: zones, folderName: folderName }).then(response => {
+        Message(response.msg)
       }).catch(error => {
         console.log(error)
         reject(error)
