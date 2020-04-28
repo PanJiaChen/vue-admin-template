@@ -33,7 +33,7 @@ export default {
       this.$store
         .dispatch('folder/addFolder', data)
         .then(() => {
-          location.reload()
+
         })
         .catch(() => {
 

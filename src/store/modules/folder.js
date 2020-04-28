@@ -29,7 +29,11 @@ const actions = {
     const { zones } = treeInfo
     return new Promise((resolve, reject) => {
       deleteFile({ zones: zones }).then(response => {
-        console.log(response)
+        Message({
+          message: response.msg,
+          type: 'success',
+          duration: 5 * 1000
+        })
       }).catch(error => {
         console.log(error)
         reject(error)
@@ -40,7 +44,11 @@ const actions = {
     const { zones, folderName } = treeInfo
     return new Promise((resolve, reject) => {
       addFolder({ zones: zones, folderName: folderName }).then(response => {
-        Message(response.msg)
+        Message({
+          message: response.msg,
+          type: 'success',
+          duration: 5 * 1000
+        })
       }).catch(error => {
         console.log(error)
         reject(error)
