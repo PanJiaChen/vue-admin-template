@@ -5,21 +5,21 @@
     </div>
     <div style="position:relative;">
       <pan-thumb :image="avatar" class="panThumb" />
-      <mallki class-name="mallki-text" text="vue-element-admin" />
+      <mallki class-name="mallki-text" text="个人网盘系统" />
       <div style="padding-top:35px;" class="progress-item">
         <span>Vue</span>
+        <el-progress :percentage="30" />
+      </div>
+      <div class="progress-item">
+        <span>Redis</span>
+        <el-progress :percentage="50" />
+      </div>
+      <div class="progress-item">
+        <span>Mysql</span>
         <el-progress :percentage="70" />
       </div>
       <div class="progress-item">
-        <span>JavaScript</span>
-        <el-progress :percentage="18" />
-      </div>
-      <div class="progress-item">
-        <span>Css</span>
-        <el-progress :percentage="12" />
-      </div>
-      <div class="progress-item">
-        <span>ESLint</span>
+        <span>Golang</span>
         <el-progress :percentage="100" status="success" />
       </div>
     </div>
