@@ -28,4 +28,8 @@ describe('Utils:parseTime', () => {
   it('empty argument', () => {
     expect(parseTime()).toBeNull()
   })
+
+  it('null', () => {
+    expect(parseTime(null)).toBeNull()
+  })
 })
