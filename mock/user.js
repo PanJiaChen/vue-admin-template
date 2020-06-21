@@ -23,7 +23,7 @@ const users = {
   }
 }
 
-export default [
+module.exports = [
   // user login
   {
     url: '/vue-admin-template/user/login',

@@ -1,8 +1,8 @@
-import Mock from 'mockjs'
-import { param2Obj } from '../src/utils'
+const Mock = require('mockjs')
+const { param2Obj } = require('./utils')
 
-import user from './user'
-import table from './table'
+const user = require('./user')
+const table = require('./table')
 
 const mocks = [
   ...user,
@@ -12,7 +12,7 @@ const mocks = [
 // for front mock
 // please use it cautiously, it will redefine XMLHttpRequest,
 // which will cause many of your third-party libraries to be invalidated(like progress event).
-export function mockXHR() {
+function mockXHR() {
   // mock patch
   // https://github.com/nuysoft/Mock/issues/300
   Mock.XHR.prototype.proxy_send = Mock.XHR.prototype.send
@@ -50,4 +50,8 @@ export function mockXHR() {
   }
 }
 
-export default mocks
+module.exports = {
+  mocks,
+  mockXHR
+}
+
