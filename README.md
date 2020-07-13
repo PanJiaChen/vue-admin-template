@@ -12,10 +12,10 @@ English | [简体中文](./README-zh.md)
 
 ## GitAds
 
-[<img src="https://images.gitads.io/PanJiaChen/vue-admin-template" alt="GitAds" />](https://tracking.gitads.io/?repo=PanJiaChen/vue-admin-template)
+[<img src="https://images.gitads.io/vue-admin-template" alt="GitAds" />](https://tracking.gitads.io/?repo=vue-admin-template)
+
 
 ## Build Setup
-
 
 ```bash
 # clone the project
