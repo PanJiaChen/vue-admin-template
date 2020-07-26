@@ -12,6 +12,8 @@ English | [简体中文](./README-zh.md)
 
 ## GitAds
 
+> vue-admin-template is being sponsored by the following tool; please help to support us by taking a look and signing up to a free trial
+
 [<img src="https://images.gitads.io/vue-admin-template" alt="GitAds" />](https://tracking.gitads.io/?repo=vue-admin-template)
 
 
