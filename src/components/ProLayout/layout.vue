@@ -1,6 +1,6 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div v-if="device==='mobile' && !collapsed" class="drawer-bg" @click="handleClickOutside" />
+    <div v-if="isMobile && !collapsed" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
@@ -43,6 +43,22 @@ export default {
     handleCollapse: {
       type: Function,
       default: () => () => {}
+    },
+    withoutAnimation: {
+      type: Boolean,
+      default: false
+    },
+    isMobile: {
+      type: Boolean,
+      default: false
+    },
+    fixedHeader: {
+      type: Boolean,
+      default: false
+    },
+    handleMediaQuery: {
+      type: Function,
+      default: () => () => {}
     }
   },
   provide() {
@@ -55,21 +71,12 @@ export default {
     }
   },
   computed: {
-    sidebar() {
-      return this.$store.state.app.sidebar
-    },
-    device() {
-      return this.$store.state.app.device
-    },
-    fixedHeader() {
-      return this.$store.state.settings.fixedHeader
-    },
     classObj() {
       return {
         hideSidebar: this.collapsed,
         openSidebar: !this.collapsed,
-        withoutAnimation: this.sidebar.withoutAnimation,
-        mobile: this.device === 'mobile'
+        withoutAnimation: this.withoutAnimation,
+        mobile: this.isMobile
       }
     }
   },

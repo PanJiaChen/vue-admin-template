@@ -10,6 +10,8 @@
     :is-mobile="isMobile"
     :handle-media-query="handleMediaQuery"
     :handle-collapse="handleCollapse"
+    :without-animation="sidebar.withoutAnimation"
+    :fixed-header="fixedHeader"
   >
     <router-view />
   </pro-layout>
@@ -28,15 +30,23 @@ export default {
       query: {},
       layout: 'sidemenu',
       contentWidth: 'Fluid',
-      theme: 'dark',
-      isMobile: false
+      theme: 'dark'
     }
   },
   computed: {
     ...mapGetters([
       'sidebar',
       'avatar'
-    ])
+    ]),
+    device() {
+      return this.$store.state.app.device
+    },
+    isMobile() {
+      return this.device === 'mobile'
+    },
+    fixedHeader() {
+      return this.$store.state.settings.fixedHeader
+    }
   },
   methods: {
     handleMediaQuery(query) {

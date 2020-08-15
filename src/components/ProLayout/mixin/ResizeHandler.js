@@ -1,12 +1,10 @@
-import store from '@/store'
-
 const { body } = document
 const WIDTH = 992 // refer to Bootstrap's responsive design
 
 export default {
   watch: {
     $route(route) {
-      if (this.device === 'mobile' && !this.collapsed) {
+      if (this.isMobile && !this.collapsed) {
         this.handleCollapse && this.handleCollapse({ withoutAnimation: false })
       }
     }
@@ -20,7 +18,6 @@ export default {
   mounted() {
     const isMobile = this.$_isMobile()
     if (isMobile) {
-      store.dispatch('app/toggleDevice', 'mobile')
       this.handleCollapse && this.handleCollapse({ withoutAnimation: true })
     }
   },
@@ -34,7 +31,7 @@ export default {
     $_resizeHandler() {
       if (!document.hidden) {
         const isMobile = this.$_isMobile()
-        store.dispatch('app/toggleDevice', isMobile ? 'mobile' : 'desktop')
+        this.handleMediaQuery && this.handleMediaQuery(isMobile)
 
         if (isMobile) {
           this.handleCollapse && this.handleCollapse({ withoutAnimation: true })
