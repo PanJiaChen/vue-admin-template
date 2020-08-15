@@ -12,7 +12,7 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item v-for="route in menus" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -22,14 +22,11 @@
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
+import { sidebarProps } from '../../props'
 
 export default {
   components: { SidebarItem, Logo },
-  inject: {
-    routes: 'menus',
-    collapsed: 'collapsed',
-    showLogo: 'showLogo'
-  },
+  props: sidebarProps,
   computed: {
     activeMenu() {
       const route = this.$route

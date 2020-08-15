@@ -1,24 +1,7 @@
-<template>
-  <div :class="classObj" class="app-wrapper">
-    <div v-if="isMobile && !collapsed" class="drawer-bg" @click="handleClickOutside" />
-    <sidebar class="sidebar-container" />
-    <div class="main-container">
-      <div :class="{'fixed-header':fixedHeader}">
-        <slot v-if="$slots.headerRender" name="headerRender" />
-        <navbar v-else>
-          <template v-slot:rightContentRender>
-            <slot name="rightContentRender" />
-          </template>
-        </navbar>
-      </div>
-      <app-main><slot /></app-main>
-    </div>
-  </div>
-</template>
-
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
+import { proLayoutPrefix } from './variables.scss'
 
 export default {
   name: 'ProLayout',
@@ -75,6 +58,7 @@ export default {
       title: this.title,
       logo: this.logo,
       menus: this.menus,
+      isMobile: this.isMobile,
       collapsed: this.collapsed,
       handleCollapse: this.handleCollapse,
       showLogo: this.showLogo
@@ -86,26 +70,43 @@ export default {
         hideSidebar: this.collapsed,
         openSidebar: !this.collapsed,
         withoutAnimation: this.withoutAnimation,
-        mobile: this.isMobile
+        mobile: this.isMobile,
+        [`${proLayoutPrefix}-app-wrapper`]: true
       }
     }
-  },
-  mounted() {
-    console.log(this.$slots)
   },
   methods: {
     handleClickOutside() {
       this.handleCollapse && this.handleCollapse({ withoutAnimation: false })
     }
+  },
+  render() {
+    const { classObj, isMobile, collapsed, handleClickOutside, fixedHeader, $scopedSlots, $props } = this
+
+    return (
+      <div class={classObj}>
+        {(isMobile && !collapsed) && <div class='drawer-bg' onClick={handleClickOutside} />}
+        <sidebar class='sidebar-container' props={$props}/>
+        <div class='main-container'>
+          <div class={{ 'fixed-header': fixedHeader }}>
+            {$scopedSlots.headerRender
+              ? ($scopedSlots.headerRender)
+              : (<navbar scopedSlots={$scopedSlots}></navbar>)}
+          </div>
+          <app-main>{$scopedSlots.default}</app-main>
+        </div>
+      </div>
+    )
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   @import "~@/styles/mixin.scss";
   @import "~@/styles/variables.scss";
+  @import "./variables.scss";
 
-  .app-wrapper {
+  .#{$proLayoutPrefix}-app-wrapper {
     @include clearfix;
     position: relative;
     height: 100%;
@@ -114,31 +115,32 @@ export default {
       position: fixed;
       top: 0;
     }
-  }
-  .drawer-bg {
-    background: #000;
-    opacity: 0.3;
-    width: 100%;
-    top: 0;
-    height: 100%;
-    position: absolute;
-    z-index: 999;
-  }
 
-  .fixed-header {
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 9;
-    width: calc(100% - #{$sideBarWidth});
-    transition: width 0.28s;
-  }
+    .drawer-bg {
+      background: #000;
+      opacity: 0.3;
+      width: 100%;
+      top: 0;
+      height: 100%;
+      position: absolute;
+      z-index: 999;
+    }
 
-  .hideSidebar .fixed-header {
-    width: calc(100% - 54px)
-  }
+    .fixed-header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      z-index: 9;
+      width: calc(100% - #{$sideBarWidth});
+      transition: width 0.28s;
+    }
 
-  .mobile .fixed-header {
-    width: 100%;
+    &.hideSidebar .fixed-header {
+      width: calc(100% - 54px)
+    }
+
+    &.mobile .fixed-header {
+      width: 100%;
+    }
   }
 </style>
