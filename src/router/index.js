@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 /* Layout */
-import Layout from '@/layout/layout'
+import Layout from '@/layout/BasicLayout'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1

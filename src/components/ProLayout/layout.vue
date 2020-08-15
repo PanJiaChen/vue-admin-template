@@ -1,6 +1,6 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+    <div v-if="device==='mobile' && !collapsed" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
@@ -16,7 +16,7 @@ import { Navbar, Sidebar, AppMain } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
-  name: 'Layout',
+  name: 'ProLayout',
   components: {
     Navbar,
     Sidebar,
@@ -31,12 +31,27 @@ export default {
     logo: {
       type: String,
       default: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+    },
+    menus: {
+      type: Array,
+      default: () => []
+    },
+    collapsed: {
+      type: Boolean,
+      default: () => []
+    },
+    handleCollapse: {
+      type: Function,
+      default: () => () => {}
     }
   },
   provide() {
     return {
       title: this.title,
-      logo: this.logo
+      logo: this.logo,
+      menus: this.menus,
+      collapsed: this.collapsed,
+      handleCollapse: this.handleCollapse
     }
   },
   computed: {
@@ -51,8 +66,8 @@ export default {
     },
     classObj() {
       return {
-        hideSidebar: !this.sidebar.opened,
-        openSidebar: this.sidebar.opened,
+        hideSidebar: this.collapsed,
+        openSidebar: !this.collapsed,
         withoutAnimation: this.sidebar.withoutAnimation,
         mobile: this.device === 'mobile'
       }
@@ -60,7 +75,7 @@ export default {
   },
   methods: {
     handleClickOutside() {
-      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+      this.handleCollapse && this.handleCollapse({ withoutAnimation: false })
     }
   }
 }

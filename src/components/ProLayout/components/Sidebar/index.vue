@@ -1,10 +1,10 @@
 <template>
   <div :class="{'has-logo':showLogo}">
-    <logo v-if="showLogo" :collapse="isCollapse" />
+    <logo v-if="showLogo" :collapse="collapsed" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
-        :collapse="isCollapse"
+        :collapse="collapsed"
         :background-color="variables.menuBg"
         :text-color="variables.menuText"
         :unique-opened="false"
@@ -26,13 +26,14 @@ import variables from '@/styles/variables.scss'
 
 export default {
   components: { SidebarItem, Logo },
+  inject: {
+    routes: 'menus',
+    collapsed: 'collapsed'
+  },
   computed: {
     ...mapGetters([
       'sidebar'
     ]),
-    routes() {
-      return this.$router.options.routes
-    },
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
@@ -47,9 +48,6 @@ export default {
     },
     variables() {
       return variables
-    },
-    isCollapse() {
-      return !this.sidebar.opened
     }
   }
 }

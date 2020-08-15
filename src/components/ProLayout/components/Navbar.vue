@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+    <hamburger :is-active="!collapsed" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb class="breadcrumb-container" />
 
@@ -47,9 +47,10 @@ export default {
       'avatar'
     ])
   },
+  inject: ['collapsed', 'handleCollapse'],
   methods: {
     toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
+      this.handleCollapse && this.handleCollapse()
     },
     async logout() {
       await this.$store.dispatch('user/logout')
