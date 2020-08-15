@@ -6,7 +6,7 @@
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
       </div>
-      <app-main />
+      <app-main><slot /></app-main>
     </div>
   </div>
 </template>
@@ -23,6 +23,22 @@ export default {
     AppMain
   },
   mixins: [ResizeMixin],
+  props: {
+    title: {
+      type: String,
+      default: 'Vue Admin Template'
+    },
+    logo: {
+      type: String,
+      default: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+    }
+  },
+  provide() {
+    return {
+      title: this.title,
+      logo: this.logo
+    }
+  },
   computed: {
     sidebar() {
       return this.$store.state.app.sidebar
