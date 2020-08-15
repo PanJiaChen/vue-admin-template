@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import ProLayout from '@/components/ProLayout'
+import ProLayout from '@zt8989/element-pro-layout'
 import { mapGetters } from 'vuex'
 
 export default {
