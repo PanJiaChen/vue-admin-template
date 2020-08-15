@@ -4,7 +4,12 @@
     <sidebar class="sidebar-container" />
     <div class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
-        <navbar />
+        <slot v-if="$slots.headerRender" name="headerRender" />
+        <navbar v-else>
+          <template v-slot:rightContentRender>
+            <slot name="rightContentRender" />
+          </template>
+        </navbar>
       </div>
       <app-main><slot /></app-main>
     </div>
@@ -79,6 +84,9 @@ export default {
         mobile: this.isMobile
       }
     }
+  },
+  mounted() {
+    console.log(this.$slots)
   },
   methods: {
     handleClickOutside() {
