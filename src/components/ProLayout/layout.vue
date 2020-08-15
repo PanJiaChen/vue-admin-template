@@ -64,6 +64,10 @@ export default {
     handleMediaQuery: {
       type: Function,
       default: () => () => {}
+    },
+    showLogo: {
+      type: Boolean,
+      default: false
     }
   },
   provide() {
@@ -72,7 +76,8 @@ export default {
       logo: this.logo,
       menus: this.menus,
       collapsed: this.collapsed,
-      handleCollapse: this.handleCollapse
+      handleCollapse: this.handleCollapse,
+      showLogo: this.showLogo
     }
   },
   computed: {

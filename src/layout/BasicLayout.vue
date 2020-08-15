@@ -12,6 +12,7 @@
     :handle-collapse="handleCollapse"
     :without-animation="sidebar.withoutAnimation"
     :fixed-header="fixedHeader"
+    :show-logo="showLogo"
   >
     <template v-slot:rightContentRender>
       <div class="right-menu">
@@ -73,6 +74,9 @@ export default {
     },
     fixedHeader() {
       return this.$store.state.settings.fixedHeader
+    },
+    showLogo() {
+      return this.$store.state.settings.sidebarLogo
     }
   },
   methods: {

@@ -113,6 +113,7 @@ export default {
 | --- | --- | --- | --- |
 | title | layout 的 左上角 的 title | VNode \| String | `'Ant Design Pro'` |
 | logo | layout 的 左上角 logo 的 url | VNode \| render | - |
+| showLogo | 显示logo | boolean | false |
 | menus | Vue-router `routes` 属性 | Object | `[{}]` |
 | collapsed | 控制菜单的收起和展开 | boolean | true |
 | isMobile | 是否为手机模式 | boolean | false |

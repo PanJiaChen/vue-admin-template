@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
@@ -28,12 +27,10 @@ export default {
   components: { SidebarItem, Logo },
   inject: {
     routes: 'menus',
-    collapsed: 'collapsed'
+    collapsed: 'collapsed',
+    showLogo: 'showLogo'
   },
   computed: {
-    ...mapGetters([
-      'sidebar'
-    ]),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
@@ -43,9 +40,7 @@ export default {
       }
       return path
     },
-    showLogo() {
-      return this.$store.state.settings.sidebarLogo
-    },
+
     variables() {
       return variables
     }
