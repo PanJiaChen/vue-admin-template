@@ -9,14 +9,6 @@ English | [简体中文](./README-zh.md)
 
 **The current version is `v4.0+` build on `vue-cli`. If you want to use the old version , you can switch branch to [tag/3.11.0](https://github.com/PanJiaChen/vue-admin-template/tree/tag/3.11.0), it does not rely on `vue-cli`**
 
-
-## GitAds
-
-> vue-admin-template is being sponsored by the following tool; please help to support us by taking a look and signing up to a free trial
-
-[<img src="https://images.gitads.io/vue-admin-template" alt="GitAds" />](https://tracking.gitads.io/?repo=vue-admin-template)
-
-
 ## Build Setup
 
 ```bash
