@@ -74,34 +74,34 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  *  roles: ['admin'] meta里面存在roles且roles里面有值时才会触发，默认为都可以访问的菜单
  */
-export const asyncRoutes = [
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'),
-        name: 'Menu1',
-        meta: { title: 'Menu1' }
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
-      }
-    ]
-  },
+// export const asyncRoutes = [
+//   {
+//     path: '/nested',
+//     component: Layout,
+//     redirect: '/nested/menu1',
+//     name: 'Nested',
+//     meta: {
+//       title: 'Nested',
+//       icon: 'nested'
+//     },
+//     children: [
+//       {
+//         path: 'menu1',
+//         component: () => import('@/views/nested/menu1/index'),
+//         name: 'Menu1',
+//         meta: { title: 'Menu1' }
+//       },
+//       {
+//         path: 'menu2',
+//         component: () => import('@/views/nested/menu2/index'),
+//         meta: { title: 'menu2' }
+//       }
+//     ]
+//   },
 
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
+//   // 404 page must be placed at the end !!!
+//   { path: '*', redirect: '/404', hidden: true }
+// ]
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
