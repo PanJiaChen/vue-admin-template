@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">Login Form</h3>
+        <h3 class="title">平安银行征信系统</h3>
       </div>
 
       <el-form-item prop="username">
@@ -13,11 +13,11 @@
         <el-input
           ref="username"
           v-model="loginForm.username"
-          placeholder="Username"
+          placeholder="请输入用户名"
           name="username"
           type="text"
           tabindex="1"
-          auto-complete="on"
+          autocomplete="off"
         />
       </el-form-item>
 
@@ -30,10 +30,10 @@
           ref="password"
           v-model="loginForm.password"
           :type="passwordType"
-          placeholder="Password"
+          placeholder="请输入密码"
           name="password"
           tabindex="2"
-          auto-complete="on"
+          autocomplete="on"
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
@@ -41,12 +41,7 @@
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
+      <el-button :loading="loading" class="login-button" @click.native.prevent="handleLogin">登录</el-button>
 
     </el-form>
   </div>
@@ -132,6 +127,7 @@ export default {
 $bg:#283443;
 $light_gray:#fff;
 $cursor: #fff;
+$black_gray:#000;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
   .login-container .el-input input {
@@ -147,12 +143,12 @@ $cursor: #fff;
     width: 85%;
 
     input {
-      background: transparent;
+      // background: transparent;
       border: 0px;
       -webkit-appearance: none;
       border-radius: 0px;
       padding: 12px 5px 12px 15px;
-      color: $light_gray;
+      color: $black_gray;
       height: 47px;
       caret-color: $cursor;
 
@@ -165,7 +161,7 @@ $cursor: #fff;
 
   .el-form-item {
     border: 1px solid rgba(255, 255, 255, 0.1);
-    background: rgba(0, 0, 0, 0.1);
+    background: $light_gray;
     border-radius: 5px;
     color: #454545;
   }
@@ -176,8 +172,11 @@ $cursor: #fff;
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
+$black_gray:#000;
 
 .login-container {
+  background-image: url('../../assets/u2.jpg');
+  background-size: 100% 100%;
   min-height: 100%;
   width: 100%;
   background-color: $bg;
@@ -217,13 +216,21 @@ $light_gray:#eee;
 
     .title {
       font-size: 26px;
-      color: $light_gray;
+      color: $black_gray;
       margin: 0px auto 40px auto;
       text-align: center;
       font-weight: bold;
     }
   }
-
+  .login-button {
+    width: 100%;
+    margin-bottom: 30px;
+    background-color:rgb(214, 98, 18);
+    color:#000;
+    font-weight: 700;
+    font-style: normal;
+    font-size: 20px;
+  }
   .show-pwd {
     position: absolute;
     right: 10px;

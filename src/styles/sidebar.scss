@@ -1,20 +1,37 @@
 #app {
+  .globalnav-container {
+    position: fixed;
+    height: 50px;
+    line-height: 50px;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1002;
+    overflow: hidden;
+    background-color: #D66212;
+  }
 
   .main-container {
     min-height: 100%;
     transition: margin-left .28s;
     margin-left: $sideBarWidth;
     position: relative;
-  }
+    margin-top: 50px;
+    -webkit-transition: margin-left .28s;
+    -moz-transition: margin-left .28s;
+    -ms-transition: margin-left .28s;
+    -o-transition: margin-left .28s;
+}
 
   .sidebar-container {
     transition: width 0.28s;
     width: $sideBarWidth !important;
-    background-color: $menuBg;
+    background-color: $menuBgDefalut;
     height: 100%;
     position: fixed;
     font-size: 0px;
-    top: 0;
+    top: 50px;
     bottom: 0;
     left: 0;
     z-index: 1001;
@@ -191,6 +208,7 @@
     .svg-icon {
       margin-right: 16px;
     }
+
     .sub-el-icon {
       margin-right: 12px;
       margin-left: -2px;
