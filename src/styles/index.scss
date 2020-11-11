@@ -63,3 +63,95 @@ div:focus {
 .app-container {
   padding: 20px;
 }
+
+.territory-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  line-height: 50px;
+  border: 1px solid #080808;
+  padding: 0 20px;
+  background-color: #E4E4E4;
+
+  .territory-title {
+    font-family: '微软雅黑 Bold', '微软雅黑';
+    font-weight: 700;
+    font-style: normal;
+    font-size: 20px;
+    color: #080808;
+  }
+}
+
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+
+  .filter-box {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.change-name {
+  font-family: '微软雅黑 Bold', '微软雅黑';
+  font-weight: 700;
+  font-style: normal;
+  font-size: 16px;
+  color: #00FF66;
+}
+
+.operation {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.accounts {
+  .el-dialog__header {
+    background-color: #D66212;
+
+    .el-dialog__title {
+      color: #fff;
+    }
+
+    .el-dialog__headerbtn .el-dialog__close {
+      color: #fff;
+    }
+  }
+
+  .el-dialog__footer {
+    .el-button--primary {
+      padding: 12px 40px;
+      background-color: #D66212;
+    }
+  }
+}
+
+.menufocus-button {
+  float: right;
+  padding: 3px 0;
+}
+
+.menufocus {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: 50% 50%;
+
+  .menufocus-item {
+    grid-column-start: 1;
+    grid-column-end: 3;
+
+    .menufocus-select-first {
+      width: 92%;
+    }
+
+    .menufocus-select-second {
+      width: 40.5vw;
+    }
+
+    .menufocus-select-third {
+      width: 41.5vw;
+    }
+  }
+}
