@@ -33,7 +33,7 @@ module.exports = {
     port: port,
     open: true,
     overlay: {
-      warnings: false,
+      warnings: true,
       errors: true
     },
     before: require('./mock/mock-server.js')
