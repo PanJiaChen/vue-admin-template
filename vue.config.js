@@ -6,7 +6,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'vue Admin Template' // page title
+const name = defaultSettings.title || '常州致邦服饰有限公司管理系统' // page title
 
 // If your port is set to 80,
 // use administrator privileges to execute the command line.
@@ -36,19 +36,57 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    before: require('./mock/mock-server.js')
+    proxy: {
+      // 配置跨域
+      '/api': {
+        target: 'http://119.45.238.82:8000',
+        // ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
+      '/prop-api': {
+        target: 'http://119.45.238.82:8000',
+        // ws: true,
+        changeOrigin: true,
+        pathRewrite: {
+          '^/prop-api': ''
+        }
+      }
+    }
+    // before: require('./mock/mock-server.js')
   },
   configureWebpack: {
     // provide the app's title in webpack's name field, so that
     // it can be accessed in index.html to inject the correct title.
     name: name,
+    // config.name = name
     resolve: {
       alias: {
         '@': resolve('src')
       }
     }
+    // config.resolve.alias = { '@': resolve('src') }
+    // config.module.rules.push({
+    //   test: /\.worker.js$/,
+    //   use: {
+    //     loader: 'worker-loader',
+    //     options: { inline: true, name: 'workerName.[hash].js' }
+    //     // options: { inline: true }
+    //   }
+    // })
   },
+  parallel: false,
   chainWebpack(config) {
+    config.module
+      .rule('worker')
+      .test(/\.worker\.js$/)
+      .use('worker')
+      .loader('worker-loader')
+      .options({
+        inline: 'fallback'
+      })
     // it can improve the speed of the first screen, it is recommended to turn on preload
     config.plugin('preload').tap(() => [
       {
@@ -62,7 +100,7 @@ module.exports = {
 
     // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
-
+    config.output.globalObject('this')
     // set svg-sprite-loader
     config.module
       .rule('svg')
@@ -87,7 +125,7 @@ module.exports = {
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
             .use('script-ext-html-webpack-plugin', [{
-            // `runtime` must same as runtimeChunk name. default is `runtime`
+              // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
             .end()

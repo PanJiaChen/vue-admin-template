@@ -1,18 +1,26 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">name: {{ name }}</div>
+    <!-- <el-card>
+      <div slot="header" class="clearfix">
+        <span>更新日志</span>
+      </div>
+      <div class="text item">
+      </div>
+    </el-card> -->
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 export default {
   name: 'Dashboard',
   computed: {
-    ...mapGetters([
-      'name'
-    ])
+    name() {
+      return this.$store.state.user.name
+    },
+    position() {
+      return this.$store.state.user.position
+    }
   }
 }
 </script>

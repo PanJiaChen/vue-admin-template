@@ -24,8 +24,8 @@ export default {
   },
   data() {
     return {
-      title: 'Vue Admin Template',
-      logo: 'https://wpimg.wallstcn.com/69a1c46c-eb1c-4b46-8bd4-e9e686ef5251.png'
+      title: '常州致邦服饰有限公司管理系统',
+      logo: 'http://czsanbang.myqnapcloud.cn:8000/media/logo.png'
     }
   }
 }
