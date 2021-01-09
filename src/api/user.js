@@ -70,13 +70,13 @@ export function deleteUsers(data) {
   })
 }
 
-export function getUserRole(data) {
-  return request({
-    url: '/user/query_role',
-    method: 'post',
-    data
-  })
-}
+// export function getUserRole(data) {
+//   return request({
+//     url: '/user/query_role',
+//     method: 'post',
+//     data
+//   })
+// }
 
 // 用户组
 export function getAllGroups() {
@@ -136,6 +136,14 @@ export function error_query() {
 export function error_delete() {
   return request({
     url: '/error/delete',
+    method: 'get'
+  })
+}
+
+// 获取业务员
+export function query_salesman() {
+  return request({
+    url: '/user/query_salesman',
     method: 'get'
   })
 }

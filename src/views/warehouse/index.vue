@@ -1,7 +1,6 @@
-
 <template>
   <div class="app-container">
-    <el-form inline @submit.native.prevent>
+    <el-form inline style="margin-bottom:-10px" @submit.native.prevent>
       <el-form-item>
         <el-input v-model="input" placeholder="输入查询条件" @keyup.enter.native="queryWarehouse()" />
       </el-form-item>
@@ -9,9 +8,9 @@
       <el-button type="primary" plain @click="getWarehouses()">全部</el-button>
       <el-button type="success" plain @click="addWarehouse()">添加</el-button>
     </el-form>
-    <el-table v-loading="listLoading" :data="pageWarehouses" size="mini" :height="height-200+'px'">
+    <el-table v-loading="listLoading" :data="pageWarehouses" :height="height-190+'px'">
       <el-table-column v-if="false" prop="warehouse_id" />
-      <el-table-column type="index" label="序号" />
+      <el-table-column type="index" />
       <el-table-column prop="name" label="仓库名称" width="300px" />
       <el-table-column label="操作" width="100px">
         <template slot-scope="scope">
@@ -53,7 +52,7 @@
       :width="device=='mobile'?'90%':'60%'"
       :before-close="closeDialog"
     >
-      <el-form ref="warehouseForm" :model="warehouseForm" :inline="true" label-position="left" label-width="80px" size="small">
+      <el-form ref="warehouseForm" :model="warehouseForm" :inline="true" label-position="left" label-width="80px">
         <el-row>
           <el-form-item label="仓库位置: ">
             <el-input v-model="warehouseForm.name" />
@@ -61,8 +60,8 @@
         </el-row>
       </el-form>
       <span>
-        <el-button type="primary" size="mini" @click="submitwarehouseForm('warehouseForm')">确定</el-button>
-        <el-button type="info" size="mini" @click="closeDialog()">取消</el-button>
+        <el-button type="primary" @click="submitwarehouseForm('warehouseForm')">确定</el-button>
+        <el-button type="info" @click="closeDialog()">取消</el-button>
       </span>
     </el-dialog>
   </div>
@@ -102,7 +101,6 @@ export default {
   methods: {
     // 获取全部
     getWarehouses() {
-      this.listLoading = true
       this.input = ''
       this.queryWarehouse()
     },
@@ -133,7 +131,6 @@ export default {
           this.listLoading = false
           this.total = this.Warehouses.length
           this.getPageWarehouses()
-          this.input = ''
         })
         .catch((err) => {
           console.log(err)
@@ -162,7 +159,7 @@ export default {
         delete_warehouse({ warehouse_id: row.warehouse_id })
           .then(() => {
             this.$message.success('删除仓库成功')
-            this.getWarehouses()
+            this.qeuryWarehouse()
           })
           .catch((err) => {
             console.log(err)
@@ -175,21 +172,23 @@ export default {
         add_warehouse(this.warehouseForm)
           .then(() => {
             this.closeDialog()
-            this.getWarehouses()
+            this.queryWarehouse()
+            this.$message.success('添加仓库资料成功')
           })
           .catch((err) => {
             console.log(err)
-            this.$message.error('添加仓库失败')
+            this.$message.error('添加仓库资料失败')
           })
       } else {
         modify_warehouse(this.warehouseForm)
           .then(() => {
             this.closeDialog()
-            this.getWarehouses()
+            this.queryWarehouse()
+            this.$message.success('修改仓库资料成功')
           })
           .catch((err) => {
             console.log(err)
-            this.$message.error('修改仓库失败')
+            this.$message.error('修改仓库资料失败')
           })
       }
     },

@@ -141,3 +141,11 @@
   background: #d8dadd; 
 }
 
+.el-form-item--mini {
+  .el-form-item__content {
+      width: 150px;
+  }
+  .el-input__inner {
+      width: 150px;
+  }
+}

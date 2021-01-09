@@ -1,23 +1,21 @@
 <template>
   <div class="app-container">
-    <el-form size="small" inline @submit.native.prevent>
-      <el-row>
-        <el-form-item>
-          <el-input v-model="input" placeholder="输入查询条件" @keyup.enter.native="queryCustomer()" />
-        </el-form-item>
-        <el-button type="primary" size="small" plain @click="queryCustomer()">查询</el-button>
-        <el-button type="primary" size="small" plain @click="getCustomers()">全部</el-button>
-        <el-button type="success" size="small" plain @click="addCustomer()">添加</el-button>
-      </el-row>
+    <el-form inline style="margin-bottom:-10px" @submit.native.prevent>
+      <el-form-item>
+        <el-input v-model="input" placeholder="输入查询条件" @keyup.enter.native="queryCustomer()" />
+      </el-form-item>
+      <el-button type="primary" plain @click="queryCustomer()">查询</el-button>
+      <el-button type="primary" plain @click="getCustomers()">全部</el-button>
+      <el-button type="success" plain @click="addCustomer()">添加</el-button>
     </el-form>
-    <el-table v-loading="listLoading" :data="pageCustomers" size="mini" :height="height-230 + 'px'">
-      <el-table-column v-if="false" prop="uuid" />
-      <el-table-column prop="company" label="公司名称" width="200px" />
+    <el-table v-loading="listLoading" :data="pageCustomers" :height="height-190+'px'">
+      <el-table-column v-if="false" prop="customer_id" />
+      <el-table-column prop="name" label="公司名称" width="200px" />
       <el-table-column prop="attribution" label="缩写" width="150px" />
-      <el-table-column prop="brand" label="品牌" width="150px" />
       <el-table-column prop="contact" label="联系人" width="80px" />
-      <el-table-column prop="mobile" label="电话" width="150px" />
+      <el-table-column prop="contact_mobile" label="电话" width="150px" />
       <el-table-column prop="address" label="地址" width="250px" />
+      <el-table-column prop="salesman" label="业务员" width="200px" />
       <el-table-column prop="discription" label="特征" width="300px" />
       <el-table-column label="操作" fixed="right" width="100px">
         <template slot-scope="scope">
@@ -25,14 +23,12 @@
             type="primary"
             icon="el-icon-edit"
             circle
-            size="small"
             @click="modifyCustomer(scope.row)"
           />
           <el-button
             type="danger"
             icon="el-icon-delete"
             circle
-            size="small"
             @click="deleteCustomer(scope.row)"
           />
         </template>
@@ -59,39 +55,41 @@
       :width="dialogWidth"
       :before-close="closeDialog"
     >
-      <el-form ref="customerForm" :model="customerForm" :inline="true" label-position="left" label-width="80px" size="small">
-        <el-row>
-          <el-form-item label="公司名称: " prop="company">
-            <el-input v-model="customerForm.company" />
-          </el-form-item>
-          <el-form-item label="缩写: " prop="attribution">
-            <el-input v-model="customerForm.attribution" />
-          </el-form-item>
-          <el-form-item label="品牌: " prop="brand">
-            <el-input v-model="customerForm.brand" />
-          </el-form-item>
-          <el-form-item label="联系人: " prop="contact">
-            <el-input v-model="customerForm.contact" />
-          </el-form-item>
-          <el-form-item label="电话: " prop="mobile">
-            <el-input v-model="customerForm.mobile" />
-          </el-form-item>
-          <el-form-item label="地址: " prop="address">
-            <el-input v-model="customerForm.address" />
-          </el-form-item>
-          <el-form-item label="特征: " prop="discription">
-            <el-input
-              v-model="customerForm.discription"
-              type="textarea"
-              :autosize="{ minRows: 2, maxRows: 4}"
-              style="width:200px"
-            />
-          </el-form-item>
-        </el-row>
+      <el-form ref="customerForm" :rules="rules" :model="customerForm" :inline="true" label-position="left" label-width="90px">
+        <el-form-item label="公司名称:" prop="name">
+          <el-input v-model="customerForm.name" />
+        </el-form-item>
+        <el-form-item label="缩写:" prop="attribution">
+          <el-input v-model="customerForm.attribution" />
+        </el-form-item>
+        <el-form-item label="联系人:" prop="contact">
+          <el-input v-model="customerForm.contact" />
+        </el-form-item>
+        <el-form-item label="电话:" prop="contact_mobile">
+          <el-input v-model="customerForm.contact_mobile" />
+        </el-form-item>
+        <el-form-item label="地址:" prop="address" size="small">
+          <el-input v-model="customerForm.address" style="width: 400px" />
+        </el-form-item>
+        <el-form-item label="备注:" prop="discription" size="small">
+          <el-input
+            v-model="customerForm.discription"
+            type="textarea"
+            :autosize="{ minRows: 2, maxRows: 4}"
+            style="width:300px"
+          />
+        </el-form-item>
+        <div style="margin-bottom:20px">
+          <el-row style="font-weight:bold">业务员：</el-row>
+          <div v-for="(item, index) in salesman_group" :key="index" style="display:inline-block; margin-right:10px">
+            <span>{{ item }}: </span>
+            <el-checkbox v-model="customerForm.salesman[item]" />
+          </div>
+        </div>
       </el-form>
       <span>
-        <el-button type="primary" size="mini" @click="submitcustomerForm('customerForm')">确定</el-button>
-        <el-button type="info" size="mini" @click="closeDialog()">取消</el-button>
+        <el-button type="primary" @click="submitcustomerForm('customerForm')">确定</el-button>
+        <el-button type="info" @click="closeDialog()">取消</el-button>
       </span>
     </el-dialog>
   </div>
@@ -99,12 +97,12 @@
 
 <script>
 import {
-  getAllCustomers,
   queryCustomers,
   addCustomers,
   modifyCustomers,
   deleteCustomers
 } from '@/api/customer'
+import { query_salesman } from '@/api/user'
 export default {
   // name: "users",
   data() {
@@ -120,42 +118,54 @@ export default {
       dialogVisible: false,
       dialogWidth: '70%',
       customerForm: {
-        company: '',
-        brand: '',
+        name: '',
         contact: '',
-        mobile: '',
+        contact_mobile: '',
         address: '',
         discription: '',
         attribution: ''
       },
-      height: null
+      height: null,
+      salesman_group: [],
+      initial_salesman: null,
+      rules: {
+        name: [{ required: true, message: '请输入', trigger: 'blur' }],
+        attribution: [{ required: true, message: '请输入', trigger: 'blur' }],
+        contact: [{ required: true, message: '请输入', trigger: 'blur' }],
+        contact_mobile: [{ required: true, message: '请输入', trigger: 'blur' }]
+      }
+    }
+  },
+  computed: {
+    device() {
+      return this.$store.state.device
     }
   },
   mounted() {
     this.getCustomers()
-    if (navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)) {
-      this.mobile()
-    }
     this.height = document.documentElement.clientHeight
+    this.get_salesman()
   },
   methods: {
-    mobile() {
-      this.dialogWidth = '90%'
-    },
-    getCustomers() {
-      this.listLoading = true
-      getAllCustomers()
+    get_salesman() {
+      query_salesman()
         .then((respond) => {
-          console.log(respond)
-          this.Customers = respond.data
-          this.listLoading = false
-          this.total = this.Customers.length
-          this.getPageCustomers()
+          const salesman = respond.data
+          this.customerForm.salesman = {}
+          this.salesman_group = salesman.map((item) => {
+            this.customerForm.salesman[item.value] = false
+            return item.value
+          })
+          this.initial_salesman = this.customerForm.salesman
         })
         .catch((err) => {
           console.log(err)
-          this.$message.error('获取客户信息失败' + err)
+          this.$message.error('获取业务员信息失败')
         })
+    },
+    getCustomers() {
+      this.input = ''
+      this.queryCustomer()
     },
     getPageCustomers: function() {
       this.pageCustomers = []
@@ -184,7 +194,6 @@ export default {
           this.listLoading = false
           this.total = this.Customers.length
           this.getPageCustomers()
-          this.input = ''
         })
         .catch((err) => {
           console.log(err)
@@ -197,12 +206,22 @@ export default {
     },
     modifyCustomer(row) {
       this.dialogTitle = '修改客户资料'
+      var current_row = JSON.parse(JSON.stringify(row))
+      var selected_salesman = current_row.salesman
+      current_row.salesman = {}
+      this.salesman_group.forEach((item) => {
+        if (selected_salesman.indexOf(item) !== -1) {
+          current_row.salesman[item] = true
+        } else {
+          current_row.salesman[item] = false
+        }
+      })
+      this.customerForm = current_row
       this.dialogVisible = true
-      this.customerForm = JSON.parse(JSON.stringify(row))
     },
     deleteCustomer(row) {
       this.$confirm(
-        '是否删除客户：' + row.company + '联系人：' + row.contact + '?',
+        '是否删除客户：' + row.name + '联系人：' + row.contact + '?',
         '提示',
         {
           confirmButtonText: '确定',
@@ -210,10 +229,10 @@ export default {
           type: 'warning'
         }
       ).then(() => {
-        deleteCustomers({ uuid: row.uuid })
+        deleteCustomers({ customer_id: row.customer_id })
           .then(() => {
             this.$message.success('删除客户成功')
-            this.getCustomers()
+            this.queryCustomer()
           })
           .catch((err) => {
             this.$message.error('删除客户失败' + err)
@@ -221,36 +240,56 @@ export default {
       })
     },
     submitcustomerForm() {
-      if (this.dialogTitle === '添加客户资料') {
-        addCustomers(this.customerForm)
-          .then(() => {
-            this.closeDialog()
-            this.getCustomers()
+      this.$refs['customerForm'].validate((valid) => {
+        if (valid) {
+          // 处理业务员
+          var res = []
+          this.salesman_group.forEach((item) => {
+            if (this.customerForm.salesman[item] === true) {
+              res.push(item)
+            }
           })
-          .catch((err) => {
-            this.$message.error('添加客户失败' + err)
-          })
-      } else {
-        modifyCustomers(this.customerForm)
-          .then(() => {
-            this.closeDialog()
-            this.getCustomers()
-          })
-          .catch((err) => {
-            this.$message.error('修改客户失败' + err)
-          })
-      }
+          this.customerForm.salesman = res.join(',')
+          if (this.dialogTitle === '添加客户资料') {
+            addCustomers(this.customerForm)
+              .then(() => {
+                this.closeDialog()
+                this.queryCustomer()
+                this.$message.success('添加客户资料成功')
+              })
+              .catch((err) => {
+                console.log(err)
+                this.$message.error('添加客户失败')
+              })
+          } else {
+            modifyCustomers(this.customerForm)
+              .then(() => {
+                this.closeDialog()
+                this.queryCustomer()
+                this.$message.success('修改客户资料成功')
+              })
+              .catch((err) => {
+                console.log(err)
+                this.$message.error('修改客户失败')
+              })
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     closeDialog() {
       this.dialogVisible = false
-      this.customerForm.company = ''
-      this.customerForm.brand = ''
+      this.$refs['customerForm'].resetFields()
+      this.customerForm.customer_id = null
+      this.customerForm.name = ''
       this.customerForm.contact = ''
-      this.customerForm.mobile = ''
+      this.customerForm.contact_mobile = ''
       this.customerForm.address = ''
       this.customerForm.discription = ''
       this.customerForm.attribution = ''
-      // this.$refs['userForm'].resetFields()
+      this.customerForm.salesman = this.initial_salesman
     }
   }
 }

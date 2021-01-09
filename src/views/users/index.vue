@@ -10,14 +10,16 @@
         <el-button type="success" plain @click="addUser()">添加</el-button>
       </el-row>
     </el-form>
-    <el-table v-loading="listLoading" :data="pageUsers" size="mini" :height="height-200+'px'">
-      <!-- <el-table-column type="index" label="序号" width="50px" /> -->
+    <el-table v-loading="listLoading" :data="pageUsers" :height="height-190+'px'">
+      <el-table-column v-if="false" prop="user_id" />
+      <el-table-column v-if="false" prop="roles" />
+      <el-table-column type="index" />
       <el-table-column prop="user" label="用户名" width="80px" />
-      <el-table-column prop="name" label="名字" width="80px" />
+      <el-table-column prop="name" label="姓名" width="80px" />
       <el-table-column prop="birthday" label="生日" width="100px" />
       <el-table-column prop="position" label="职位" width="80px" />
-      <el-table-column prop="mobile" label="电话" width="120px" />
-      <el-table-column prop="entry_time" label="入职时间" width="120px" />
+      <el-table-column prop="mobile" label="联系方式" width="120px" />
+      <el-table-column prop="entry_time" label="入职日期" width="120px" />
       <el-table-column prop="address" label="地址" width="250px" />
       <el-table-column label="操作" fixed="right" width="100px">
         <template slot-scope="scope">
@@ -59,19 +61,19 @@
       width="80%"
       :before-close="closeDialog"
     >
-      <el-form ref="userForm" :model="userForm" :inline="true" label-position="left" label-width="90px" size="small">
+      <el-form ref="userForm" :rules="rules" :model="userForm" :inline="true" label-position="left" label-width="90px">
         <el-row>
-          <el-col :span="16">
-            <el-form-item label="用户名: " prop="user">
+          <el-col :span="14">
+            <el-form-item label="用户名:" prop="user">
               <el-input v-model="userForm.user" :disabled="isEdit" />
             </el-form-item>
-            <el-form-item label="姓名: " prop="name">
+            <el-form-item label="姓名:" prop="name">
               <el-input v-model="userForm.name" />
             </el-form-item>
-            <el-form-item label="密码: " prop="password">
+            <el-form-item label="密码:" prop="password">
               <el-input v-model="userForm.password" />
             </el-form-item>
-            <el-form-item label="职务: " prop="group">
+            <el-form-item label="职务:" prop="position">
               <el-select v-model="userForm.position" placeholder="请选择用户组">
                 <el-option label="管理员" value="管理员" />
                 <el-option label="总经理" value="总经理" />
@@ -84,10 +86,19 @@
                 <el-option label="采购" value="采购" />
               </el-select>
             </el-form-item>
-            <el-form-item label="电话: " prop="mobile">
+            <el-form-item label="联系方式: " prop="mobile">
               <el-input v-model="userForm.mobile" />
             </el-form-item>
-            <el-form-item label="入职时间: " prop="entry_time">
+            <el-form-item label="出生日期:">
+              <el-date-picker
+                v-model="userForm.birthday"
+                type="date"
+                placeholder="选择日期"
+                style="width:200px"
+                value-format="yyyy-MM-dd"
+              />
+            </el-form-item>
+            <el-form-item label="入职日期:">
               <el-date-picker
                 v-model="userForm.entry_time"
                 type="date"
@@ -96,21 +107,14 @@
                 value-format="yyyy-MM-dd"
               />
             </el-form-item>
-            <el-form-item label="地址: " prop="address">
+            <el-form-item label="地址:">
               <el-input v-model="userForm.address" />
             </el-form-item>
-            <el-form-item label="紧急联系人: " prop="contact">
-              <el-input v-model="userForm.contact" />
-            </el-form-item>
-            <el-form-item label="联系人电话: " prop="contact">
-              <el-input v-model="userForm.contact_mobile" />
-            </el-form-item>
           </el-col>
-
-          <el-col :span="8">
+          <el-col :span="10">
             <el-row style="font-size:16px ">用户权限</el-row>
             <div v-for="(item, index) in roles" :key="index">
-              <el-form-item style="margin-bottom:-5px" :label="item.label">
+              <el-form-item style="margin-bottom:-5px; font" size="small" :label="item.label">
                 <el-radio-group v-model="item.role">
                   <el-radio :label="2">编辑</el-radio>
                   <el-radio :label="1">查看</el-radio>
@@ -122,8 +126,8 @@
         </el-row>
       </el-form>
       <span>
-        <el-button type="primary" size="mini" @click="submitUserForm('userForm')">确定</el-button>
-        <el-button type="info" size="mini" @click="closeDialog()">取消</el-button>
+        <el-button type="primary" @click="submitUserForm('userForm')">确定</el-button>
+        <el-button type="info" @click="closeDialog()">取消</el-button>
       </span>
     </el-dialog>
   </div>
@@ -134,8 +138,7 @@ import {
   queryUsers,
   addUsers,
   modifyUsers,
-  deleteUsers,
-  getUserRole
+  deleteUsers
 } from '@/api/user'
 export default {
   // name: "users",
@@ -156,14 +159,25 @@ export default {
         name: '',
         position: '',
         mobile: '',
-        entry_time: '',
-        address: '',
-        contact: '',
-        contact_mobile: ''
+        entry_time: null,
+        address: ''
       },
-      roles: [],
+      roles: [{
+        label: '测试',
+        role: 0
+      }, {
+        label: '测试2',
+        role: 0
+      }],
       isEdit: false,
-      height: null
+      height: null,
+      rules: {
+        user: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        name: [{ required: true, message: '请输入姓名', trigger: 'blur' }],
+        position: [{ required: true, message: '请输入职位', trigger: 'blur' }],
+        mobile: [{ required: true, message: '请输入联系方式', trigger: 'blur' }]
+      }
     }
   },
   computed: {
@@ -181,7 +195,7 @@ export default {
   methods: {
     getUsers() {
       this.listLoading = true
-      this.inputStr = ''
+      this.input = ''
       this.queryUser()
     },
     getPageUsers: function() {
@@ -211,7 +225,6 @@ export default {
           this.listLoading = false
           this.total = this.Users.length
           this.getPageUsers()
-          this.input = ''
         })
         .catch((err) => {
           console.log(err)
@@ -223,18 +236,13 @@ export default {
       this.dialogVisible = true
     },
     modifyUser(row) {
-      getUserRole({ user: row.user })
-        .then((respond) => {
-          this.roles = respond.data
-        })
-        .catch((err) => {
-          console.log(err)
-          this.$message.error('获取用户权限失败')
-        })
       this.isEdit = true
       this.dialogTitle = '修改用户'
       this.dialogVisible = true
       this.userForm = JSON.parse(JSON.stringify(row))
+      if (this.userForm.roles) {
+        this.roles = this.userForm.roles
+      }
     },
     deleteUser(row) {
       this.$confirm(
@@ -246,10 +254,10 @@ export default {
           type: 'warning'
         }
       ).then(() => {
-        deleteUsers({ user: row.user })
+        deleteUsers({ user_id: row.user_id })
           .then(() => {
             this.$message.success('删除用户成功')
-            this.getUsers()
+            this.queryUsers()
           })
           .catch((err) => {
             this.$message.error('删除用户失败' + err)
@@ -257,30 +265,39 @@ export default {
       })
     },
     submitUserForm() {
-      this.userForm.roles = this.roles
-      console.log(this.userForm)
-      if (this.dialogTitle === '添加用户') {
-        addUsers(this.userForm)
-          .then(() => {
-            this.closeDialog()
-            this.getUsers()
-          })
-          .catch((err) => {
-            this.$message.error('添加用户失败' + err)
-          })
-      } else {
-        modifyUsers(this.userForm)
-          .then(() => {
-            this.closeDialog()
-            this.getUsers()
-          })
-          .catch((err) => {
-            this.$message.error('修改用户失败' + err)
-          })
-      }
+      this.$refs['userForm'].validate((valid) => {
+        if (valid) {
+          this.userForm.roles = this.roles
+          if (this.dialogTitle === '添加用户') {
+            addUsers(this.userForm)
+              .then(() => {
+                this.closeDialog()
+                this.getUsers()
+                this.$message.success('添加用户成功')
+              })
+              .catch((err) => {
+                this.$message.error('添加用户失败' + err)
+              })
+          } else {
+            modifyUsers(this.userForm)
+              .then(() => {
+                this.closeDialog()
+                this.getUsers()
+                this.$message.success('修改用户成功')
+              })
+              .catch((err) => {
+                this.$message.error('修改用户失败' + err)
+              })
+          }
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     },
     closeDialog() {
       this.dialogVisible = false
+      this.$refs['userForm'].resetFields()
       this.userForm.user = ''
       this.userForm.password = ''
       this.userForm.name = ''
@@ -288,9 +305,6 @@ export default {
       this.userForm.mobile = ''
       this.userForm.entry_time = ''
       this.userForm.address = ''
-      this.userForm.contact = ''
-      this.userForm.contact_mobile = ''
-      // this.$refs['userForm'].resetFields()
     }
   }
 }
@@ -298,6 +312,6 @@ export default {
 
 <style>
 .el-form .el-row {
- margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 </style>
