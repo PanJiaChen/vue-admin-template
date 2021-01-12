@@ -1,12 +1,15 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, getInfo, ActiveRouter } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
+// import { resolve, reject } from 'core-js/fn/promise'
 
 const getDefaultState = () => {
   return {
     token: getToken(),
     name: '',
-    avatar: ''
+    avatar: '',
+    menus: '',
+    position: ''
   }
 }
 
@@ -24,6 +27,15 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_MENUS: (state, menus) => {
+    state.menus = menus
+  },
+  SET_POSITION: (state, position) => {
+    state.position = position
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
   }
 }
 
@@ -52,11 +64,11 @@ const actions = {
         if (!data) {
           return reject('Verification failed, please Login again.')
         }
-
-        const { name, avatar } = data
-
+        const { name, avatar, position, roles } = data
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
+        commit('SET_POSITION', position)
+        commit('SET_ROLES', roles)
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -64,17 +76,64 @@ const actions = {
     })
   },
 
-  // user logout
-  logout({ commit, state }) {
+  // 获取路由表
+  getActiveRouter({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
-        removeToken() // must remove  token  first
-        resetRouter()
-        commit('RESET_STATE')
-        resolve()
+      ActiveRouter(state.token).then(response => {
+        const list = response.data
+        if (!list) {
+          reject('验证失败，请重新登录')
+        }
+        const menus = list
+        // console.log(menus)
+        menus.push(
+          {
+            path: '/others',
+            component: 'Layout',
+            meta: {
+              title: '其他事务',
+              icon: 'el-icon-setting'
+            },
+            children: [
+              {
+                path: '/my',
+                name: 'my_profile',
+                component: 'users/my',
+                meta: {
+                  title: '个人中心',
+                  icon: 'user'
+                }
+              }
+            ]
+          }, {
+            path: '/404',
+            component: '404',
+            hidden: true
+          }, {
+            path: '*',
+            redirect: '/404',
+            hidden: true
+          }, {
+            path: '/emptyPage',
+            component: 'emptyPage',
+            hidden: true
+          })
+        commit('SET_MENUS', menus)
+        resolve(list)
       }).catch(error => {
-        reject(error)
+        console.log(error)
       })
+    })
+  },
+
+  // user logout
+  logout({ commit, dispatch }) {
+    return new Promise(resolve => {
+      removeToken() // must remove  token  first
+      resetRouter()
+      commit('RESET_STATE')
+      dispatch('tagsView/delAllViews', null, { root: true })
+      resolve()
     })
   },
 
