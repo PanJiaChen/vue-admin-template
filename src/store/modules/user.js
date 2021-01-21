@@ -47,7 +47,7 @@ const actions = {
     })
   },
 
-  // get user info
+  // 获取用户信息
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
@@ -59,7 +59,7 @@ const actions = {
 
         const { roles, name, avatar } = data
 
-        // roles must be a non-empty array
+        // roles必须是非空数组
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
@@ -74,11 +74,11 @@ const actions = {
     })
   },
 
-  // user logout
+  // 用户退出
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
-        removeToken() // must remove  token  first
+        removeToken() // 必须先移除 token
         resetRouter()
         commit('RESET_STATE')
         resolve()
@@ -88,10 +88,10 @@ const actions = {
     })
   },
 
-  // remove token
+  // 删除 token
   resetToken({ commit }) {
     return new Promise(resolve => {
-      removeToken() // must remove  token  first
+      removeToken() // 必须先移除 token
       commit('RESET_STATE')
       resolve()
     })
