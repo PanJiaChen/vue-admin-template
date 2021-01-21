@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: '内容爬虫中台',
 
   /**
    * @type {boolean} true | false
@@ -10,7 +10,7 @@ module.exports = {
 
   /**
    * @type {boolean} true | false
-   * @description Whether show the logo in sidebar
+   * @description 是否在侧边栏中显示logo
    */
-  sidebarLogo: false
+  sidebarLogo: true
 }
