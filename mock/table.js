@@ -4,16 +4,18 @@ const data = Mock.mock({
   'items|30': [{
     id: '@id',
     title: '@sentence(10, 20)',
+    tags: [1, 2, 3],
+    views: '@integer(0, 1000)',
     'status|1': ['published', 'draft', 'deleted'],
+    'enableComment|1': [1, 2],
     author: 'name',
-    display_time: '@datetime',
-    pageviews: '@integer(300, 5000)'
+    updateTime: '@datetime'
   }]
 })
 
 module.exports = [
   {
-    url: '/vue-admin-template/table/list',
+    url: '/blog/list',
     type: 'get',
     response: config => {
       const items = data.items

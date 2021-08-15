@@ -12,7 +12,7 @@
         </span>
         <el-input
           ref="username"
-          v-model="loginForm.username"
+          v-model="loginForm.loginUserName"
           placeholder="Username"
           name="username"
           type="text"
@@ -28,7 +28,7 @@
         <el-input
           :key="passwordType"
           ref="password"
-          v-model="loginForm.password"
+          v-model="loginForm.loginPassword"
           :type="passwordType"
           placeholder="Password"
           name="password"
@@ -43,10 +43,10 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
 
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
+<!--      <div class="tips">-->
+<!--        <span style="margin-right:20px;">username: admin</span>-->
+<!--        <span> password: 000000</span>-->
+<!--      </div>-->
 
     </el-form>
   </div>
@@ -54,6 +54,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+import md5 from 'js-md5'
 
 export default {
   name: 'Login',
@@ -74,12 +75,12 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        loginUserName: 'admin',
+        loginPassword: 'liao972627735'
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        loginUserName: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        loginPassword: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       loading: false,
       passwordType: 'password',
@@ -107,8 +108,10 @@ export default {
     },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
+        const op = this.loginForm.loginPassword
         if (valid) {
           this.loading = true
+          this.loginForm.loginPassword = md5(op)
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
@@ -119,6 +122,7 @@ export default {
           console.log('error submit!!')
           return false
         }
+        this.loginForm.loginPassword = op
       })
     }
   }
