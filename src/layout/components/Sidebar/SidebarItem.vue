@@ -30,6 +30,7 @@ import { isExternal } from '@/utils/validate'
 import Item from './Item'
 import AppLink from './Link'
 import FixiOSBug from './FixiOSBug'
+const resolve = path.posix ? path.posix.resolve : path.resolve
 
 export default {
   name: 'SidebarItem',
@@ -88,7 +89,7 @@ export default {
       if (isExternal(this.basePath)) {
         return this.basePath
       }
-      return path.resolve(this.basePath, routePath)
+      return resolve(this.basePath, routePath)
     }
   }
 }
