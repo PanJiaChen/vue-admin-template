@@ -79,6 +79,11 @@ module.exports = {
         symbolId: 'icon-[name]'
       })
       .end()
+    config.module
+      .rule('pug')
+        .test(/\.pug$/)
+        .use('pug')
+          .loader('pug-plain-loader')
 
     config
       .when(process.env.NODE_ENV !== 'development',

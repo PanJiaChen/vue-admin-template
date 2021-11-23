@@ -21,6 +21,8 @@
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
+    "pug": "^2.0.3",
+    "pug-plain-loader": "^1.0.0",
     "vue": "2.6.10",
     "vue-router": "3.0.6",
     "vuex": "3.1.0"
