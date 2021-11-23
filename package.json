@@ -14,6 +14,7 @@
     "test:ci": "npm run lint && npm run test:unit"
   },
   "dependencies": {
+    "@zt8989/element-pro-layout": "^0.1.1",
     "axios": "0.18.1",
     "core-js": "3.6.5",
     "element-ui": "2.13.2",
