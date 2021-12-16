@@ -68,7 +68,7 @@ export default {
         }
       },
       series: (data) =>
-        data.map((item, i) => ({ ...item, itemStyle: { color: ['#FFBE5A', '#64D7B9', '#5587F0'][i] } })),
+        data.map((item, i) => ({ ...item, itemStyle: { color: ['#FFBE5A', '#64D7B9', '#5587F0'][i] }}))
     }
     this.lineChartGrid = {
       left: 18,
