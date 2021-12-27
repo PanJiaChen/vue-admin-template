@@ -47,6 +47,8 @@ export const constantRoutes = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
+    name: 'FatherDashboard',
+    meta: {title: 'FatherDashboard', icon: 'dashboard'},
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
@@ -80,6 +82,8 @@ export const constantRoutes = [
   {
     path: '/form',
     component: Layout,
+    name: 'FatherForm',
+    meta: {title: 'FatherForm', icon: 'form'},
     children: [
       {
         path: 'index',
@@ -152,6 +156,8 @@ export const constantRoutes = [
   {
     path: 'external-link',
     component: Layout,
+    name: 'father-external-link',
+    meta: { title: 'F External Link', icon: 'link' },
     children: [
       {
         path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
