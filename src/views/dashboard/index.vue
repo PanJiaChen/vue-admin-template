@@ -1,14 +1,16 @@
 <template>
   <div class="dashboard-container">
-    <!-- <div class="dashboard-text">name: {{ name }}</div> -->
+    <h5>解决el-mennu的下拉框选不中的问题</h5>
     <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
       <el-menu-item index="1">处理中心</el-menu-item>
-      <el-submenu popper-class="private-popper-calss" index="2" :hide-timeout="15000">
+      <!-- :hide-timeout="15000" -->
+      <el-submenu popper-class="private-popper-calss" index="2">
         <template slot="title">我的工作台</template>
         <el-menu-item index="2-1">选项1</el-menu-item>
         <el-menu-item index="2-2">选项2</el-menu-item>
         <el-menu-item index="2-3">选项3</el-menu-item>
-        <el-submenu popper-class="private-popper-two-calss" index="2-4" :hide-timeout="20000">
+        <!-- :hide-timeout="20000" -->
+        <el-submenu popper-class="private-popper-two-calss" index="2-4">
           <template slot="title">选项4</template>
           <el-menu-item index="2-4-1">选项1</el-menu-item>
           <el-menu-item index="2-4-2">选项2</el-menu-item>
@@ -45,15 +47,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
-  }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
-}
 </style>
 <style lang="scss">
 .private-popper-calss{
@@ -83,7 +76,5 @@ export default {
       }
     }
   }
-
 }
-
 </style>
