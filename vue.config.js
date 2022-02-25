@@ -117,6 +117,12 @@ module.exports = {
             })
           // https:// webpack.js.org/configuration/optimization/#optimizationruntimechunk
           config.optimization.runtimeChunk('single')
+
+          config.plugin('html')
+            .tap(args => {
+              args[0].minify.removeAttributeQuotes = false
+              return args
+            })
         }
       )
   }
