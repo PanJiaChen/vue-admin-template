@@ -119,5 +119,11 @@ module.exports = {
           config.optimization.runtimeChunk('single')
         }
       )
+    
+    config.plugin('html')
+      .tap(args => {
+        args[0].minify.removeAttributeQuotes = false
+        return args
+      })
   }
 }
