@@ -7,21 +7,21 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /**
- * Note: sub-menu only appear when route children.length >= 1
+ * Note: sub-menu only appears when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
  *
- * hidden: true                   if set true, item will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu
- *                                if not set alwaysShow, when item has more than one children route,
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
+ * hidden: true                  if set to true, item will not show in the sidebar (default is false)
+ * alwaysShow: true              if set to true, will always show the root menu
+ *                               if not set to true, when item has more than one child route,
+ *                               it will become nested mode, otherwise not show the root menu
+ * redirect: noRedirect          if set to noRedirect, it will not redirect in the breadcrumb
+ * name:'router-name'            the name is used by <keep-alive> (must set!!!)
  * meta : {
     roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+    title: 'title'               the name to show in sidebar and breadcrumb (recommended to set)
+    icon: 'svg-name'/'el-icon-x' the icon to show in the sidebar
+    breadcrumb: false            if set to false, the item will be hidden in breadcrumb (default is true)
+    activeMenu: '/example/list'  if path is set, the sidebar will highlight the path you set
   }
  */
 
