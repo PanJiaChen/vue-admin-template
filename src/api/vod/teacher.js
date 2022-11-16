@@ -26,12 +26,14 @@ export default {
         data:teacher
       })
     },
+    //根据id得到数据
     getById(id) {
       return request({
         url: `${api_name}/getTeacher/${id}`,
         method: `get`
       })
     },
+    //更新数据
     updateTeacher(teacher) {
       return request({
         url: `${api_name}/updateTeacher`,
@@ -39,4 +41,12 @@ export default {
         data: teacher
       })
     },
+    //批量删除
+    batchRemove(idList) {
+      return request({
+        url: `${api_name}/removeBatch`,
+        method: `delete`,
+        data: idList
+      })
+    }
 }
