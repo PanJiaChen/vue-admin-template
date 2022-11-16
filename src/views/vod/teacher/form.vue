@@ -55,33 +55,48 @@ export default {
   },
   // 页面渲染成功
   created() {
-
+    // 获取id,根据id查询得到数据
+    if (this.$route.params.id) {
+      this.fetchDataById(this.$route.params.id)
+    }
   },
   methods: {
-    saveOrUpdate() {
-    // 禁用保存按钮
-      this.saveBtnDisabled = true
-      if (!this.teacher.id) {
-        this.saveData()
-      } else {
-        this.updateData()
-      }
+    fetchDataById(id){
+      teacherApi.getById(id).then(response => {
+		    this.teacher = response.data
+	    })
     },
-    // 新增讲师
-    saveData() {
-    // debugger
+    //添加
+    save(){
+      // debugger
       teacherApi.saveTeacher(this.teacher).then(response => {
         this.$message({
           type: 'success',
-          message: response.message
+          message: '添加成功！'
         })
         this.$router.push({ path: '/vod/teacher/list' })
       })
     },
-    // 根据id更新记录
-    updateData() {
-
-    }
+    //修改
+    updateData(){
+      // teacher数据的获取
+      teacherApi.updateTeacher(this.teacher).then(response => {
+      this.$message({
+        type: 'success',
+        message: '修改成功!'
+      })
+      this.$router.push({ path: '/vod/teacher/list' })
+      })
+    },
+    saveOrUpdate() {
+    // 禁用保存按钮
+      this.saveBtnDisabled = true
+      if (!this.teacher.id) {
+        this.save()
+      } else {
+        this.updateData()
+      }
+    },
   }
 }
 </script>

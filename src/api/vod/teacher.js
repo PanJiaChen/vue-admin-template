@@ -26,4 +26,17 @@ export default {
         data:teacher
       })
     },
+    getById(id) {
+      return request({
+        url: `${api_name}/getTeacher/${id}`,
+        method: `get`
+      })
+    },
+    updateTeacher(teacher) {
+      return request({
+        url: `${api_name}/updateTeacher`,
+        method: `post`,
+        data: teacher
+      })
+    },
 }
