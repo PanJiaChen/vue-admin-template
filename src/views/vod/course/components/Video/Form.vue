@@ -14,7 +14,6 @@
           <el-radio :label="1">默认</el-radio>
         </el-radio-group>
       </el-form-item>
-
       <!-- 上传视频 -->
       <el-form-item label="上传视频">
         <el-upload
@@ -44,12 +43,10 @@
     </div>
   </el-dialog>
 </template>
-
 <script>
 import videoApi from '@/api/vod/video'
-//import vodApi from '@/api/vod/vod'
+import vodApi from '@/api/vod/vod'
 export default {
-
   data() {
     return {
       BASE_API: 'http://localhost:8301',
@@ -60,9 +57,8 @@ export default {
       },
       fileList: [], // 上传文件列表
       uploadBtnDisabled: false
-    } 
+    }
   },
-
   methods: {
     open(chapterId, videoId) {
       this.dialogVisible = true
@@ -77,22 +73,18 @@ export default {
         })
       }
     },
-
     close() {
       this.dialogVisible = false
       // 重置表单
       this.resetForm()
     },
-
     resetForm() {
       this.video = {
         sort: 0,
         free: false
       }
-
       this.fileList = [] // 重置视频上传列表
     },
-
     saveOrUpdate() {
       if (!this.video.id) {
         this.save()
@@ -100,7 +92,6 @@ export default {
         this.update()
       }
     },
-
     save() {
       this.video.courseId = this.$parent.$parent.courseId
       videoApi.save(this.video).then(response => {
@@ -111,7 +102,6 @@ export default {
         this.$parent.fetchNodeList()
       })
     },
-
     update() {
       videoApi.updateById(this.video).then(response => {
         this.$message.success(response.message)
@@ -121,41 +111,41 @@ export default {
         this.$parent.fetchNodeList()
       })
     },
-
     // 上传多于一个视频
     handleUploadExceed(files, fileList) {
       this.$message.warning('想要重新上传视频，请先删除已上传的视频')
     },
-
     // 上传
     submitUpload() {
       this.uploadBtnDisabled = true
       this.$refs.upload.submit() // 提交上传请求
     },
-
     // 视频上传成功的回调
     handleUploadSuccess(response, file, fileList) {
       this.uploadBtnDisabled = false
       this.video.videoSourceId = response.data
       this.video.videoOriginalName = file.name
     },
-
     // 失败回调
     handleUploadError() {
       this.uploadBtnDisabled = false
       this.$message.error('上传失败2')
     },
-
     // 删除视频文件确认
     handleBeforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`)
     },
-
     // 执行视频文件的删除
     handleOnRemove(file, fileList) {
       if (!this.video.videoSourceId) {
         return
       }
+      vodApi.removeByVodId(this.video.videoSourceId).then(response => {
+        this.video.videoSourceId = ''
+        this.video.videoOriginalName = ''
+        videoApi.updateById(this.video)
+        this.$message.success(response.message)
+      })
     }
   }
 }
