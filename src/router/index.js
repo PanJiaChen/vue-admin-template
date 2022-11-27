@@ -173,6 +173,44 @@ export const constantRoutes = [
   },
 
   {
+    path: '/activity',
+    component: Layout,
+    redirect: '/couponInfo/list',
+    name: 'Activity',
+    meta: { title: '营销活动管理', icon: 'el-icon-football' },
+    alwaysShow: true,
+    children: [
+      {
+        path: 'couponInfo/list',
+        name: 'CouponInfo',
+        component: () => import('@/views/activity/couponInfo/list'),
+        meta: { title: '优惠券列表' }
+      },
+      {
+        path: 'couponInfo/add',
+        name: 'CouponInfoAdd',
+        component: () => import('@/views/activity/couponInfo/form'),
+        meta: { title: '添加' },
+        hidden: true
+      },
+      {
+        path: 'couponInfo/edit/:id',
+        name: 'CouponInfoEdit',
+        component: () => import('@/views/activity/couponInfo/form'),
+        meta: { title: '编辑', noCache: true },
+        hidden: true
+      },
+      {
+        path: 'couponInfo/show/:id',
+        name: 'CouponInfoShow',
+        component: () => import('@/views/activity/couponInfo/show'),
+        meta: { title: '详情', noCache: true },
+        hidden: true
+      }
+    ]
+  },
+
+  {
     path: '/subject',
     component: Layout,
     redirect: '/subject/list',
