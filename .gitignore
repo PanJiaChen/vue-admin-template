@@ -14,3 +14,4 @@ tests/**/coverage/
 *.ntvs*
 *.njsproj
 *.sln
+.history/*
