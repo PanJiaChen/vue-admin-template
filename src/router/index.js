@@ -32,6 +32,11 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
+    path: '/',
+    redirect: '/playlist/list'
+  },
+
+  {
     path: '/login',
     component: () => import('@/views/login/index'),
     hidden: true
@@ -44,16 +49,46 @@ export const constantRoutes = [
   },
 
   {
-    path: '/',
+    path: '/playlist',
     component: Layout,
-    redirect: '/dashboard',
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      path: 'list',
+      component: () => import('@/views/playlist/list'),
+      meta: { title: '歌单管理', icon: 'table' }
     }]
   },
+
+  {
+    path: '/swiper',
+    component: Layout,
+    children: [{
+      path: 'list',
+      component: () => import('@/views/swiper/swiper'),
+      meta: { title: '轮播图管理', icon: 'example' }
+    }]
+  },
+
+  {
+    path: '/blog',
+    component: Layout,
+    children: [{
+      path: 'list',
+      component: () => import('@/views/blog/blog'),
+      meta: { title: '博客管理', icon: 'tree' }
+    }]
+  },
+
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'dashboard',
+  //     name: 'Dashboard',
+  //     component: () => import('@/views/dashboard/index'),
+  //     meta: { title: 'Dashboard', icon: 'dashboard' }
+  //   }]
+  // },
 
   {
     path: '/example',
