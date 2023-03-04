@@ -10,8 +10,8 @@
       <el-table-column prop="name" label="名称" />
       <el-table-column prop="copywriter" label="描述" />
       <el-table-column label="操作">
-        <template>
-          <el-button size="mini">编辑</el-button>
+        <template slot-scope="scope">
+          <el-button size="mini" @click="onEdit(scope.row)">编辑</el-button>
           <el-button size="mini" type="danger">删除</el-button>
         </template>
       </el-table-column>
@@ -50,6 +50,9 @@ export default {
         }
         this.loading = false
       })
+    },
+    onEdit(row) {
+      this.$router.push(`/playlist/edit/${row._id}`)
     }
   }
 }
