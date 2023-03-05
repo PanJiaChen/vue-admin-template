@@ -46,6 +46,15 @@ export default {
         this.swiperList = res.data
         this.loading = false
       })
+    },
+    uploadSuccess(res) {
+      if (res.id_list.length > 0) {
+        this.$message({
+          message: '上传成功',
+          type: 'success'
+        })
+        this.getList()
+      }
     }
   }
 }
