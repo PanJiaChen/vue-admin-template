@@ -1,8 +1,8 @@
 {
-  "name": "vue-admin-template",
-  "version": "4.4.0",
-  "description": "A vue admin template with Element UI & axios & iconfont & permission control & lint",
-  "author": "Pan <panfree23@gmail.com>",
+  "name": "club-management",
+  "version": "1.0.0",
+  "description": "A club management system build by vue2",
+  "author": "Allen Li <allenli01@foxmail.com>",
   "scripts": {
     "dev": "vue-cli-service serve",
     "build:prod": "vue-cli-service build",
@@ -16,14 +16,16 @@
   "dependencies": {
     "axios": "0.18.1",
     "core-js": "3.6.5",
-    "element-ui": "2.13.2",
-    "js-cookie": "2.2.0",
+    "element-ui": "^2.15.6",
+    "file-saver": "^2.0.5",
+    "js-cookie": "^3.0.5",
     "normalize.css": "7.0.0",
     "nprogress": "0.2.0",
     "path-to-regexp": "2.4.0",
     "vue": "2.6.10",
     "vue-router": "3.0.6",
-    "vuex": "3.1.0"
+    "vuex": "3.1.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "4.4.4",
