@@ -1,10 +1,11 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue";
+import Router from "vue-router";
+import clubHome from "../views/club/clubHome.vue";
 
-Vue.use(Router)
+Vue.use(Router);
 
 /* Layout */
-import Layout from '@/layout'
+import Layout from "@/layout";
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -32,150 +33,139 @@ import Layout from '@/layout'
  */
 export const constantRoutes = [
   {
-    path: '/login',
-    component: () => import('@/views/login/index'),
-    hidden: true
+    path: "/login",
+    component: () => import("@/views/login/index"),
+    hidden: true,
   },
 
   {
-    path: '/404',
-    component: () => import('@/views/404'),
-    hidden: true
+    path: "/404",
+    component: () => import("@/views/404"),
+    hidden: true,
   },
 
   {
-    path: '/',
+    path: "/",
     component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
-    }]
-  },
-
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    redirect: "/dashboard",
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: "dashboard",
+        name: "Dashboard",
+        component: () => import("@/views/dashboard/index"),
+        meta: { title: "首页", icon: "home" },
+      },
+    ],
+  },
+
+  {
+    path: "/joinClub",
+    component: Layout,
+    redirect: "/joinClub/list",
+    name: "JoinClub",
+    meta: { title: "加入社团", icon: "el-icon-s-help" },
+    children: [
+      {
+        path: "list",
+        name: "List",
+        component: () => import("@/views/joinClub/list"),
+        meta: { title: "社团列表", icon: "list2" },
+      },
+    ],
+  },
+
+  {
+    path: "/createClub",
+    component: Layout,
+    redirect: "/createClub/create",
+    name: "createClub",
+    meta: { title: "创建社团", icon: "user" },
+    children: [
+      {
+        path: "create",
+        name: "Create",
+        component: () => import("@/views/createClub/create.vue"),
+        meta: { title: "申请创建社团", icon: "form" },
+      },
+    ],
+  },
+  {
+    path: "/club",
+    component: Layout,
+    name: "Club",
+    redirect: "/club/home",
+    meta: { title: "社团管理" },
+    children: [
+      {
+        path: "home",
+        name: "Home",
+        component: () => import("@/views/myClub/home.vue"),
+        meta: { title: "我的社团", icon: "club" },
+      },
+    ],
+  },
+  {
+    path: "/manage",
+    component: Layout,
+    name: "Manage",
+    meta: { title: "管理面板", icon: "nested" },
+    children: [
+      {
+        path: "apply",
+        name: "Apply",
+        component: () => import("@/views/manage/apply.vue"),
+        meta: { title: "申请管理" },
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
-  },
-
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        path: "news",
+        name: "News",
+        component: () => import("@/views/manage/news.vue"),
+        meta: { title: "公告管理" },
       },
       {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
-      }
-    ]
+        path: "club",
+        name: "club",
+        component: () => import("@/views/manage/club.vue"),
+        meta: { title: "社团管理" },
+      },
+    ],
   },
-
   {
-    path: 'external-link',
+    path: "/self",
     component: Layout,
+    name: "Self",
+    meta: { title: "个人中心", icon: "user" },
     children: [
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
+        path: "selfinfo",
+        name: "selfinfo",
+        component: () => import("@/views/self/selfinfo"),
+        meta: { title: "个人信息", icon: "info" },
+      },
+      {
+        path: "selfapply",
+        name: "selfapply",
+        component: () => import("@/views/self/selfapply"),
+        meta: { title: "我的申请", icon: "apply" },
+      },
+    ],
   },
 
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
+  { path: "*", redirect: "/404", hidden: true },
+];
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes,
+  });
 
-const router = createRouter()
+const router = createRouter();
 
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher // reset router
+  const newRouter = createRouter();
+  router.matcher = newRouter.matcher; // reset router
 }
 
-export default router
+export default router;
