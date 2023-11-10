@@ -14,7 +14,7 @@
     "test:ci": "npm run lint && npm run test:unit"
   },
   "dependencies": {
-    "axios": "0.18.1",
+    "axios": "1.6.0",
     "core-js": "3.6.5",
     "element-ui": "2.13.2",
     "js-cookie": "2.2.0",
